@@ -21,6 +21,7 @@ public class Lesson {
 	public Lesson(String name) {
 		super();
 		this.name = name;
+		this.description="";
 		this.price=0.0f;
 		this.teachers=new LinkedList<User>();
 		this.students=new LinkedList<User>();
@@ -28,6 +29,63 @@ public class Lesson {
 		this.modules=new LinkedList<Module>();
 		this.levels=new LinkedList<Level>();
 	}
+	
+	
+	
+	public String getName() {
+		return name;
+	}
+
+
+
+	public String getDescription() {
+		return description;
+	}
+
+
+
+	public float getPrice() {
+		return price;
+	}
+
+
+
+	public List<User> getTeachers() {
+		return teachers;
+	}
+
+
+
+	public List<User> getStudents() {
+		return students;
+	}
+
+
+
+	public List<User> getAdmins() {
+		return admins;
+	}
+
+
+
+	public List<Module> getModules() {
+		return modules;
+	}
+
+
+
+	public List<Level> getLevels() {
+		return levels;
+	}
+
+
+
+	public Language getLanguage() {
+		return language;
+	}
+
+
+
 	@Override
 	public String toString() {
 		return "Lesson {name=" + name + ", description=" + description + ", price=" + price + "}";
