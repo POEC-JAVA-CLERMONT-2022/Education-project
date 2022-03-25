@@ -1,4 +1,4 @@
-package com.example.educ.services;
+package com.educ.services;
 
 
 
@@ -6,33 +6,40 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.example.educ.data.DataProviderUser;
-import com.example.educ.data.InMemoryDataProviderUser;
-import com.example.educ.models.User;
-import com.example.educ.models.UserRole;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 
+import com.educ.data.UserRepository;
+import com.educ.models.User;
+
+
+@Service
 public class UserService {
-	private DataProviderUser dataProviderUser;
-	private List<UserRole> userRoles;
+	@Autowired
+	private UserRepository userRepository;
 	
-
-	public UserService() {
-		
-		dataProviderUser=new InMemoryDataProviderUser();
+	public List<User> findAll(){
+		return userRepository.findAll();
 	}
 	
-	public ArrayList<User> getAll(){
-		return dataProviderUser.getAll();
+	public User findById(Long id) {
+		return userRepository.getById(id);
 	}
 	
-	public void addUser(User user) {
+	public User create(String firstName, String lastName, String email, String status) {
+		User user=new User();
+		//User user=new User(firstName, lastName, email, status);
+		return this.userRepository.save(user);
+	}
+	
+	/*public void addUser(User user) {
 		if (user==null || user.getEmail().isEmpty() || user.getEmail()==null) {
 			throw new IllegalArgumentException("User or email es invalid");
 		}
 		dataProviderUser.addUser(user);
 	}
-/*
+
 	public User searchUser(String email) {
 
 		for(User u: users) {

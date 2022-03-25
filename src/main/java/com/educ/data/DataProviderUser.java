@@ -1,8 +1,8 @@
-package com.example.educ.data;
+package com.educ.data;
 
 import java.util.ArrayList;
 
-import com.example.educ.models.User;
+import com.educ.models.User;
 
 public interface DataProviderUser {
 	public ArrayList<User> getAll();

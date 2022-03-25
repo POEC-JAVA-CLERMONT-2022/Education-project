@@ -1,4 +1,4 @@
-package com.example.educ.data;
+package com.educ.data;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import com.example.educ.models.User;
+import com.educ.models.User;
 
 public class InMemoryDataProviderUser implements DataProviderUser {
 	private ArrayList<User> users=new ArrayList<User>();

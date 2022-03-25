@@ -1,4 +1,4 @@
-package com.example.educ.services;
+package com.educ.services;
 
 
 
