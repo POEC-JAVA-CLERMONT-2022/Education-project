@@ -2,7 +2,7 @@ package com.educ.data;
 
 import java.util.ArrayList;
 
-import com.educ.models.User;
+import com.educ.entity.User;
 
 public interface DataProviderUser {
 	public ArrayList<User> getAll();

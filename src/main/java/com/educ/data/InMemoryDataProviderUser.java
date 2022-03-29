@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import com.educ.models.User;
+import com.educ.entity.User;
 
 public class InMemoryDataProviderUser implements DataProviderUser {
 	private ArrayList<User> users=new ArrayList<User>();

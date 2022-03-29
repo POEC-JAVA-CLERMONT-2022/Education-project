@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 
 import com.educ.data.UserRepository;
-import com.educ.models.User;
+import com.educ.entity.User;
 
 
 @Service
@@ -22,17 +22,30 @@ public class UserService {
 	public List<User> findAll(){
 		return userRepository.findAll();
 	}
-	
+/*
+	public User findByEMail(String email) {
+		return userRepository.findByEMail(email);
+	}
+	*/
 	public User findById(Long id) {
 		return userRepository.getById(id);
 	}
 	
-	public User create(String firstName, String lastName, String email, String status) {
+	public User create() {
 		User user=new User();
-		//User user=new User(firstName, lastName, email, status);
 		return this.userRepository.save(user);
 	}
 	
+		
+	public User create(String firstName, String lastName, String email, String status) {
+		User user=new User(firstName, lastName,email, status);
+		return this.userRepository.save(user);
+	}
+	
+	public void update(String firstName, String lastName, String email, String status) {
+		
+		
+	}
 	/*public void addUser(User user) {
 		if (user==null || user.getEmail().isEmpty() || user.getEmail()==null) {
 			throw new IllegalArgumentException("User or email es invalid");

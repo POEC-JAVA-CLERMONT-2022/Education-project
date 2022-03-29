@@ -4,16 +4,17 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.educ.models.User;
-
+import com.educ.entity.User;
 import com.educ.services.UserService;
 
 @RestController
 public class UserController {
-	private UserService userService=new UserService();
+	@Autowired
+	private UserService userService;
 	/*
 	@GetMapping("/users")
 	public ArrayList<User> getUsers(){

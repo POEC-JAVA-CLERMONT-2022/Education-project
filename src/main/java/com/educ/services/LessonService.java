@@ -10,8 +10,8 @@ import org.springframework.stereotype.Service;
 
 import com.educ.data.LessonRepository;
 import com.educ.data.UserRepository;
-import com.educ.models.Lesson;
-import com.educ.models.User;
+import com.educ.entity.Lesson;
+import com.educ.entity.User;
 
 
 @Service
