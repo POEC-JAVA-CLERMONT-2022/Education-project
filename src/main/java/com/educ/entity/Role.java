@@ -30,6 +30,10 @@ public class Role {
 		return roleName;
 	}
 
+	public Long getId() {
+		return id;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(roleName);
