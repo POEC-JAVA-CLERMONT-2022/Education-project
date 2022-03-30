@@ -2,6 +2,7 @@ package com.educ;
 
 import java.util.List;
 
+import com.educ.entity.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -50,6 +51,11 @@ public class EducationApplication {
 		
 		User user1=this.userService.create("Wendy", "kjkjlkj", "sWendygrouche@yahoo.com", "Admin systeme ");
 		System.out.println("MAIL ==========>    "+user1.getEmail());
+
+
+		Role role=this.roleService.createRole("Teacher");
+
+		Role role0=this.roleService.createRole("Admin");
 		
 		/*if (users.size()==0) {
 			User user1=this.userService.create("Wendy", "kjkjlkj", "sWendygrouche@yahoo.com", "Admin systeme ");

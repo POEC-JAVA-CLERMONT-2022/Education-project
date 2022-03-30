@@ -16,4 +16,21 @@ public class RoleService {
 		return roleRepository.findAll();
 	}
 
+	public Role createRole(String roleName){
+		Role role=new Role(roleName);
+		this.roleRepository.save(role);
+		return role;
+	}
+
+	public void updateRole (Role role){
+		Role existing=this.roleRepository.getById(role.getId());
+		if (existing!=null){
+			this.roleRepository.save(role);
+		}
+
+
+	}
+
+
+
 }
