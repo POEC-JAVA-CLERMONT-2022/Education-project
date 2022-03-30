@@ -1,7 +1,5 @@
 package com.educ.services;
 
-
-
 import java.util.LinkedList;
 import java.util.List;
 
@@ -29,7 +27,7 @@ public class LessonService {
 	
 	public Lesson create() {
 		Lesson lesson=new Lesson();
-		return this.lessonRepository.save(lesson);
+		return lessonRepository.save(lesson);
 	}
 	
 	
