@@ -35,8 +35,8 @@ public class Lesson {
 	@Column(name="price")
 	private float price;
 	
-	@ManyToMany(mappedBy = "lessons")
-	private List<User> users;
+	/*@ManyToMany(mappedBy = "lessons")
+	private List<User> users; */
 	
 	/*private List<User> students;
 	private List<User> admins;*/
@@ -91,8 +91,7 @@ public class Lesson {
 
 	@Override
 	public String toString() {
-		return "Lesson {id=" + id + ", name=" + name + ", description=" + description + ", price=" + price + ", users="
-				+ users + ", modules=" + modules + ", level=" + level + ", language=" + language + "}";
+		return "Lesson {id=" + id + ", name=" + name + ", description=" + description + ", price=" + price + ", modules=" + modules + ", level=" + level + ", language=" + language + "}";
 	}
 	
 	

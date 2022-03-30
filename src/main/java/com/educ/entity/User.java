@@ -57,12 +57,14 @@ public class User {
 	private Review review;
 	
 
-	
+/*	
 	@ManyToMany
 	@JoinTable(name="users_lessons",
 	joinColumns = @JoinColumn(name="user_id"),
 	inverseJoinColumns = @JoinColumn(name="lesson_id"))
 	private List<Lesson> lessons;
+	
+	*/
 	
 	@JoinColumn(name="role_id")
 	@ManyToMany
@@ -83,7 +85,7 @@ public class User {
 		this.lastName = lastName;
 		this.email = email;
 		this.status = status;
-		this.lessons=null;
+		//this.lessons=null;
 		}
 	
 	public String getFirstName() {
@@ -122,7 +124,7 @@ public class User {
 	public String toString() {
 		return "User {id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", birthAt=" + birthAt
 				+ ", urlImage=" + urlImage + ", email=" + email + ", password=" + password + ", status=" + status
-				+ ", review=" + review + ", lessons=" + lessons + ", roles=" + roles + "}";
+				+ ", review=" + review + ", roles=" + roles + "}";
 	}
 	@Override
 	public boolean equals(Object obj) {
