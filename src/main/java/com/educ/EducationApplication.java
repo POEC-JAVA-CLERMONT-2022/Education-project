@@ -26,10 +26,10 @@ public class EducationApplication {
 	private LessonService lessonService;
 	
 	
-	 @Autowired
+	@Autowired
 	private ModuleeService moduleService;
 	 
-	 @Autowired
+	@Autowired
 	private ReviewService reviewService;
 	 
 	 @Autowired
