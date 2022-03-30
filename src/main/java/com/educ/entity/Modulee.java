@@ -34,7 +34,7 @@ public class Modulee {
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Lesson lesson;
 	
-	@OneToMany(mappedBy = "module", cascade=CascadeType.REMOVE, orphanRemoval = true)
+	@OneToMany(mappedBy = "module", fetch = FetchType.LAZY, cascade=CascadeType.REMOVE, orphanRemoval = true)
 	private List<Review> reviews; 
 	
 	@OneToOne(cascade = CascadeType.ALL)

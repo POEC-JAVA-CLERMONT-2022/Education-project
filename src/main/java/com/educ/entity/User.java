@@ -10,12 +10,14 @@ import javax.annotation.Generated;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -42,7 +44,6 @@ public class User {
 	@Column(name="urlImage")
 	private String urlImage;
 	
-	
 	@Column(name="email", length=150)
 	private String email;
 	
@@ -52,20 +53,11 @@ public class User {
 	@Column(name="status", length=150)
 	private String status;
 	
-	@OneToOne(cascade=CascadeType.REMOVE, orphanRemoval = true)
-	@JoinColumn(name = "review_id", referencedColumnName = "id")
-	private Review review;
+	/*@OneToMany(mappedBy ="user", fetch = FetchType.LAZY)*/
+	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade=CascadeType.REMOVE, orphanRemoval = true)
+	private List<Review> reviews;
 	
 
-/*	
-	@ManyToMany
-	@JoinTable(name="users_lessons",
-	joinColumns = @JoinColumn(name="user_id"),
-	inverseJoinColumns = @JoinColumn(name="lesson_id"))
-	private List<Lesson> lessons;
-	
-	*/
-	
 	@JoinColumn(name="role_id")
 	@ManyToMany
 	private List<Role> roles;
@@ -124,7 +116,7 @@ public class User {
 	public String toString() {
 		return "User {id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", birthAt=" + birthAt
 				+ ", urlImage=" + urlImage + ", email=" + email + ", password=" + password + ", status=" + status
-				+ ", review=" + review + ", roles=" + roles + "}";
+				+ ", review=" + reviews + ", roles=" + roles + "}";
 	}
 	@Override
 	public boolean equals(Object obj) {

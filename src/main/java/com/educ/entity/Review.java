@@ -29,6 +29,9 @@ public class Review {
 	@ManyToOne()
 	private Modulee module;
 	
+	@ManyToOne()
+	private User user;
+	
 	public Review() {
 		
 	}
@@ -38,6 +41,7 @@ public class Review {
 		this.note = note;
 		this.comment = comment;
 		this.module=null;
+		this.user=null;
 	}
 
 	@Override
