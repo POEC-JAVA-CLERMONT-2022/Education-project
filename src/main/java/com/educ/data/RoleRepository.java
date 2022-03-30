@@ -5,9 +5,16 @@ import org.springframework.stereotype.Repository;
 
 import com.educ.entity.Role;
 
+import java.util.List;
+
 @Repository
 
 public interface RoleRepository extends JpaRepository<Role, Long> {
 
-    // void findOneRoleName();
+    public List<Role> findAll();
+
+    public Role createRole(String roleName);
+
+    public void updateRole (Role role);
+
 }
