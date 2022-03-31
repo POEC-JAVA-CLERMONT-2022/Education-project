@@ -2,15 +2,13 @@ package com.educ;
 
 import java.util.List;
 
-import com.educ.entity.Role;
+import com.educ.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.event.ApplicationStartedEvent;
 import org.springframework.context.event.EventListener;
 
-import com.educ.entity.Lesson;
-import com.educ.entity.User;
 import com.educ.services.LessonService;
 import com.educ.services.ModuleeService;
 import com.educ.services.ReviewService;
@@ -53,13 +51,14 @@ public class EducationApplication {
 		System.out.println("MAIL ==========>    "+user1.getEmail());
 
 
-		Role role=this.roleService.createRole("Teacher");
+		//Role role=this.roleService.createRole("Teacher");
 
-		Role role0=this.roleService.createRole("Admin");
+		//Role role0=this.roleService.createRole("Admin");
 
-		this.roleService.updateRole(1L, "Student");
+		Lesson lesson1 = this.lessonService.create("LessonFRançais", "descriptiondelale", 20.50f, Language.EN, Level.ADVANCE);
 
-		this.roleService.deleteRole(1L);
+
+		//this.roleService.deleteRole(1L);
 
 		
 		/*if (users.size()==0) {

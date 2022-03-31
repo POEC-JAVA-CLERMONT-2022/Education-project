@@ -11,17 +11,8 @@ import java.util.List;
 
 @Repository
 public interface RoleRepository extends JpaRepository<Role, Long> {
-
     public List<Role> findAll();
-
-  public Role getById(Long id);
-
-    public Role createRole(String roleName);
-
-
-
-    public void updateRole (Long id, String name);
-
+    public Role getById(Long id);
 
 
 }
