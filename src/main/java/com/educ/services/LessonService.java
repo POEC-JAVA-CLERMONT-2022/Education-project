@@ -27,11 +27,33 @@ public class LessonService {
 
 	@Transactional
 	public Lesson create(String name, String description, Float price, Language language, Level level) {
-		Lesson lesson=new Lesson(name, description, price, language, level);
-		this.lessonRepository.save(lesson);
-		return lesson;
+		if(this.lessonRepository.findByName(name) == null){
+			Lesson lesson=new Lesson(name, description, price, language, level);
+			this.lessonRepository.save(lesson);
+			return lesson;
+		}else {
+			return null;
+		}
+
 	}
-	
+
+	@Transactional
+	public void updateLesson(Long id, String name, String description, Float price, Language language, Level level){
+		if ((this.lessonRepository.getById(id) != null) && (this.lessonRepository.findByName(name)==null)){
+			Lesson lesson=this.lessonRepository.getById(id);
+			lesson.setName(name);
+			this.lessonRepository.save(lesson);
+		}
+	}
+
+	@Transactional
+	public void deleteLesson(Long id) {
+		Lesson lesson = this.lessonRepository.getById(id);
+		if(lesson !=null){
+			this.lessonRepository.delete(lesson);
+		}
+
+	}
 	
 	/*private List<Lesson> lessons;
 	
@@ -39,35 +61,8 @@ public class LessonService {
 		super();
 		this.lessons = new LinkedList<Lesson>();
 	}
+	
 
-	public void createLesson() {
-		Lesson lesson=new Lesson();
-		lessons.add(lesson);
-	}
-	
-	public Lesson researchLesson() {
-		
-		for (Lesson l:lessons) {
-			if(l.getName().equals(name)) {
-				return l;
-			}else {
-				
-			}
-		}
-		return null;
-		
-	}
-	
-	public void modifLesson(Lesson lesson) {
-		
-	}
-	public void deleteLesson() {
-		
-	}
-	
-	public void selectModule() {
-		///Composition
-	}
 	*/
 
 }
