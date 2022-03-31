@@ -26,7 +26,7 @@ public class Lesson {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(name="name")
+	@Column(name="name", unique = true)
 	private String name;
 	
 	@Column(name="description")
@@ -70,6 +70,31 @@ public class Lesson {
 		this.level = level;
 	}
 
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public void setPrice(float price) {
+		this.price = price;
+	}
+	/*
+	public void setModules(List<Modulee> modules) {
+		this.modules = modules;
+	}
+	*/
+
+
+	public void setLevel(Level level) {
+		this.level = level;
+	}
+
+	public void setLanguage(Language language) {
+		this.language = language;
+	}
 
 	@Override
 	public int hashCode() {
