@@ -61,12 +61,13 @@ public class Lesson {
 	}
 
 
-	public Lesson(String name, String description, float price, Language language) {
+	public Lesson(String name, String description, float price, Language language, Level level) {
 		super();
 		this.name = name;
 		this.description = description;
 		this.price = price;
 		this.language = language;
+		this.level = level;
 	}
 
 

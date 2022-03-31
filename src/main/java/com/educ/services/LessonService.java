@@ -1,33 +1,35 @@
 package com.educ.services;
 
-import java.util.LinkedList;
 import java.util.List;
 
+import com.educ.entity.Language;
+import com.educ.entity.Level;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.educ.data.LessonRepository;
-import com.educ.data.UserRepository;
 import com.educ.entity.Lesson;
-import com.educ.entity.User;
+import org.springframework.transaction.annotation.Transactional;
 
 
 @Service
 public class LessonService {
 	@Autowired
 	private LessonRepository lessonRepository;
-	
-	public List<Lesson> findAll(){
-		return lessonRepository.findAll();
+
+	@Transactional(readOnly = true)
+	public List<Lesson> findAll(){ return lessonRepository.findAll();
 	}
-	
-	public Lesson findById(Long id) {
-		return lessonRepository.getById(id);
+
+	@Transactional(readOnly = true)
+	public Lesson findById(Long id) { return lessonRepository.getById(id);
 	}
-	
-	public Lesson create() {
-		Lesson lesson=new Lesson();
-		return lessonRepository.save(lesson);
+
+	@Transactional
+	public Lesson create(String name, String description, Float price, Language language, Level level) {
+		Lesson lesson=new Lesson(name, description, price, language, level);
+		this.lessonRepository.save(lesson);
+		return lesson;
 	}
 	
 	
