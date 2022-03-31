@@ -48,8 +48,8 @@ public class EducationApplication {
 		List<Lesson> lessons=lessonService.findAll();
 		System.out.println(lessons.size()+" Lessons trouvées");
 		
-		User user1=this.userService.create("Wendy", "kjkjlkj", "sWendygrouche@yahoo.com", "Admin systeme ");
-		System.out.println("MAIL ==========>    "+user1.getEmail());
+		//User user1=this.userService.create("Wendy", "kjkjlkj", "sWendygrouche@yahoo.com", "Admin systeme ");
+		//System.out.println("MAIL ==========>    "+user1.getEmail());
 		Role role=this.roleService.createRole("Teacher");
 
 		Role role1=this.roleService.createRole("Admin");
