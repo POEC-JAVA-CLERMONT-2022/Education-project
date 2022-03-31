@@ -11,10 +11,10 @@ import java.util.List;
 
 public interface RoleRepository extends JpaRepository<Role, Long> {
 
-    public List<Role> findAll();
+  /*  public List<Role> findAll();
 
     public Role createRole(String roleName);
 
-    public void updateRole (Role role);
+    public void updateRole (Role role);*/
 
 }
