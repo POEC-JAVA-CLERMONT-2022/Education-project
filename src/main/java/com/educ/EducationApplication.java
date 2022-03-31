@@ -1,7 +1,9 @@
 package com.educ;
 
+import java.time.Clock;
 import java.util.List;
 
+import com.educ.data.RoleRepository;
 import com.educ.entity.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -25,8 +27,7 @@ public class EducationApplication {
 	
 	@Autowired
 	private LessonService lessonService;
-	
-	
+
 	@Autowired
 	private ModuleeService moduleService;
 	 
@@ -35,8 +36,7 @@ public class EducationApplication {
 	 
 	 @Autowired
 	private RoleService roleService;
-	
-	
+
 	public static void main(String[] args) {
 		SpringApplication.run(EducationApplication.class, args);
 	}
@@ -52,16 +52,19 @@ public class EducationApplication {
 		User user1=this.userService.create("Wendy", "kjkjlkj", "sWendygrouche@yahoo.com", "Admin systeme ");
 		System.out.println("MAIL ==========>    "+user1.getEmail());
 
-
 		Role role=this.roleService.createRole("Teacher");
 
 		Role role0=this.roleService.createRole("Admin");
 
-		this.roleService.updateRole(1L, "Student");
+		System.out.println(this.roleService.findByName("Admin"));
 
-		this.roleService.deleteRole(1L);
+		Role role1=this.roleService.createRole("Admin");
 
-		
+		this.roleService.updateRole(5L, "Admin");
+		this.roleService.updateRole(5L, "Student");
+
+		//this.roleService.deleteRole(1L);
+
 		/*if (users.size()==0) {
 			User user1=this.userService.create("Wendy", "kjkjlkj", "sWendygrouche@yahoo.com", "Admin systeme ");
 			user1.getEmail();

@@ -23,19 +23,29 @@ public class RoleService {
 	@Transactional(readOnly = true)
 	public Role getById(Long id) {return roleRepository.getById(id);}
 
+	@Transactional(readOnly = true)
+	public Role findByName(String name){
+		return this.roleRepository.findByName(name);
+	}
+
 	@Transactional
 	public Role createRole(String name){
-		Role role=new Role(name);
-		this.roleRepository.save(role);
-		return role;
+		if (this.roleRepository.findByName(name) == null){
+			Role role=new Role(name);
+			this.roleRepository.save(role);
+			return role;
+		}else{
+			return null;
+		}
 	}
 
 	@Transactional
 	public void updateRole (Long id, String name){
-		//this.roleRepository.updateRole(id,name);
-		Role role=this.roleRepository.getById(id);
-		role.setName(name);
-		this.roleRepository.save(role);
+		if ((this.roleRepository.getById(id) != null) &&  (this.roleRepository.findByName(name)==null)){
+				Role role=this.roleRepository.getById(id);
+				role.setName(name);
+				this.roleRepository.save(role);
+		}
 	}
 
 	@Transactional
@@ -45,7 +55,5 @@ public class RoleService {
 			this.roleRepository.delete(role);
 		}
 	}
-
-
 
 }
