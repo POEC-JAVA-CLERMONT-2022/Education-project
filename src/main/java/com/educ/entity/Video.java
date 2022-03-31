@@ -23,7 +23,7 @@ public class Video {
 	@Column(name="title")
 	private String title;
 	
-	@Column(name="url")
+	@Column(name="url", unique = true)
 	private String url;
 	
 	@Column(name="duration")
@@ -36,15 +36,48 @@ public class Video {
 	public Video() {
 	}
 	
-	public Video(String url) {
+	/*public Video(String url) {
 		super();
 		this.url = url;
-	}
+	} */
 	
 	public Video(String title, String url, LocalTime duration) {
 		super();
 		this.title = title;
 		this.url = url;
+		this.duration = duration;
+		this.module=null;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public LocalTime getDuration() {
+		return duration;
+	}
+
+	public Modulee getModule() {
+		return module;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	public void setDuration(LocalTime duration) {
 		this.duration = duration;
 	}
 
