@@ -51,18 +51,16 @@ public class EducationApplication {
 		User user1=this.userService.create("Wendy", "kjkjlkj", "sWendygrouche@yahoo.com", "Admin systeme ");
 		System.out.println("MAIL ==========>    "+user1.getEmail());
 		Role role=this.roleService.createRole("Teacher");
-
-		//Role role0=this.roleService.createRole("Admin");
-    //this.roleService.updateRole(5L, "Admin");
-	//	this.roleService.updateRole(5L, "Student");
-	//System.out.println(this.roleService.findByName("Admin"));
-
-		//Role role1=this.roleService.createRole("Admin");
+		Role role0=this.roleService.createRole("Admin");
+		Role role1=this.roleService.createRole("Student");
+		//this.roleService.updateRole(5L, "Admin");
+		//	this.roleService.updateRole(5L, "Student");
+		//System.out.println(this.roleService.findByName("Admin"));
 
 		//this.roleService.deleteRole(1L);it 
-    	//Lesson lesson1 = this.lessonService.create("LessonFRançais", "descriptiondelale", 20.50f, Language.EN, Level.ADVANCE);
-
-
+    	Lesson lesson1 = this.lessonService.create("LessonFRançais", "descriptiondelale", 20.50f, Language.EN, Level.ADVANCE);
+		Modulee module1 = this.moduleService.createModule("Modulo1");
+		this.moduleService.updateModule(1L, "Modulo Principiante");
 
 		//this.lessonService.deleteLesson(1L);
 
@@ -71,7 +69,7 @@ public class EducationApplication {
 			user1.getEmail();
 		}*/
 
-		this.lessonService.updateLesson(2L, "Curso de Espanol", "descriptiondelale", 20.50f, Language.EN, Level.ADVANCE);
+		//this.lessonService.updateLesson(2L, "Curso de Espanol", "descriptiondelale", 20.50f, Language.EN, Level.ADVANCE);
 	}
 
 }
