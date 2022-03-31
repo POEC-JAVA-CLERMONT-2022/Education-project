@@ -27,9 +27,14 @@ public class LessonService {
 
 	@Transactional
 	public Lesson create(String name, String description, Float price, Language language, Level level) {
-		Lesson lesson=new Lesson(name, description, price, language, level);
-		this.lessonRepository.save(lesson);
-		return lesson;
+		if(this.lessonRepository.findByName(name) == null){
+			Lesson lesson=new Lesson(name, description, price, language, level);
+			this.lessonRepository.save(lesson);
+			return lesson;
+		}else {
+			return null;
+		}
+
 	}
 
 	@Transactional
@@ -49,7 +54,6 @@ public class LessonService {
 		}
 
 	}
-
 	
 	/*private List<Lesson> lessons;
 	
@@ -57,28 +61,8 @@ public class LessonService {
 		super();
 		this.lessons = new LinkedList<Lesson>();
 	}
-
-
-	public Lesson researchLesson() {
-		
-		for (Lesson l:lessons) {
-			if(l.getName().equals(name)) {
-				return l;
-			}else {
-				
-			}
-		}
-		return null;
-		
-	}
 	
-	public void modifLesson(Lesson lesson) {
-		
-	}
 
-	public void selectModule() {
-		///Composition
-	}
 	*/
 
 }
