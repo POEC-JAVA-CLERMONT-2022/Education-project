@@ -56,6 +56,11 @@ public class EducationApplication {
 		Role role=this.roleService.createRole("Teacher");
 
 		Role role0=this.roleService.createRole("Admin");
+
+		this.roleService.updateRole(1L, "Student");
+
+		this.roleService.deleteRole(1L);
+
 		
 		/*if (users.size()==0) {
 			User user1=this.userService.create("Wendy", "kjkjlkj", "sWendygrouche@yahoo.com", "Admin systeme ");
