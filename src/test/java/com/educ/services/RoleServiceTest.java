@@ -68,4 +68,25 @@ public class RoleServiceTest {
         assertNotEquals(roles.size(),3);
    }
 
+    @Test
+    @DisplayName("update role test")
+    public void testUpdateRole(){
+        String name="Admin";
+        Role role=this.roleService.createRole(name);
+        List<Role> roles=roleService.findAll();
+        assertNotNull(role);
+        assertEquals(roles.size(),1);
+        assertSame(role.getName(),roles.get(0).getName());
+        this.roleService.updateRole(1L, name);
+        List<Role> roles_update=roleService.findAll();
+        assertSame(role.getName(),roles_update.get(0).getName());
+        assertEquals(roles.size(),roles_update.size());
+        this.roleService.updateRole(1L,"STUDENT");
+        roles_update=roleService.findAll();
+        assertNotSame(role.getName(),roles_update.get(0).getName());
+        this.roleService.updateRole(1L,null);
+        assertNotSame(role.getName(),roles_update.get(0).getName());
+    }
+
+
 }
