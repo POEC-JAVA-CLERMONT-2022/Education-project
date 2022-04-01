@@ -42,7 +42,10 @@ public class EducationApplication {
 	
 	@EventListener(classes= {ApplicationStartedEvent.class})
 	public void applicationStarted() {
+		/*
+
 		System.out.println("Application démarée");
+
 		List<User> users=userService.findAll();
 		System.out.println(users.size()+" users trouvés");
 		List<Lesson> lessons=lessonService.findAll();
@@ -57,12 +60,12 @@ public class EducationApplication {
     	this.roleService.updateRole(9L, "Admin");
 		this.roleService.updateRole(9L, "Student");
 		System.out.println(this.roleService.findByName("Admin"));
-		//this.roleService.deleteRole(1L);
+
 
     	Lesson lesson1 = this.lessonService.createLesson("LessonFRançais", "descriptiondelale", 20.50f, Language.EN, Level.ADVANCE);
 		Modulee module1 = this.moduleService.createModule("Modulo1");
 		this.moduleService.updateModule(1L, "Modulo Principiante");
-
+*/
 		//this.lessonService.deleteLesson(1L);
 
 		/*if (users.size()==0) {
