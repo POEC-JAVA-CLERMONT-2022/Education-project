@@ -44,7 +44,7 @@ public class User {
 	@Column(name="urlImage")
 	private String urlImage;
 	
-	@Column(name="email", length=150)
+	@Column(name="email", length=150, unique = true)
 	private String email;
 	
 	@Column(name="password", length=150)
@@ -70,16 +70,57 @@ public class User {
 		super();
 		this.email = email;
 	}*/
-		
-	public User(String firstName, String lastName, String email, String status) {
+
+	public User(String firstName, String lastName, LocalDate birthAt, String urlImage, String email, String password, String status) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.birthAt = birthAt;
+		this.urlImage = urlImage;
+		this.email = email;
+		this.password = password;
+		this.status = status;
+		this.roles=null;
+		this.reviews=null;
+	}
+
+/*	public User(String firstName, String lastName, String email, String status) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
 		this.status = status;
-		//this.lessons=null;
+		this.urlImage=null;
 		}
-	
+	*/
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public void setBirthAt(LocalDate birthAt) {
+		this.birthAt = birthAt;
+	}
+
+	public void setUrlImage(String urlImage) {
+		this.urlImage = urlImage;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 	public String getFirstName() {
 		return firstName;
 	}

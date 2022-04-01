@@ -28,7 +28,7 @@ public class Modulee {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(name="title")
+	@Column(name="title", unique = true)
 	private String title;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -47,6 +47,14 @@ public class Modulee {
 	
 	public Modulee(String title) {
 		super();
+		this.title = title;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
 		this.title = title;
 	}
 
