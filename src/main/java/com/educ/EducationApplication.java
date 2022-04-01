@@ -1,10 +1,10 @@
 package com.educ;
 
-import java.time.Clock;
+
 import java.util.List;
 
 import com.educ.entity.*;
-import com.educ.data.RoleRepository;
+
 import com.educ.entity.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -59,7 +59,7 @@ public class EducationApplication {
 		System.out.println(this.roleService.findByName("Admin"));
 		//this.roleService.deleteRole(1L);
 
-    	Lesson lesson1 = this.lessonService.create("LessonFRançais", "descriptiondelale", 20.50f, Language.EN, Level.ADVANCE);
+    	Lesson lesson1 = this.lessonService.createLesson("LessonFRançais", "descriptiondelale", 20.50f, Language.EN, Level.ADVANCE);
 		Modulee module1 = this.moduleService.createModule("Modulo1");
 		this.moduleService.updateModule(1L, "Modulo Principiante");
 

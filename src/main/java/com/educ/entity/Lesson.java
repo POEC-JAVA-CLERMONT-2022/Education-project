@@ -26,7 +26,7 @@ public class Lesson {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(name="name", unique = true)
+	@Column(name="name")
 	private String name;
 	
 	@Column(name="description")
@@ -53,12 +53,7 @@ public class Lesson {
 	public Lesson() {
 		
 	}
-	
-	
-	public Lesson(String name) {
-		super();
-		this.name = name;
-	}
+
 
 
 	public Lesson(String name, String description, float price, Language language, Level level) {
@@ -68,6 +63,7 @@ public class Lesson {
 		this.price = price;
 		this.language = language;
 		this.level = level;
+		this.modules=null;
 	}
 
 	public void setName(String name) {
