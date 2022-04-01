@@ -42,6 +42,7 @@ public class EducationApplication {
 	
 	@EventListener(classes= {ApplicationStartedEvent.class})
 	public void applicationStarted() {
+
 		/*
 
 		System.out.println("Application démarée");
@@ -74,6 +75,7 @@ public class EducationApplication {
 		}*/
 
 		//this.lessonService.updateLesson(2L, "Curso de Espanol", "descriptiondelale", 20.50f, Language.EN, Level.ADVANCE);
+
 	}
 
 }
