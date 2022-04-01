@@ -1,14 +1,12 @@
 package com.educ.services;
 
-import com.educ.entity.Lesson;
+
 import com.educ.entity.Modulee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.educ.data.ModuleeRepository;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 public class ModuleeService {
@@ -21,6 +19,10 @@ public class ModuleeService {
 	public Modulee findById(Long id) { return moduleRepository.getById(id);
 	}
 
+	@Transactional(readOnly = true)
+	Modulee findByTitle(String title) { return moduleRepository.findByTitle(title);
+	}
+
 	@Transactional
 	public Modulee createModule(String title) {
 		if(this.moduleRepository.findByTitle(title) == null){
@@ -30,8 +32,6 @@ public class ModuleeService {
 		}else {
 			return null;
 		}
-
-		
 	}
 
 	@Transactional
@@ -41,7 +41,6 @@ public class ModuleeService {
 			modulee.setTitle(title);
 			this.moduleRepository.save(modulee);
 		}
-		
 	}
 
 	@Transactional
@@ -50,8 +49,6 @@ public class ModuleeService {
 		if(modulee !=null){
 			this.moduleRepository.delete(modulee);
 		}
-
-
 	}
 
 	@Transactional(readOnly = true)
@@ -64,7 +61,6 @@ public class ModuleeService {
 	public List<Lesson> findAllByLesson(){ return moduleRepository.findAllByLesson();
 	}
 	*/
-
 
 }
 
