@@ -5,6 +5,7 @@ import java.util.List;
 import com.educ.entity.Language;
 import com.educ.entity.Level;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import com.educ.data.LessonRepository;
@@ -25,9 +26,16 @@ public class LessonService {
 	public Lesson findById(Long id) { return lessonRepository.getById(id);
 	}
 
+	@Transactional(readOnly = true)
+	Lesson findByNameAndLevelAndLanguage(String name, Level level, Language language){
+		return this.lessonRepository.findByNameAndLevelAndLanguage(name, level, language);
+	}
+
+
 	@Transactional
-	public Lesson create(String name, String description, Float price, Language language, Level level) {
-		if(this.lessonRepository.findByName(name) == null){
+	public Lesson createLesson(String name, String description, Float price, Language language, Level level) {
+
+		if(this.lessonRepository.findByNameAndLevelAndLanguage(name, level, language) == null){
 			Lesson lesson=new Lesson(name, description, price, language, level);
 			this.lessonRepository.save(lesson);
 			return lesson;
@@ -39,9 +47,13 @@ public class LessonService {
 
 	@Transactional
 	public void updateLesson(Long id, String name, String description, Float price, Language language, Level level){
-		if ((this.lessonRepository.getById(id) != null) && (this.lessonRepository.findByName(name)==null)){
+		if ((this.lessonRepository.getById(id) != null) && (this.lessonRepository.findByNameAndLevelAndLanguage(name, level, language)==null)){
 			Lesson lesson=this.lessonRepository.getById(id);
 			lesson.setName(name);
+			lesson.setDescription(description);
+			lesson.setLevel(level);
+			lesson.setPrice(price);
+			lesson.setLanguage(language);
 			this.lessonRepository.save(lesson);
 		}
 	}
