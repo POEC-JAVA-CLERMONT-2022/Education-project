@@ -19,9 +19,15 @@ public class UserServiceTest {
 
     @Test
     public void createUserTest() {
-        //LocalDate birthd = LocalDate.parse("1990-03-03");
         User user = this.userService.createUser("Wendy", "P", LocalDate.parse("1990-03-03"), "jkhkhj", "xxxxx@gmail.com", "jkljk", "sin status");
         Assertions.assertNotNull(user);
+    }
+
+    @Test
+    public void updateUserTest() {
+        //Long id, String firstName, String lastName, LocalDate birthAt, String urlImage, String email, String password, String status)
+        //User user = this.userService.updateUser("Wendy", "P", LocalDate.parse("1990-03-03"), "jkhkhj", "xxxxx@gmail.com", "jkljk", "sin status");
+        //Assertions.assertNotNull(user);
     }
 }
 
