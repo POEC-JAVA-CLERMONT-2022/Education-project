@@ -137,7 +137,9 @@ public class User {
 		return email;
 	}
 
-
+	public Long getId() {
+		return id;
+	}
 
 	public String getStatus() {
 		return status;

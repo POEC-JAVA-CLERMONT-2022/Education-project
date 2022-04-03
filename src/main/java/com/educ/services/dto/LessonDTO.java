@@ -3,10 +3,6 @@ package com.educ.services.dto;
 import com.educ.entity.Language;
 import com.educ.entity.Level;
 import com.educ.entity.Modulee;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.OneToMany;
 import java.util.List;
 
 public class LessonDTO {

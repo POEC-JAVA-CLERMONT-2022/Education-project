@@ -2,8 +2,6 @@ package com.educ.services.dto;
 
 import com.educ.entity.Modulee;
 
-import javax.persistence.Column;
-import javax.persistence.OneToOne;
 import java.time.LocalTime;
 
 public class VideoDTO {
