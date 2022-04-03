@@ -43,12 +43,22 @@ public class EducationApplication {
 	@EventListener(classes= {ApplicationStartedEvent.class})
 	public void applicationStarted() {
 
-		/*
+
 
 		System.out.println("Application démarée");
 
 		List<User> users=userService.findAll();
 		System.out.println(users.size()+" users trouvés");
+
+
+
+
+
+
+
+
+
+		/*
 		List<Lesson> lessons=lessonService.findAll();
 		System.out.println(lessons.size()+" Lessons trouvées");
 		

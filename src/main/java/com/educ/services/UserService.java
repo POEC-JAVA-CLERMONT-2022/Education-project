@@ -30,10 +30,11 @@ public class UserService {
 		return userRepository.findByEMail(email);
 	}
 
+
 	@Transactional(readOnly = true)
-	public User getById(Long id) {
-		return userRepository.getById(id);
-	}
+	public User getById(Long id) {	return userRepository.getById(id); }
+
+
 
 	@Transactional
 	public User createUser(String firstName, String lastName, LocalDate birthAt, String urlImage, String email, String password, String status) {
