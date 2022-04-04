@@ -44,7 +44,7 @@ public class EducationApplication {
 	public void applicationStarted() {
 
 
-
+	/*
 		System.out.println("Application démarée");
 
 		List<User> users=userService.findAll();
@@ -58,7 +58,7 @@ public class EducationApplication {
 
 
 
-		/*
+
 		List<Lesson> lessons=lessonService.findAll();
 		System.out.println(lessons.size()+" Lessons trouvées");
 		
