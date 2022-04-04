@@ -54,15 +54,14 @@ public class RoleServiceTest {
         Role role=this.roleService.createRole(name);
         List<Role> roles=roleService.findAll();
         assertNotNull(role);
+        assertEquals(role.getName(),"Admin", "Erreur dans le role name");
         assertNotNull(roles);
         Role role_exist=this.roleService.createRole(name);
         roles=roleService.findAll();
         assertNull(role_exist);
         assertNotEquals(role,role_exist);
-
         Role role1=this.roleService.createRole(n);
         roles=roleService.findAll();
-
         assertNotNull(role1);
         assertEquals(roles.size(),2);
         assertNotEquals(roles.size(),3);
@@ -74,18 +73,24 @@ public class RoleServiceTest {
         String name="Admin";
         Role role=this.roleService.createRole(name);
         List<Role> roles=roleService.findAll();
-        assertNotNull(role);
-        assertEquals(roles.size(),1);
-        assertSame(role.getName(),roles.get(0).getName());
+        //assertNotNull(role);
+        //assertEquals(roles.size(),1);
+        //assertSame(role.getName(),roles.get(0).getName());
         this.roleService.updateRole(1L, name);
         List<Role> roles_update=roleService.findAll();
         assertSame(role.getName(),roles_update.get(0).getName());
         assertEquals(roles.size(),roles_update.size());
         this.roleService.updateRole(1L,"STUDENT");
         roles_update=roleService.findAll();
+        Role r=roles_update.get(0);
         assertNotSame(role.getName(),roles_update.get(0).getName());
-        this.roleService.updateRole(1L,null);
+        assertTrue(r.getName().equals("STUDENT"));
+        name=null;
+        this.roleService.updateRole(1L,name);
+        roles_update=roleService.findAll();
         assertNotSame(role.getName(),roles_update.get(0).getName());
+        assertNotEquals(roles_update.get(0).getName(),null,"Erreur name null");
+
     }
 
 

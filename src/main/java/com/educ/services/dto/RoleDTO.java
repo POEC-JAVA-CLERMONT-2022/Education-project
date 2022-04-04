@@ -7,6 +7,7 @@ public class RoleDTO {
     private String name;
 
     public RoleDTO() {
+        //this.name = "";
     }
 
     public RoleDTO(String name) {
