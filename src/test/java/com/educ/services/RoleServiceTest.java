@@ -111,7 +111,7 @@ public class RoleServiceTest {
         this.roleService.deleteRole(10L);
         roles=this.roleService.findAll();
         assertTrue(roles.contains(role));
-        
+
 
     }
 
