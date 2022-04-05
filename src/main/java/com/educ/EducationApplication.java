@@ -3,6 +3,7 @@ package com.educ;
 
 import java.util.List;
 
+import com.educ.data.LessonRepository;
 import com.educ.entity.*;
 
 import com.educ.entity.Role;
@@ -36,15 +37,24 @@ public class EducationApplication {
 	 @Autowired
 	private RoleService roleService;
 
+	 @Autowired
+	 private LessonRepository lessonRepository;
+
 	public static void main(String[] args) {
 		SpringApplication.run(EducationApplication.class, args);
 	}
 	
 	@EventListener(classes= {ApplicationStartedEvent.class})
 	public void applicationStarted() {
+		/*
+		List<Lesson> lessons=lessonService.findAll();
+		System.out.println(lessons.size()+" Lessons trouvées");
+
+		List<Lesson> lessons = lessonService.findAllLessonsModules();
+		System.out.println(lessons);
 
 
-	/*
+
 		System.out.println("Application démarée");
 
 		List<User> users=userService.findAll();

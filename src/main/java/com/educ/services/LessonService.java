@@ -18,7 +18,7 @@ public class LessonService {
 	@Autowired
 	private LessonRepository lessonRepository;
 
-	@Transactional(readOnly = true)
+	@Transactional (readOnly = true)
 	public List<Lesson> findAll(){ return lessonRepository.findAll();
 	}
 
@@ -31,6 +31,13 @@ public class LessonService {
 		return this.lessonRepository.findByNameAndLevelAndLanguage(name, level, language);
 	}
 
+	/*
+	@Transactional(readOnly = true)
+	public List<Lesson> findAllLessonsModules(){
+		return lessonRepository.findAllLessonsModules();
+	}
+
+	 */
 
 	@Transactional
 	public Lesson createLesson(String name, String description, Float price, Language language, Level level) {
