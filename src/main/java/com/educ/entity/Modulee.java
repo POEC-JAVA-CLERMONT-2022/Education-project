@@ -49,9 +49,20 @@ public class Modulee {
 		this.video=null;
 	}
 
+	public Long getId() {
+		return id;
+	}
+
 	public String getTitle() {
 		return title;
 	}
+
+	/*
+	public Video getVideo() {
+		return video;
+	}
+
+	 */
 
 	public void setTitle(String title) {
 		this.title = title;
