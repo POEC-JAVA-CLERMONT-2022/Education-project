@@ -83,6 +83,31 @@ public class Lesson {
 	}
 	*/
 
+	public String getName() {
+		return name;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public float getPrice() {
+		return price;
+	}
+
+	public Level getLevel() {
+		return level;
+	}
+
+	public Language getLanguage() {
+		return language;
+	}
+
+	public List<Modulee> getModules() {
+		return modules;
+	}
+
+
 
 	public void setLevel(Level level) {
 		this.level = level;
