@@ -93,5 +93,27 @@ public class RoleServiceTest {
 
     }
 
+    @Test
+    @DisplayName("delete role test")
+    public void testDeleteRole(){
+        String name="Admin";
+        Role role=this.roleService.createRole(name);
+        List<Role> roles=roleService.findAll();
+        assertNotNull(role);
+        assertEquals(roles.size(),1);
+        assertSame(role.getName(),roles.get(0).getName());
+        this.roleService.deleteRole(1L);
+        roles=roleService.findAll();
+        assertEquals(roles.size(),0);
+        assertFalse(roles.contains(role));
+        role=this.roleService.createRole("STUDENT");
+        roles=this.roleService.findAll();
+        this.roleService.deleteRole(10L);
+        roles=this.roleService.findAll();
+        assertTrue(roles.contains(role));
+        
+
+    }
+
 
 }
