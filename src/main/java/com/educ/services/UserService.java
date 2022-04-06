@@ -27,18 +27,46 @@ public class UserService {
 
 	@Transactional(readOnly = true)
 	public User findByEMail(String email) {
-		return userRepository.findByEMail(email);
+		if(email!=null){
+			List<User> users=this.findAll();
+			for (User user:users){
+				if(user.getEmail().equals(email)){
+					return user;
+				}
+			}
+			return null;
+		}else{
+			return null;
+		}
+
+	}
+
+	@Transactional(readOnly = true)
+	public boolean existId(Long id) {
+		List<User> users=this.userRepository.findAll();
+		for(User user:users){
+			if(user.getId()==id){
+				return true;
+			}
+		}
+		return false;
 	}
 
 
 	@Transactional(readOnly = true)
-	public User getById(Long id) {	return userRepository.getById(id); }
+	public User getById(Long id) {
+		if(this.existId(id)){
+			return userRepository.getById(id);
+		}else{
+			return null;
+		}
+	}
 
 
 
 	@Transactional
 	public User createUser(String firstName, String lastName, LocalDate birthAt, String urlImage, String email, String password, String status) {
-		if(this.findByEMail(email)==null){
+		if(email!=null && this.findByEMail(email)==null){
 			User user=new User(firstName, lastName, birthAt, urlImage, email, password, status);
 			this.userRepository.save(user);
 			return user;
@@ -49,61 +77,44 @@ public class UserService {
 
 	@Transactional
 	User updateFirstNameLastNameByEmail(String firstName, String lastName, String email){
-		return this.userRepository.updateFirstNameLastNameByEmail(firstName,lastName,email);
+		if(email != null && this.findByEMail(email)!=null){
+			User user =this.findByEMail(email);
+			user.setFirstName(firstName);
+			user.setLastName(lastName);
+			return user;
+		}else{
+			return null;
+		}
 	}
 
 	@Transactional
 	public void updateUser(Long id, String firstName, String lastName, LocalDate birthAt, String urlImage, String email, String password, String status) {
-		if ((this.userRepository.getById(id) != null) &&  (this.userRepository.findByEMail(email)==null)){
-			User user=this.userRepository.getById(id);
-			user.setFirstName(firstName);
-			user.setLastName(lastName);
-			user.setBirthAt(birthAt);
-			user.setUrlImage(urlImage);
-			user.setEmail(email);
-			user.setPassword(password);
-			user.setStatus(status);
-			this.userRepository.save(user);
+		if(email != null && this.existId(id)){
+			if ((this.userRepository.getById(id) != null) &&  (this.userRepository.findByEMail(email)==null)){
+				User user=this.userRepository.getById(id);
+				user.setFirstName(firstName);
+				user.setLastName(lastName);
+				user.setBirthAt(birthAt);
+				user.setUrlImage(urlImage);
+				user.setEmail(email);
+				user.setPassword(password);
+				user.setStatus(status);
+				this.userRepository.save(user);
+			}
 		}
 	}
 
-
 	@Transactional
 	public void deleteUser(Long id){
-		User user=this.userRepository.getById(id);
+		User user=this.getById(id);
 		if(user !=null){
 			this.userRepository.delete(user);
 		}
 	}
 
 
-	/*public void addUser(User user) {
-		if (user==null || user.getEmail().isEmpty() || user.getEmail()==null) {
-			throw new IllegalArgumentException("User or email es invalid");
-		}
-		dataProviderUser.addUser(user);
-	}
+	/*
 
-	public User searchUser(String email) {
-
-		for(User u: users) {
-			if(u.getEmail().equals(email)) {
-				return u;
-			}
-		}
-		return null;
-	}
-
-	public void addUser(String firstName, String lastName, String email, String status, List<UserRole> userRoles) {
-		if(this.searchUser(email)==null) {
-			User user=new User(firstName, lastName, email, status, userRoles);
-			this.users.add(user);
-			
-		}else {
-			//user existe deja
-			
-		}
-	}
 
 	private void addUserRole(String email, UserRole userRole) {
 		User user=this.searchUser(email);
@@ -115,23 +126,7 @@ public class UserService {
 		}
 	}
 
-	public void modifUser(User user) {
-		User u=this.searchUser(user.getEmail());
-		if(u!=null) {
-			this.users.remove(u);
-			this.users.add(user);
-		}
-	}
 
-	public void deleteUser(User user) {
-
-		User u=this.searchUser(user.getEmail());
-		if(u!=null) {
-			this.users.remove(u);
-		}
-	}
-	
-	
 	*/
 
 
