@@ -28,23 +28,6 @@ public class RoleServiceTest {
         System.out.println("beforeAll");
     }
 
-/*
-    @BeforeEach
-    void init() {
-        System.out.println("beforeEach");
-
-    }
-
-    @AfterEach
-    void tearDown() {
-        System.out.println("afterEach");
-    }
-
-    @AfterAll
-    static void tearDownAll() {
-        System.out.println("afterAll");
-    }
-*/
     @Test
     @DisplayName("creation role test")
     public void testCreationRole(){
@@ -73,9 +56,6 @@ public class RoleServiceTest {
         String name="Admin";
         Role role=this.roleService.createRole(name);
         List<Role> roles=roleService.findAll();
-        //assertNotNull(role);
-        //assertEquals(roles.size(),1);
-        //assertSame(role.getName(),roles.get(0).getName());
         this.roleService.updateRole(1L, name);
         List<Role> roles_update=roleService.findAll();
         assertSame(role.getName(),roles_update.get(0).getName());
@@ -111,8 +91,6 @@ public class RoleServiceTest {
         this.roleService.deleteRole(10L);
         roles=this.roleService.findAll();
         assertTrue(roles.contains(role));
-
-
     }
 
 

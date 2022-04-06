@@ -44,6 +44,26 @@ public class Review {
 		this.user=null;
 	}
 
+	public Long getId() {
+		return id;
+	}
+
+	public int getNote() {
+		return note;
+	}
+
+	public void setNote(int note) {
+		this.note = note;
+	}
+
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
