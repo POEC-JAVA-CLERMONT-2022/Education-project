@@ -57,12 +57,12 @@ public class Modulee {
 		return title;
 	}
 
-	/*
+
 	public Video getVideo() {
 		return video;
 	}
 
-	 */
+
 
 	public void setTitle(String title) {
 		this.title = title;

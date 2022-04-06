@@ -64,6 +64,14 @@ public class Review {
 		this.comment = comment;
 	}
 
+	public Modulee getModule() {
+		return module;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);

@@ -52,7 +52,6 @@ public class UserController {
 		return user;
 	}
 
-
 	@PutMapping("users/{id}")
 	public User updateUser(@PathVariable Long id, String firstName, String lastName, LocalDate birthAt, String urlImage, String email, String password, String status) {
 		User user = userRepository.getById(id);
@@ -64,12 +63,6 @@ public class UserController {
 		user.setPassword(password);
 		user.setStatus(status);
 
-		/*
-		user.setFirstName("Gianina");
-		user.setLastName("Ballarta");
-		user.setEmail("wendyg@hotmail.fr");
-
-		 */
 		this.userRepository.save(user);
 		return user;
 	}

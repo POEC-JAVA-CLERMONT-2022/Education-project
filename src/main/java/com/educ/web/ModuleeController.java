@@ -6,6 +6,7 @@ import com.educ.services.ModuleeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.nio.file.Path;
 import java.util.List;
 
 @RestController
@@ -29,13 +30,33 @@ public class ModuleeController {
     }
 
     @PostMapping("modules/add")
-    public Modulee addModule(){
-        Modulee modulee = new Modulee("Module API");
+    public Modulee addModule(@RequestBody Modulee modulee){
         return moduleeRepository.save(modulee);
     }
-/*
-    @PutMapping("modules/{id}")
-    public
 
- */
+    //check this for update another attrib
+    /*
+    @PutMapping("modules/{id}")
+    public Modulee updateModule(@PathVariable Long id, @RequestBody Modulee moduleeInfo){
+
+        Modulee modulee = moduleeRepository.getById(id);
+        modulee.setTitle(moduleeInfo.getTitle());
+        this.moduleeRepository.save(modulee);
+        return modulee;
+    }
+
+     */
+
+    @PutMapping("modules/{id}")
+    public Modulee updateModule(@PathVariable Long id, @RequestParam String title){
+        Modulee modulee = moduleeService.updateModule(id, title);
+        return modulee;
+    }
+
+    @DeleteMapping("modules/{id}")
+    public void deleteModule(@PathVariable Long id){
+        this.moduleeRepository.deleteById(id);
+    }
+
+
 }
