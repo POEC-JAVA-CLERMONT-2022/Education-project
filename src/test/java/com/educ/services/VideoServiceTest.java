@@ -56,6 +56,9 @@ public class VideoServiceTest {
         List<Video> videosUpdated=this.videoService.findAll();
         assertEquals(videos.size(),videosUpdated.size());
         assertTrue(videosUpdated.get(0).getTitle().equals("Spring Data JPA Tutorial")) ;
+        this.videoService.updateVideo(1L,"Spring Data ",null,LocalTime.of(1,11,40));
+        videosUpdated=videoService.findAll();
+        assertFalse(videosUpdated.get(0).getTitle().equals("Spring Data"));
         this.videoService.updateVideo(9L,"Spring Data JPA Tutorial","https://www.youtube.com/watch?v=XszpXoII9Sg&ab_channel=DailyCodeBuffer",LocalTime.of(1,11,40));
         videos=this.videoService.findAll();
         assertTrue(videosUpdated.size()==1 && videosUpdated.get(0).getId()!=9L);
