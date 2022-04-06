@@ -48,25 +48,32 @@ public class VideoService {
 
 	@Transactional
 	public Video createVideo(String title, String url, LocalTime duration){
-		if (this.videoRepository.findByUrl(url) == null){
-			Video video=new Video(title,url,duration);
-			this.videoRepository.save(video);
-			return video;
-		}else{
+		if(url != null){
+			if (this.videoRepository.findByUrl(url) == null){
+				Video video=new Video(title,url,duration);
+				this.videoRepository.save(video);
+				return video;
+			}else{
+				return null;
+			}
+		}else {
 			return null;
 		}
+
 	}
 
 	@Transactional
 	public void updateVideo (Long id, String title, String url, LocalTime duration){
-
-		if (this.existId(id) &&  (this.videoRepository.findByUrl(url)==null)){
-			Video video=this.videoRepository.getById(id);
-			video.setTitle(title);
-			video.setUrl(url);
-			video.setDuration(duration);
-			this.videoRepository.save(video);
+		if(url != null){
+			if (this.existId(id) &&  (this.videoRepository.findByUrl(url)==null)){
+				Video video=this.videoRepository.getById(id);
+				video.setTitle(title);
+				video.setUrl(url);
+				video.setDuration(duration);
+				this.videoRepository.save(video);
+			}
 		}
+
 	}
 
 	@Transactional

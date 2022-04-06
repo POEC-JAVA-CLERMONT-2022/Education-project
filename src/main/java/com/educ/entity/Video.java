@@ -23,7 +23,7 @@ public class Video {
 	@Column(name="title")
 	private String title;
 	
-	@Column(name="url", unique = true)
+	@Column(name="url", unique = true, nullable = false)
 	private String url;
 	
 	@Column(name="duration")
@@ -34,12 +34,8 @@ public class Video {
 	private Modulee module;
 	
 	public Video() {
+		this.url="";
 	}
-	
-	/*public Video(String url) {
-		super();
-		this.url = url;
-	} */
 	
 	public Video(String title, String url, LocalTime duration) {
 		super();
