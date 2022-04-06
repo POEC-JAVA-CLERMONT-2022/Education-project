@@ -60,11 +60,11 @@ public class Video {
 	public LocalTime getDuration() {
 		return duration;
 	}
-
+/*
 	public Modulee getModule() {
 		return module;
 	}
-
+*/
 	public void setTitle(String title) {
 		this.title = title;
 	}

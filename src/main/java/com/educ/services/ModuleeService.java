@@ -35,12 +35,13 @@ public class ModuleeService {
 	}
 
 	@Transactional
-	public void updateModule(Long id, String title) {
+	public Modulee updateModule(Long id, String title) {
 		if ((this.moduleRepository.getById(id) != null) && (this.moduleRepository.findByTitle(title)==null)){
 			Modulee modulee=this.moduleRepository.getById(id);
 			modulee.setTitle(title);
 			this.moduleRepository.save(modulee);
 		}
+		return null;
 	}
 
 	@Transactional
