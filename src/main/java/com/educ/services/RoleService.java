@@ -2,6 +2,7 @@ package com.educ.services;
 
 import java.util.List;
 
+import com.educ.entity.Review;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,8 +22,23 @@ public class RoleService {
 	}
 
 	@Transactional(readOnly = true)
+	public boolean existId(Long id) {
+		List<Role> roles=this.roleRepository.findAll();
+		for(Role role:roles){
+			if(role.getId()==id){
+				return true;
+			}
+		}
+		return false;
+	}
+
+	@Transactional(readOnly = true)
 	public Role getById(Long id) {
-		return roleRepository.getById(id);
+		if(this.existId(id)){
+			return roleRepository.getById(id);
+		}else{
+			return null;
+		}
 	}
 
 	@Transactional(readOnly = true)
@@ -43,34 +59,22 @@ public class RoleService {
 		}else{
 			return null;
 		}
-		/*catch (RuntimeException e){
-			System.out.println("Erreur create role name null");
-			return null;
-		}*/
 	}
 
 	@Transactional
 	public void updateRole (Long id, String name){
 		if(name!=null){
-			if((this.roleRepository.getById(id) != null) &&  (this.roleRepository.findByName(name)==null)){
-				Role role=this.roleRepository.getById(id);
+			if(this.existId(id) && (this.roleRepository.findByName(name)==null)){
+				Role role=this.getById(id);
 				role.setName(name);
 				this.roleRepository.save(role);
 			}
 		}
-		else{
-
-		}
-		/*catch (RuntimeException e){
-			System.out.println("Erreur update role name null");
-		}finally {
-			System.out.println("fin update role name null");
-		}*/
 	}
 
 	@Transactional
 	public void deleteRole(Long id){
-		Role role=this.roleRepository.getById(id);
+		Role role=this.getById(id);
 		if(role !=null){
 			this.roleRepository.delete(role);
 		}

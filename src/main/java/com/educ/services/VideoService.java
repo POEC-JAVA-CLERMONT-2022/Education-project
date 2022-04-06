@@ -22,7 +22,24 @@ public class VideoService {
 	}
 
 	@Transactional(readOnly = true)
-	public Video getById(Long id) {return videoRepository.getById(id);}
+	public boolean existId(Long id) {
+		List<Video> videos=this.videoRepository.findAll();
+		for(Video video:videos){
+			if(video.getId()==id){
+				return true;
+			}
+		}
+		return false;
+	}
+
+	@Transactional(readOnly = true)
+	public Video getById(Long id) {
+		if(this.existId(id)){
+			return videoRepository.getById(id);
+		}else{
+			return null;
+		}
+	}
 
 	@Transactional(readOnly = true)
 	public Video findByUrl(String url){
@@ -43,7 +60,7 @@ public class VideoService {
 	@Transactional
 	public void updateVideo (Long id, String title, String url, LocalTime duration){
 
-		if ((this.videoRepository.getById(id) != null) &&  (this.videoRepository.findByUrl(url)==null)){
+		if (this.existId(id) &&  (this.videoRepository.findByUrl(url)==null)){
 			Video video=this.videoRepository.getById(id);
 			video.setTitle(title);
 			video.setUrl(url);
@@ -53,8 +70,8 @@ public class VideoService {
 	}
 
 	@Transactional
-	public void deleteRole(Long id){
-		Video video=this.videoRepository.getById(id);
+	public void deleteVideo(Long id){
+		Video video=this.getById(id);
 		if(video !=null){
 			this.videoRepository.delete(video);
 		}
