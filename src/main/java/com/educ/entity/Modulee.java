@@ -25,7 +25,7 @@ public class Modulee {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(name="title", unique = true)
+	@Column(name="title", unique = true, nullable = false)
 	private String title;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
