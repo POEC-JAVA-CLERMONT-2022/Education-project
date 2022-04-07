@@ -5,7 +5,6 @@ import java.util.List;
 import com.educ.entity.Language;
 import com.educ.entity.Level;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import com.educ.data.LessonRepository;
@@ -23,12 +22,38 @@ public class LessonService {
 	}
 
 	@Transactional(readOnly = true)
-	public Lesson findById(Long id) { return lessonRepository.getById(id);
+	public boolean existId(Long id) {
+		List<Lesson> lessons=this.lessonRepository.findAll();
+		for(Lesson lesson:lessons){
+			if(lesson.getId()==id){
+				return true;
+			}
+		}
+		return false;
 	}
 
 	@Transactional(readOnly = true)
+	public Lesson getById(Long id) {
+		if(this.existId(id)){
+			Lesson lesson=this.lessonRepository.getById(id);
+			return lesson;
+		}else{
+			return null;
+		}
+	}
+
+
+
+	@Transactional(readOnly = true)
 	Lesson findByNameAndLevelAndLanguage(String name, Level level, Language language){
-		return this.lessonRepository.findByNameAndLevelAndLanguage(name, level, language);
+		List<Lesson> lessons=this.lessonRepository.findAll();
+		for(Lesson lesson:lessons){
+			if(lesson.getName().equals(name) &&(lesson.getLanguage().equals(language) && lesson.getLevel().equals(level))){
+				return lesson;
+			}
+		}
+		return null;
+		//return this.lessonRepository.findByNameAndLevelAndLanguage(name, level, language);
 	}
 
 	/*
@@ -42,7 +67,7 @@ public class LessonService {
 	@Transactional
 	public Lesson createLesson(String name, String description, Float price, Language language, Level level) {
 
-		if(this.lessonRepository.findByNameAndLevelAndLanguage(name, level, language) == null){
+		if(this.findByNameAndLevelAndLanguage(name, level, language) == null){
 			Lesson lesson=new Lesson(name, description, price, language, level);
 			this.lessonRepository.save(lesson);
 			return lesson;
@@ -54,7 +79,7 @@ public class LessonService {
 
 	@Transactional
 	public void updateLesson(Long id, String name, String description, Float price, Language language, Level level){
-		if ((this.lessonRepository.getById(id) != null) && (this.lessonRepository.findByNameAndLevelAndLanguage(name, level, language)==null)){
+		if (this.existId(id) && (this.lessonRepository.getById(id) != null && this.findByNameAndLevelAndLanguage(name, level, language)==null)){
 			Lesson lesson=this.lessonRepository.getById(id);
 			lesson.setName(name);
 			lesson.setDescription(description);
@@ -67,7 +92,7 @@ public class LessonService {
 
 	@Transactional
 	public void deleteLesson(Long id) {
-		Lesson lesson = this.lessonRepository.getById(id);
+		Lesson lesson = this.getById(id);
 		if(lesson !=null){
 			this.lessonRepository.delete(lesson);
 		}
