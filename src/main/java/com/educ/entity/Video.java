@@ -25,7 +25,7 @@ public class Video {
 	
 	@Column(name="url", unique = true, nullable = false)
 	private String url;
-	
+
 	@Column(name="duration")
 	private LocalTime duration;
 	
