@@ -6,10 +6,7 @@ import com.educ.entity.Review;
 import com.educ.entity.User;
 import com.educ.services.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -27,10 +24,27 @@ public class ReviewController {
         return reviews;
     }
 
-    //check this for add all parameters module & user
+    @GetMapping("reviews/{id}")
+    public Review getReviewById(@PathVariable Long id){
+        Review review = reviewRepository.getById(id);
+        return review;
+    }
+
+    //check this for insert module & user
     @PostMapping("reviews/add")
-    public Review addReview(int note, String comment){
-        Review review = new Review(note, comment);
+    public Review addReview(@RequestBody Review review){
         return reviewRepository.save(review);
     }
+
+    //check this for insert module & user
+    @PutMapping("reviews/{id}")
+    public void updateReview(@PathVariable Long id, @RequestParam int note, @RequestParam String comment){
+        reviewService.updateReview(id, note, comment);
+    }
+
+    @DeleteMapping("reviews/{id}")
+    public void deleteReview(@PathVariable Long id){ reviewRepository.deleteById(id); }
+
+
+
 }
