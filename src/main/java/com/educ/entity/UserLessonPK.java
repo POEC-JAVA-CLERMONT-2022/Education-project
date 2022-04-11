@@ -13,6 +13,7 @@ public class UserLessonPK implements Serializable {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Lesson lesson;
+
 	protected UserLessonPK() {
 		
 	}
@@ -21,6 +22,12 @@ public class UserLessonPK implements Serializable {
 		this.user=user;
 		this.lesson =lesson;
 	}
-	
 
+	public User getUser() {
+		return user;
+	}
+
+	public Lesson getLesson() {
+		return lesson;
+	}
 }

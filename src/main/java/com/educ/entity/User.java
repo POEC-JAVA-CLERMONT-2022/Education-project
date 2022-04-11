@@ -44,7 +44,7 @@ public class User {
 	@Column(name="urlImage")
 	private String urlImage;
 	
-	@Column(name="email", length=150, unique = true)
+	@Column(name="email", length=150, unique = true, nullable = false)
 	private String email;
 	
 	@Column(name="password", length=150)
@@ -63,13 +63,9 @@ public class User {
 	private List<Role> roles;
 	
 	public User() {
-		
+		this.email="";
 	}
 		
-	/*public User(String email) {
-		super();
-		this.email = email;
-	}*/
 
 	public User(String firstName, String lastName, LocalDate birthAt, String urlImage, String email, String password, String status) {
 		this.firstName = firstName;
@@ -82,16 +78,6 @@ public class User {
 		this.roles=null;
 		this.reviews=null;
 	}
-
-/*	public User(String firstName, String lastName, String email, String status) {
-		super();
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.email = email;
-		this.status = status;
-		this.urlImage=null;
-		}
-	*/
 
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
@@ -137,7 +123,9 @@ public class User {
 		return email;
 	}
 
-
+	public Long getId() {
+		return id;
+	}
 
 	public String getStatus() {
 		return status;

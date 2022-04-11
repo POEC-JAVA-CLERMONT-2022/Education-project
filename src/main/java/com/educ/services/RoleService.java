@@ -2,6 +2,7 @@ package com.educ.services;
 
 import java.util.List;
 
+import com.educ.entity.Review;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +22,24 @@ public class RoleService {
 	}
 
 	@Transactional(readOnly = true)
-	public Role getById(Long id) {return roleRepository.getById(id);}
+	public boolean existId(Long id) {
+		List<Role> roles=this.roleRepository.findAll();
+		for(Role role:roles){
+			if(role.getId()==id){
+				return true;
+			}
+		}
+		return false;
+	}
+
+	@Transactional(readOnly = true)
+	public Role getById(Long id) {
+		if(this.existId(id)){
+			return roleRepository.getById(id);
+		}else{
+			return null;
+		}
+	}
 
 	@Transactional(readOnly = true)
 	public Role findByName(String name){
@@ -30,10 +48,14 @@ public class RoleService {
 
 	@Transactional
 	public Role createRole(String name){
-		if (this.roleRepository.findByName(name) == null){
-			Role role=new Role(name);
-			this.roleRepository.save(role);
-			return role;
+		if(name != null){
+			if(this.roleRepository.findByName(name) == null){
+				Role role=new Role(name);
+				this.roleRepository.save(role);
+				return role;
+			}else{
+				return null;
+			}
 		}else{
 			return null;
 		}
@@ -41,16 +63,18 @@ public class RoleService {
 
 	@Transactional
 	public void updateRole (Long id, String name){
-		if ((this.roleRepository.getById(id) != null) &&  (this.roleRepository.findByName(name)==null)){
-				Role role=this.roleRepository.getById(id);
+		if(name!=null){
+			if(this.existId(id) && (this.roleRepository.findByName(name)==null)){
+				Role role=this.getById(id);
 				role.setName(name);
 				this.roleRepository.save(role);
+			}
 		}
 	}
 
 	@Transactional
 	public void deleteRole(Long id){
-		Role role=this.roleRepository.getById(id);
+		Role role=this.getById(id);
 		if(role !=null){
 			this.roleRepository.delete(role);
 		}

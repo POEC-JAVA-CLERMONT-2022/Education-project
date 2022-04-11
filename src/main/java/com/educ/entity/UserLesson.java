@@ -14,6 +14,7 @@ import javax.persistence.Table;
 	@AssociationOverride(name="users.user", joinColumns = @JoinColumn(name="user_id") ),
 	@AssociationOverride(name="lessons.lesson", joinColumns = @JoinColumn(name="lesson_id") )
 })
+
 public class UserLesson {
 @EmbeddedId
 private UserLessonPK userLessonPK;
