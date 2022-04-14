@@ -70,14 +70,20 @@ public class UserServiceTest {
         /* Verifie une fois l'utilisation de repo mocked avec un user mocked */
         verify(mockedUserRepository, times(1)).save(any(User.class));
 
-        firstName="Ilyan";
+        /*firstName="Ilyan";
         lastName="Guerilli";
         birthAt=LocalDate.of(2020,4,8);
         urlImage="https://i.unimedias.fr/2012/06/06/Bebe-a-2-mois1_0.jpg?auto=format%2Ccompress&crop=faces&cs=tinysrgb&fit=crop&h=453&w=806";
         email="salsabilgrouche@yahoo.fr";
         password="yyyy";
-        status="Dev";
+        status="Dev";*/
 
+        /* comportamiento */
+        when(mockedUserRepository.save(Mockito.any(User.class))).thenReturn(new User(firstName,lastName,birthAt,urlImage,email,password,status));
+        /* on appele le service */
+        User userJunior = userService.createUser(firstName,lastName,birthAt,urlImage,email,password,status);
+        /* test objet not null */
+        assertThat(userJunior).isNull();
 
 
 
