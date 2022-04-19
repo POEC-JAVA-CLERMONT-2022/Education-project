@@ -46,6 +46,11 @@ public class EducationApplication {
 	
 	@EventListener(classes= {ApplicationStartedEvent.class})
 	public void applicationStarted() {
+		Role roleM=this.roleService.createRole("Member");
+		Role roleA=this.roleService.createRole("Admin");
+		Role roleT=this.roleService.createRole("Teacher");
+		Role roleS=this.roleService.createRole("Student");
+
 		/*
 		List<Lesson> lessons=lessonService.findAll();
 		System.out.println(lessons.size()+" Lessons trouvées");

@@ -2,6 +2,7 @@ package com.educ.web;
 import java.time.LocalDate;
 import java.util.List;
 import com.educ.data.UserRepository;
+import com.educ.services.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,9 +42,8 @@ public class UserController {
 
 	@PostMapping("users/add")
 	@ResponseBody
-	public User addUser(){
-		User user = new User("Clara", "Pariente", LocalDate.parse("1990-03-03"), "/photos/wg.jpg", "clara@gmail.com", "", "admin");
-		return userRepository.save(user);
+	public User addUser(@RequestBody UserDTO userDTO){
+		return userService.createUser(userDTO);
 	}
 
 	@GetMapping("users/{id}")

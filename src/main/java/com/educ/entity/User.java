@@ -68,8 +68,6 @@ public class User {
 		
 
 	public User(String firstName, String lastName, LocalDate birthAt, String urlImage, String email, String password, String status) {
-		List<Role> rs=new LinkedList<Role>();
-		rs.add(new Role());
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.birthAt = birthAt;
@@ -77,7 +75,7 @@ public class User {
 		this.email = email;
 		this.password = password;
 		this.status = status;
-		this.roles=rs;
+		this.roles=null;
 		this.reviews=null;
 	}
 
@@ -109,6 +107,10 @@ public class User {
 		this.status = status;
 	}
 
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
+	}
+
 	public String getFirstName() {
 		return firstName;
 	}
@@ -137,7 +139,10 @@ public class User {
 		return urlImage;
 	}
 
-	
+	public List<Role> getRoles() {
+		return roles;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(email);

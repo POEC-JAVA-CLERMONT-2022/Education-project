@@ -19,7 +19,7 @@ public class Role {
 	private String name;
 
 	public Role() {
-		this.name="Member";
+
 		}
 
 	public Role(String name) {
