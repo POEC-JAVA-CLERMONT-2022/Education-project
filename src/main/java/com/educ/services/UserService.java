@@ -21,6 +21,9 @@ public class UserService {
 	@Autowired
 	private UserRepository userRepository;
 
+	@Autowired
+	private RoleService roleService;
+
 	@Transactional(readOnly = true)
 	public List<User> findAll(){
 		return userRepository.findAll();
@@ -70,7 +73,7 @@ public class UserService {
 	public User createUser(UserDTO userDTO) {
 		if(userDTO.getEmail()!=null && this.findByEMail(userDTO.getEmail())==null){
 			User user=new User(userDTO.getFirstName(), userDTO.getLastName(), userDTO.getBirthAt(), userDTO.getUrlImage(), userDTO.getEmail(), userDTO.getPassword(), userDTO.getStatus());
-			//this.userRepository.save(user);
+			user=this.addUserRole(userDTO.getEmail(), "Member");
 			return userRepository.save(user);
 		}else {
 			return null;
@@ -121,21 +124,22 @@ public class UserService {
 	}
 
 
-	/*
 
 
-	private void addUserRole(String email, UserRole userRole) {
-		User user=this.searchUser(email);
-		if(user!=null) {
-			this.userRoles=user.getUserRoles();
-			this.userRoles.add(userRole);
-			user.setUserRoles(userRoles);
-			this.modifUser(user);
-		}
+	private User addUserRole(String email, String name) {
+		List<Role> roles;
+		User user=this.findByEMail(email);
+		Role role=roleService.findByName(name);
+		if(user!=null && role!=null) {
+			roles=user.getRoles();
+			roles.add(role);
+			user.setRoles(roles);
+			return user;
+		}else {return null;}
+
 	}
 
 
-	*/
 
 
 
