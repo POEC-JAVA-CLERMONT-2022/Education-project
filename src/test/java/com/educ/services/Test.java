@@ -15,10 +15,10 @@ import static org.mockito.Mockito.*;
 
 @SpringBootTest
 public class Test {
-    @InjectMocks
+    @InjectMocks //appel mock
     UserService userService;
 
-    @Mock
+    @Mock //injection de mock en Repo
     private UserRepository mockedUserRepository;
 
     @org.junit.jupiter.api.Test
@@ -40,7 +40,7 @@ public class Test {
         //assertThat(testUser).isSameAs(new User(null,null,null,null,"wendy@hotmail.fr",null,null));
         /* si tous les champs sont ok par rapport au premier argument */
         assertThat(testUser).usingRecursiveComparison().isEqualTo(new User(null,null,null,null,"wendy@hotmail.fr",null,null));
-        /* Verifie une fois l'utilisation de repo mocked avec un user mocked */
+        /* Verifie une fois l'utilisation de repo mocked avec un user mocked, verifica si le methode est appelé */
         verify(mockedUserRepository, times(1)).save(any(User.class));
     }
 }
