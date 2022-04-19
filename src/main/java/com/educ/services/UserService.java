@@ -68,8 +68,8 @@ public class UserService {
 	public User createUser(String firstName, String lastName, LocalDate birthAt, String urlImage, String email, String password, String status) {
 		if(email!=null && this.findByEMail(email)==null){
 			User user=new User(firstName, lastName, birthAt, urlImage, email, password, status);
-			this.userRepository.save(user);
-			return user;
+			//this.userRepository.save(user);
+			return userRepository.save(user);
 		}else {
 			return null;
 		}

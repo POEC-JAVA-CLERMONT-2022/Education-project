@@ -78,9 +78,9 @@ public class UserServiceTest {
         status="Dev";*/
 
         /* comportamiento */
-        //when(mockedUserRepository.save(Mockito.any(User.class))).thenReturn(new User(firstName,lastName,birthAt,urlImage,email,password,status));
+        when(mockedUserRepository.save(Mockito.any(User.class))).thenReturn(null);
         /* on appele le service */
-        mockedUserRepository.save(new User(firstName,lastName,birthAt,urlImage,email,password,status));
+        //mockedUserRepository.save(new User(firstName,lastName,birthAt,urlImage,email,password,status));
         User userJunior = userService.createUser(firstName,lastName,birthAt,urlImage,email,password,status);
         /* test objet not null */
         assertThat(userJunior).isNull();
