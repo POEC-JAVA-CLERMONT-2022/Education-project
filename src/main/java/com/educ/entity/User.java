@@ -68,6 +68,8 @@ public class User {
 		
 
 	public User(String firstName, String lastName, LocalDate birthAt, String urlImage, String email, String password, String status) {
+		List<Role> rs=new LinkedList<Role>();
+		rs.add(new Role());
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.birthAt = birthAt;
@@ -75,7 +77,7 @@ public class User {
 		this.email = email;
 		this.password = password;
 		this.status = status;
-		this.roles=null;
+		this.roles=rs;
 		this.reviews=null;
 	}
 
