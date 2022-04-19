@@ -57,7 +57,7 @@ public class UserServiceTest {
         when(mockedUserRepository.save(Mockito.any(User.class))).thenReturn(new User(firstName,lastName,birthAt,urlImage,email,password,status));
         /* on appele le service */
         User testUser = userService.createUser(userDTO);
-       /* System.out.println(testUser.toString());*/
+       System.out.println(testUser.toString());
         /* test null */
         assertNotNull(testUser);
         /* test id not null */
