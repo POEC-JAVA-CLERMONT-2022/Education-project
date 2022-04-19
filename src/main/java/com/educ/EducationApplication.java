@@ -4,6 +4,7 @@ package com.educ;
 import java.util.List;
 
 import com.educ.data.LessonRepository;
+import com.educ.data.RoleRepository;
 import com.educ.entity.*;
 
 import com.educ.entity.Role;
@@ -38,6 +39,9 @@ public class EducationApplication {
 	private RoleService roleService;
 
 	 @Autowired
+	 private RoleRepository roleRepository;
+
+	 @Autowired
 	 private LessonRepository lessonRepository;
 
 	public static void main(String[] args) {
@@ -50,6 +54,11 @@ public class EducationApplication {
 		Role roleA=this.roleService.createRole("Admin");
 		Role roleT=this.roleService.createRole("Teacher");
 		Role roleS=this.roleService.createRole("Student");
+
+		Role ejemplo = roleRepository.findByName("Member");
+		System.out.println(ejemplo.getId());
+		System.out.println(ejemplo.getName());
+		System.out.println(this.roleService.findByName("Admin"));
 
 		/*
 		List<Lesson> lessons=lessonService.findAll();
