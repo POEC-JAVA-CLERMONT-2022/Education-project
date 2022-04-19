@@ -55,6 +55,7 @@ public class UserServiceTest {
         when(mockedUserRepository.save(Mockito.any(User.class))).thenReturn(new User(firstName,lastName,birthAt,urlImage,email,password,status));
         /* on appele le service */
         User testUser = userService.createUser(firstName,lastName,birthAt,urlImage,email,password,status);
+       /* System.out.println(testUser.toString());*/
         /* test null */
         assertNotNull(testUser);
         /* test id not null */
@@ -63,6 +64,9 @@ public class UserServiceTest {
         assertThat(testUser).isNotNull();
         /* test objet id not null */
         assertThat(testUser.getId()).isNull();
+
+
+        
         /* si les references sont egales */
         assertThat(testUser).isEqualTo(new User(firstName,lastName,birthAt,urlImage,email,password,status));
         /* si tous les champs sont ok par rapport au premier argument */
