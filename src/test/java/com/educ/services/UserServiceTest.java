@@ -3,6 +3,7 @@ package com.educ.services;
 import com.educ.data.UserRepository;
 import com.educ.entity.User;
 import com.educ.entity.Video;
+import com.educ.services.dto.UserDTO;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -50,11 +51,12 @@ public class UserServiceTest {
         String email="salsabilgrouche@yahoo.fr";
         String password="xxxx";
         String status="Developpeuse";
+        UserDTO userDTO=new UserDTO(firstName,lastName,birthAt,urlImage,email,password,status);
 
         /* comportamiento */
         when(mockedUserRepository.save(Mockito.any(User.class))).thenReturn(new User(firstName,lastName,birthAt,urlImage,email,password,status));
         /* on appele le service */
-        User testUser = userService.createUser(firstName,lastName,birthAt,urlImage,email,password,status);
+        User testUser = userService.createUser(userDTO);
        /* System.out.println(testUser.toString());*/
         /* test null */
         assertNotNull(testUser);
@@ -66,7 +68,7 @@ public class UserServiceTest {
         assertThat(testUser.getId()).isNull();
 
 
-        
+
         /* si les references sont egales */
         assertThat(testUser).isEqualTo(new User(firstName,lastName,birthAt,urlImage,email,password,status));
         /* si tous les champs sont ok par rapport au premier argument */
@@ -85,12 +87,12 @@ public class UserServiceTest {
         when(mockedUserRepository.save(Mockito.any(User.class))).thenReturn(null);
         /* on appele le service */
         //mockedUserRepository.save(new User(firstName,lastName,birthAt,urlImage,email,password,status));
-        User userJunior = userService.createUser(firstName,lastName,birthAt,urlImage,email,password,status);
+        User userJunior = userService.createUser(userDTO);
         /* test objet not null */
         assertThat(userJunior).isNull();
 
     /* Verifie une fois l'utilisation de repo mocked avec un user mocked */
-        verify(mockedUserRepository, times(1)).save(any(User.class));
+        verify(mockedUserRepository, times(2)).save(any(User.class));
 
         /*
         User user=this.userService.createUser(firstName,lastName,birthAt,urlImage,email,password,status);
