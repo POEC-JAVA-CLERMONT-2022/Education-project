@@ -2,6 +2,7 @@ package com.educ.services;
 
 import com.educ.data.UserRepository;
 import com.educ.entity.User;
+import com.educ.services.dto.UserDTO;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -26,7 +27,8 @@ public class Test {
         /* comportamiento */
         when(mockedUserRepository.save(Mockito.any(User.class))).thenReturn(new User(null,null,null,null,"wendy@hotmail.fr",null,null));
         /* on appele le service */
-        User testUser = userService.createUser(null,null,null,null,"wendy@hotmail.fr",null,null);
+        UserDTO userDTO=new UserDTO(null,null,null,null,"wendy@hotmail.fr",null,null);
+        User testUser = userService.createUser(userDTO);
         /* test null */
         assertNotNull(testUser);
         /* test id not null */

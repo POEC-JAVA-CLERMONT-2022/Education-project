@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import com.educ.entity.Role;
+import com.educ.services.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -65,9 +66,10 @@ public class UserService {
 
 
 	@Transactional
-	public User createUser(String firstName, String lastName, LocalDate birthAt, String urlImage, String email, String password, String status) {
-		if(email!=null && this.findByEMail(email)==null){
-			User user=new User(firstName, lastName, birthAt, urlImage, email, password, status);
+//	public User createUser(String firstName, String lastName, LocalDate birthAt, String urlImage, String email, String password, String status) {
+	public User createUser(UserDTO userDTO) {
+		if(userDTO.getEmail()!=null && this.findByEMail(userDTO.getEmail())==null){
+			User user=new User(userDTO.getFirstName(), userDTO.getLastName(), userDTO.getBirthAt(), userDTO.getUrlImage(), userDTO.getEmail(), userDTO.getPassword(), userDTO.getStatus());
 			//this.userRepository.save(user);
 			return userRepository.save(user);
 		}else {
@@ -76,11 +78,16 @@ public class UserService {
 	}
 
 	@Transactional
-	User updateFirstNameLastNameByEmail(String firstName, String lastName, String email){
-		if(email != null && this.findByEMail(email)!=null){
-			User user =this.findByEMail(email);
-			user.setFirstName(firstName);
-			user.setLastName(lastName);
+	//User updateFirstNameLastNameByEmail(String firstName, String lastName, String email){
+	User updateByEmail(UserDTO userDTO){
+		if(userDTO.getEmail() != null && this.findByEMail(userDTO.getEmail())!=null){
+			User user =this.findByEMail(userDTO.getEmail());
+			user.setFirstName(userDTO.getFirstName());
+			user.setLastName(userDTO.getLastName());
+			user.setBirthAt(userDTO.getBirthAt());
+			user.setUrlImage(userDTO.getUrlImage());
+			user.setPassword(userDTO.getPassword());
+			user.setStatus(userDTO.getStatus());
 			return user;
 		}else{
 			return null;
@@ -88,17 +95,18 @@ public class UserService {
 	}
 
 	@Transactional
-	public void updateUser(Long id, String firstName, String lastName, LocalDate birthAt, String urlImage, String email, String password, String status) {
-		if(email != null && this.existId(id)){
-			if ((this.userRepository.getById(id) != null) &&  (this.userRepository.findByEMail(email)==null)){
+	//public void updateUser(Long id, String firstName, String lastName, LocalDate birthAt, String urlImage, String email, String password, String status) {
+	public void updateUser(Long id, UserDTO userDTO) {
+		if(userDTO.getEmail() != null && this.existId(id)){
+			if ((this.userRepository.getById(id) != null) &&  (this.userRepository.findByEMail(userDTO.getEmail())==null)){
 				User user=this.userRepository.getById(id);
-				user.setFirstName(firstName);
-				user.setLastName(lastName);
-				user.setBirthAt(birthAt);
-				user.setUrlImage(urlImage);
-				user.setEmail(email);
-				user.setPassword(password);
-				user.setStatus(status);
+				user.setFirstName(userDTO.getFirstName());
+				user.setLastName(userDTO.getLastName());
+				user.setBirthAt(userDTO.getBirthAt());
+				user.setUrlImage(userDTO.getUrlImage());
+				user.setEmail(userDTO.getEmail());
+				user.setPassword(userDTO.getPassword());
+				user.setStatus(userDTO.getStatus());
 				this.userRepository.save(user);
 			}
 		}
