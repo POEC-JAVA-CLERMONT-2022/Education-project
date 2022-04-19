@@ -31,6 +31,7 @@ public class ModuleeController {
 
     @PostMapping("modules/add")
     public Modulee addModule(@RequestBody Modulee modulee){
+
         return moduleeRepository.save(modulee);
     }
 
@@ -55,6 +56,7 @@ public class ModuleeController {
 
     @DeleteMapping("modules/{id}")
     public void deleteModule(@PathVariable Long id){
+
         this.moduleeRepository.deleteById(id);
     }
 

@@ -7,6 +7,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -14,16 +17,22 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 @SpringBootTest
 @DisplayName("test du user service")
 public class UserServiceTest {
-    @Autowired
+    @InjectMocks
     UserService userService;
 
-    @Autowired
-    UserRepository userRepository;
+    /* @Autowired
+    UserRepository userRepository; */
+
+    @Mock
+    private UserRepository mockedUserRepository;
 
     @BeforeAll
     static void initAll() {
@@ -41,6 +50,45 @@ public class UserServiceTest {
         String email="salsabilgrouche@yahoo.fr";
         String password="xxxx";
         String status="Developpeuse";
+
+        /* comportamiento */
+        when(mockedUserRepository.save(Mockito.any(User.class))).thenReturn(new User(firstName,lastName,birthAt,urlImage,email,password,status));
+        /* on appele le service */
+        User testUser = userService.createUser(firstName,lastName,birthAt,urlImage,email,password,status);
+        /* test null */
+        assertNotNull(testUser);
+        /* test id not null */
+        assertEquals(testUser.getId(), null);
+        /* test objet not null */
+        assertThat(testUser).isNotNull();
+        /* test objet id not null */
+        assertThat(testUser.getId()).isNull();
+        /* si les references sont egales */
+        assertThat(testUser).isEqualTo(new User(firstName,lastName,birthAt,urlImage,email,password,status));
+        /* si tous les champs sont ok par rapport au premier argument */
+        assertThat(testUser).usingRecursiveComparison().isEqualTo(new User(firstName,lastName,birthAt,urlImage,email,password,status));
+
+
+        /*firstName="Ilyan";
+        lastName="Guerilli";
+        birthAt=LocalDate.of(2020,4,8);
+        urlImage="https://i.unimedias.fr/2012/06/06/Bebe-a-2-mois1_0.jpg?auto=format%2Ccompress&crop=faces&cs=tinysrgb&fit=crop&h=453&w=806";
+        email="salsabilgrouche@yahoo.fr";
+        password="yyyy";
+        status="Dev";*/
+
+        /* comportamiento */
+        when(mockedUserRepository.save(Mockito.any(User.class))).thenReturn(null);
+        /* on appele le service */
+        //mockedUserRepository.save(new User(firstName,lastName,birthAt,urlImage,email,password,status));
+        User userJunior = userService.createUser(firstName,lastName,birthAt,urlImage,email,password,status);
+        /* test objet not null */
+        assertThat(userJunior).isNull();
+
+    /* Verifie une fois l'utilisation de repo mocked avec un user mocked */
+        verify(mockedUserRepository, times(1)).save(any(User.class));
+
+        /*
         User user=this.userService.createUser(firstName,lastName,birthAt,urlImage,email,password,status);
         List<User> users=userService.findAll();
         assertNotNull(user);
@@ -62,11 +110,11 @@ public class UserServiceTest {
         userJunior=this.userService.createUser(firstName,lastName,birthAt,urlImage,email,password,status);
         assertNotNull(userJunior);
         users=userService.findAll();
-        assertEquals(users.size(),2);
+        assertEquals(users.size(),2);  */
 
     }
 
-    @Test
+    /*@Test
     @DisplayName("update user test")
     public void testUpdateUser(){
         String firstName="Salsabil";
@@ -141,7 +189,7 @@ public class UserServiceTest {
 
 
     }
-
+*/
 
 
 
