@@ -49,7 +49,7 @@ public class RoleServiceTest {
         assertEquals(roles.size(),2);
         assertNotEquals(roles.size(),3);
    }
-
+    /*
     @Test
     @DisplayName("update role test")
     public void testUpdateRole(){
@@ -93,5 +93,5 @@ public class RoleServiceTest {
         assertTrue(roles.contains(role));
     }
 
-
+    */
 }
