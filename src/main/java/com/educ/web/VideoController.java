@@ -36,7 +36,7 @@ public class VideoController {
         return videoRepository.save(video);
     }
 
-    /*
+    /* mouvaise pratique :
     @PutMapping("videos/{id}")
     public Video updateVideo(@PathVariable Long id, @RequestBody Video videoInfo){
         Video video  = videoRepository.getById(id);

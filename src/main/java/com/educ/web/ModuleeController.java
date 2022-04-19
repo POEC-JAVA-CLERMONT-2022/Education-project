@@ -31,7 +31,6 @@ public class ModuleeController {
 
     @PostMapping("modules/add")
     public Modulee addModule(@RequestBody Modulee modulee){
-
         return moduleeRepository.save(modulee);
     }
 
