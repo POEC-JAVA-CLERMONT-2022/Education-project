@@ -78,9 +78,7 @@ public class EducationApplication {
 		UserDTO userDTO=new UserDTO(firstName,lastName,birthAt,urlImage,email,password,status);
 		User userAdmin = this.userService.createUser(userDTO); */
 		//User userAdmin = this.userService.createUser(userDTO);
-		//userService.add(userDTO.getEmail(), "Admin");
-
-*/
+		//userService.add(userDTO.getEmail(), "Admin");*/
 
 
 
