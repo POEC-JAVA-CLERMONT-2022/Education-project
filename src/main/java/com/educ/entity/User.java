@@ -143,6 +143,14 @@ public class User {
 		return roles;
 	}
 
+	public String getPassword() {
+		return password;
+	}
+
+	public List<Review> getReviews() {
+		return reviews;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(email);

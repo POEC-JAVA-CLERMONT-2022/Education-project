@@ -1,6 +1,8 @@
 package com.educ.services.dto;
 import com.educ.entity.Review;
 import com.educ.entity.Role;
+import com.educ.entity.User;
+
 import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
@@ -32,7 +34,16 @@ public class UserDTO {
     }
 
     public UserDTO(User user) {
-        this.firstName=user.g
+        this.firstName=user.getFirstName();
+        this.lastName=user.getLastName();
+        this.birthAt=user.getBirthAt();
+        this.urlImage=user.getUrlImage();
+        this.email=user.getEmail();
+        this.password=user.getPassword();
+        this.status=user.getStatus();
+        this.roles=user.getRoles();
+        this.reviews=user.getReviews();
+
     }
 
     public Long getId() {
