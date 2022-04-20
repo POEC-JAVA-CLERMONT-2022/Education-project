@@ -76,7 +76,7 @@ public class User {
 		this.password = password;
 		this.status = status;
 		this.roles=new LinkedList<Role>();
-		this.reviews=null;
+		this.reviews=new LinkedList<Review>();
 	}
 
 	public void setFirstName(String firstName) {

@@ -63,7 +63,7 @@ public class Lesson {
 		this.price = price;
 		this.language = language;
 		this.level = level;
-		this.modules=null;
+		this.modules=new LinkedList<Modulee>();
 	}
 
 	public void setName(String name) {
