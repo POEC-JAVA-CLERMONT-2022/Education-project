@@ -3,6 +3,7 @@ package com.educ.web;
 import com.educ.data.VideoRepository;
 import com.educ.entity.Video;
 import com.educ.services.VideoService;
+import com.educ.services.dto.VideoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
@@ -32,8 +33,8 @@ public class VideoController {
     }
 
     @PostMapping("videos/add")
-    public Video addVideo(@RequestBody Video video){
-        return videoRepository.save(video);
+    public Video addVideo(@RequestBody VideoDTO videoDTO){
+        return videoService.createVideo(videoDTO);
     }
 
     /* mouvaise pratique :
@@ -49,8 +50,8 @@ public class VideoController {
      */
 
     @PutMapping("videos/{id}")
-    public void updateVideo(@PathVariable Long id, @RequestParam String title, @RequestParam String url, @RequestParam @DateTimeFormat(pattern = "HH:mm:ss") LocalTime duration){
-        videoService.updateVideo(id, title, url, duration);
+    public void updateVideo(@PathVariable Long id, @RequestParam VideoDTO videoDTO){
+        videoService.updateVideo(id, videoDTO);
     }
 
     @DeleteMapping("videos/{id}")
