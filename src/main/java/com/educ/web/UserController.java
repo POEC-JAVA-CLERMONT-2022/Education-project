@@ -1,7 +1,6 @@
 package com.educ.web;
-import java.time.LocalDate;
 import java.util.List;
-import com.educ.data.UserRepository;
+
 import com.educ.services.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -26,24 +25,14 @@ public class UserController {
 		return user;
 	}
 
-	//@GetMapping("/users/add")
-	//public String addUser() {
-		//userService.addUser(new User("salsabilgrouche@yahoo.fr"));
-		//List<UserRole> userRoles=new LinkedList<UserRole>(); 
-		//userRoles.add(UserRole.ADMIN);
-		//return "OK";
-	//}
-
 	@PostMapping("users/add")
-	@ResponseBody
-	public UserDTO addUser(@RequestBody UserDTO userDTO){
+	public User addUser(@RequestBody UserDTO userDTO){
 		User user = userService.createUser(userDTO);
-		UserDTO userDTO1 = new UserDTO(user);
-		return userDTO1;
+		return user;
 	}
 
 	@PutMapping("users/{id}")
-	public void updateUser(@PathVariable Long id, UserDTO userDTO) {
+	public void updateUser(@PathVariable Long id, UserDTO userDTO) { /* not working with @RequestBody */
 		userService.updateUser(id, userDTO);
 	}
 
