@@ -3,6 +3,7 @@ package com.educ.services;
 import java.util.List;
 
 import com.educ.entity.Review;
+import com.educ.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,13 +44,26 @@ public class RoleService {
 
 	@Transactional(readOnly = true)
 	public Role findByName(String name){
-		return this.roleRepository.findByName(name);
+		if(name!=null){
+			List<Role> roles=this.findAll();
+			for(Role role:roles){
+				if (role.getName().equals(name)){
+					return role;
+				}
+			}
+			return null;
+		}else {
+			return null;
+		}
+		//return this.roleRepository.findByName(name);
 	}
+
+
 
 	@Transactional
 	public Role createRole(String name){
 		if(name != null){
-			if(this.roleRepository.findByName(name) == null){
+			if(this.findByName(name) == null){
 				Role role=new Role(name);
 				this.roleRepository.save(role);
 				return role;
@@ -64,7 +78,7 @@ public class RoleService {
 	@Transactional
 	public void updateRole (Long id, String name){
 		if(name!=null){
-			if(this.existId(id) && (this.roleRepository.findByName(name)==null)){
+			if(this.existId(id) && (this.findByName(name)==null)){
 				Role role=this.getById(id);
 				role.setName(name);
 				this.roleRepository.save(role);

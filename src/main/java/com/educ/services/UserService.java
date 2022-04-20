@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import com.educ.entity.Role;
+import com.educ.services.dto.AddUserRoleDTO;
 import com.educ.services.dto.UserDTO;
 import org.hibernate.result.Output;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,10 +75,11 @@ public class UserService {
 	public User createUser(UserDTO userDTO) {
 		if(userDTO.getEmail()!=null && this.findByEMail(userDTO.getEmail())==null){
 			User user=new User(userDTO.getFirstName(), userDTO.getLastName(), userDTO.getBirthAt(), userDTO.getUrlImage(), userDTO.getEmail(), userDTO.getPassword(), userDTO.getStatus());
-			System.out.println("user 1 => "+user.toString());
+
 			userRepository.save(user);
-			user=this.addUserRole(userDTO.getEmail(), "Member");
-			System.out.println("user 2  => "+user.toString());
+			AddUserRoleDTO addUserRoleDTO=new AddUserRoleDTO(userDTO.getEmail(), "Member");
+			user=this.addUserRole(addUserRoleDTO);
+
 			return user;
 			//return userRepository.save(user);
 		}else {
@@ -87,7 +89,7 @@ public class UserService {
 
 	@Transactional
 	//User updateFirstNameLastNameByEmail(String firstName, String lastName, String email){
-	User updateByEmail(UserDTO userDTO){
+	public User updateByEmail(UserDTO userDTO){
 		if(userDTO.getEmail() != null && this.findByEMail(userDTO.getEmail())!=null){
 			User user =this.findByEMail(userDTO.getEmail());
 			user.setFirstName(userDTO.getFirstName());
@@ -129,44 +131,31 @@ public class UserService {
 	}
 
 
-	private User addUserRole(String email, String name) {
+	//private User addUserRole(String email, String name) {
+	private User addUserRole(AddUserRoleDTO addUserRoleDTO) {
 		List<Role> roles;
-		User user=this.findByEMail(email);
-		Role role=roleService.findByName(name);
-		System.out.println("user 1 addRole  => "+user.toString());
+		User user=this.findByEMail(addUserRoleDTO.getMail());
+		Role role=roleService.findByName(addUserRoleDTO.getName());
+
 		if(user!=null && role!=null) {
 			roles=user.getRoles();
-			System.out.println("role 1 => "+role.toString());
-			//System.out.println(role.getId());
+
 			roles.add(role);
-			System.out.println("roles => "+roles.toString());
+
 			user.setRoles(roles);
 			userRepository.save(user);
-			System.out.println("user 2 addRole  => "+user.toString());
+
 			return user;
 		}else {
-			System.out.println("user 0 addRole  => "+user.toString());
-			return null;}
+			if(role==null){
+				return user;
+			}else{
+				return null;
+			}
+
+
+		}
 
 	}
-
-	/*
-	private User addUserRole(String email, String name) {
-		List<Role> roles;
-		User user=this.findByEMail(email);
-		Role role=roleService.findByName(name);
-		if(user!=null && role!=null) {
-			roles=user.getRoles();
-			roles.add(role);
-			user.setRoles(roles);
-			return user;
-		}else {return null;}
-
-	}
-	*/
-
-
-
-
 
 }
