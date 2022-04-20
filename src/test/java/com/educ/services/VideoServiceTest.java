@@ -3,6 +3,7 @@ package com.educ.services;
 import com.educ.data.VideoRepository;
 import com.educ.entity.Review;
 import com.educ.entity.Video;
+import com.educ.services.dto.VideoDTO;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -45,7 +46,8 @@ public class VideoServiceTest {
         String url="https://www.youtube.com/watch?v=c3gKseNAs9w&ab_channel=DailyCodeBuffer";
         LocalTime duration=LocalTime.of(3,11,17);
         when(mockVideoRepository.save(Mockito.any(Video.class))).thenReturn(new Video(title, url, duration));
-        Video testVideo = videoService.createVideo(title, url, duration);
+        VideoDTO videoDTO=new VideoDTO(title, url, duration);
+        Video testVideo = videoService.createVideo(videoDTO);
         assertNotNull(testVideo);
         assertEquals(testVideo.getId(), null);
         assertThat(testVideo).isNotNull();

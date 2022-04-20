@@ -20,4 +20,36 @@ public class VideoDTO {
         this.duration = duration;
         this.module=null;
     }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public LocalTime getDuration() {
+        return duration;
+    }
+
+    public Modulee getModule() {
+        return module;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public void setDuration(LocalTime duration) {
+        this.duration = duration;
+    }
+
+    public void setModule(Modulee module) {
+        this.module = module;
+    }
 }

@@ -80,10 +80,6 @@ public class EducationApplication {
 		//User userAdmin = this.userService.createUser(userDTO);
 		//userService.add(userDTO.getEmail(), "Admin");
 
-		Role ejemplo = roleRepository.findByName("Member");
-		System.out.println(ejemplo.getId());
-		System.out.println(ejemplo.getName());
-		System.out.println(this.roleService.findByName("Admin"));*/
 
 
 		/*

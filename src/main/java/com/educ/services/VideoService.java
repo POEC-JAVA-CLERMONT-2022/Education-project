@@ -2,6 +2,7 @@ package com.educ.services;
 
 import com.educ.entity.Role;
 import com.educ.entity.Video;
+import com.educ.services.dto.VideoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,14 +44,23 @@ public class VideoService {
 
 	@Transactional(readOnly = true)
 	public Video findByUrl(String url){
-		return this.videoRepository.findByUrl(url);
+		if(url!=null){
+			List<Video> videos=this.findAll();
+			for (Video video:videos){
+				if (video.getUrl().equals(url)){
+					return video;
+				}
+			}
+			return null;
+		}else { return null;}
 	}
 
-	@Transactional
-	public Video createVideo(String title, String url, LocalTime duration){
 
-			if ((url != null) && this.videoRepository.findByUrl(url) == null){
-				Video video=new Video(title,url,duration);
+	@Transactional
+	//public Video createVideo(String title, String url, LocalTime duration){
+	public Video createVideo(VideoDTO videoDTO){
+			if ((videoDTO.getUrl() != null) && this.findByUrl(videoDTO.getUrl()) == null){
+				Video video=new Video(videoDTO.getTitle(), videoDTO.getUrl(), videoDTO.getDuration());
 				this.videoRepository.save(video);
 				return video;
 			}else{
@@ -59,13 +69,14 @@ public class VideoService {
 	}
 
 	@Transactional
-	public void updateVideo (Long id, String title, String url, LocalTime duration){
-		if(url != null){
-			if (this.existId(id) &&  (this.videoRepository.findByUrl(url)==null)){
-				Video video=this.videoRepository.getById(id);
-				video.setTitle(title);
-				video.setUrl(url);
-				video.setDuration(duration);
+	//public void updateVideo (Long id, String title, String url, LocalTime duration){
+	public void updateVideo (Long id, VideoDTO videoDTO){
+		if(videoDTO.getUrl() != null){
+			if (this.existId(id) &&  (this.findByUrl(videoDTO.getUrl())==null)){
+				Video video=this.getById(id);
+				video.setTitle(videoDTO.getTitle());
+				video.setUrl(videoDTO.getUrl());
+				video.setDuration(videoDTO.getDuration());
 				this.videoRepository.save(video);
 			}
 		}
