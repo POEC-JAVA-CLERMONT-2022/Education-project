@@ -54,11 +54,16 @@ public class EducationApplication {
 	@EventListener(classes= {ApplicationStartedEvent.class})
 	public void applicationStarted() {
 
+
 		/* Load roles by default */
 		Role roleM=this.roleService.createRole("Member");
+
+		/*Role roleM=this.roleService.createRole("Member");
+
 		Role roleA=this.roleService.createRole("Admin");
 		Role roleT=this.roleService.createRole("Teacher");
 		Role roleS=this.roleService.createRole("Student");
+
 
 		/* Load user ADMIN */
 
@@ -74,6 +79,12 @@ public class EducationApplication {
 		User userAdmin = this.userService.createUser(userDTO);
 		//User userAdmin = this.userService.createUser(userDTO);
 		//userService.add(userDTO.getEmail(), "Admin");
+
+		Role ejemplo = roleRepository.findByName("Member");
+		System.out.println(ejemplo.getId());
+		System.out.println(ejemplo.getName());
+		System.out.println(this.roleService.findByName("Admin"));*/
+
 
 		/*
 		List<Lesson> lessons=lessonService.findAll();
