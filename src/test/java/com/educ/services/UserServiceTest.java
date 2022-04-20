@@ -1,6 +1,8 @@
 package com.educ.services;
 
+import com.educ.data.RoleRepository;
 import com.educ.data.UserRepository;
+import com.educ.entity.Role;
 import com.educ.entity.User;
 import com.educ.entity.Video;
 import com.educ.services.dto.UserDTO;
@@ -16,6 +18,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.LinkedList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -35,9 +38,36 @@ public class UserServiceTest {
     @Mock
     private UserRepository mockedUserRepository;
 
+@Mock
+private UserService mockedUserService;
+@Mock
+private RoleService mockedRoleService;
+
+
+    @Mock
+    private RoleRepository mockedRoleRepository;
+
+    @InjectMocks
+    private RoleService roleService;
+
     @BeforeAll
     static void initAll() {
         System.out.println("beforeAll");
+    }
+    private User createUser(){
+        String firstName="Salsabil";
+        String lastName="Grouche";
+        LocalDate birthAt=LocalDate.of(1988,7,19);
+        String urlImage="https://thumbs.dreamstime.com/z/ic%C3%B4ne-de-fille-avatar-femme-visage-type-dessin-anim%C3%A9-vecteur-89897086.jpg";
+        String email="salsabilgrouche@yahoo.fr";
+        String password="xxxx";
+        String status="Developpeuse";
+        UserDTO userDTO=new UserDTO(firstName,lastName,birthAt,urlImage,email,password,status);
+       List<Role> roles=new LinkedList<Role>();
+        roles.add(new Role("Member"));
+        User user=new User(firstName,lastName,birthAt,urlImage,email,password,status);
+        user.setRoles(roles);
+        return user;
     }
 
     @Test
@@ -52,12 +82,37 @@ public class UserServiceTest {
         String password="xxxx";
         String status="Developpeuse";
         UserDTO userDTO=new UserDTO(firstName,lastName,birthAt,urlImage,email,password,status);
+       List<Role> roles=new LinkedList<Role>();
+        roles.add(new Role("Member"));
+        /*User user=new User(firstName,lastName,birthAt,urlImage,email,password,status);
+        user.setRoles(roles);*/
 
         /* comportamiento */
-        when(mockedUserRepository.save(Mockito.any(User.class))).thenReturn(new User(firstName,lastName,birthAt,urlImage,email,password,status));
+        //
+        //
+        List<User> users=new LinkedList<User>();
+        when(mockedRoleRepository.save(Mockito.any(Role.class))).thenReturn(new Role("Member"));
+        when(mockedRoleService.findByName(Mockito.any(String.class))).thenReturn(new Role("Member"));
+        when(mockedUserRepository.save(Mockito.any(User.class))).thenReturn(this.createUser());
+        when(mockedUserService.findByEMail(Mockito.any(String.class))).thenReturn(new User(firstName,lastName,birthAt,urlImage,email,password,status));
+        users.add( new User(firstName,lastName,birthAt,urlImage,email,password,status));
+        System.out.println("list users  => "+users.toString());
+        System.out.println("list roles  => "+roles.toString());
+        when(mockedUserRepository.findAll()).thenReturn(users);
+        when(mockedRoleRepository.findAll()).thenReturn(roles);
+
+                /*(()->{
+
+                        return user;
+        }
+                );*/
         /* on appele le service */
+        Role testRole=roleService.createRole("Member");
+        List<Role> rs=new LinkedList<Role>();
+        rs.add(testRole);
         User testUser = userService.createUser(userDTO);
-       System.out.println(testUser.toString());
+       // testUser.setRoles(roles);
+       //System.out.println(testUser.toString());
         /* test null */
         assertNotNull(testUser);
         /* test id not null */
@@ -84,15 +139,23 @@ public class UserServiceTest {
         status="Dev";*/
 
         /* comportamiento */
-        when(mockedUserRepository.save(Mockito.any(User.class))).thenReturn(null);
+        //when(mockedUserRepository.save(Mockito.any(User.class))).thenReturn(null);
         /* on appele le service */
         //mockedUserRepository.save(new User(firstName,lastName,birthAt,urlImage,email,password,status));
-        User userJunior = userService.createUser(userDTO);
+       // User userJunior = userService.createUser(userDTO);
         /* test objet not null */
-        assertThat(userJunior).isNull();
+        //assertThat(userJunior).isNull();
 
     /* Verifie une fois l'utilisation de repo mocked avec un user mocked */
-        verify(mockedUserRepository, times(2)).save(any(User.class));
+
+
+        verify(mockedRoleRepository, times(2)).save(any(Role.class));
+        verify(mockedRoleService, times(2)).findByName(any(String.class));
+        verify(mockedUserRepository, times(3)).save(any(User.class));
+        verify(mockedUserService, times(2)).findByEMail(any(String.class));
+
+        verify(mockedUserRepository, times(3)).findAll();
+        verify(mockedRoleRepository, times(3)).findAll();
 
         /*
         User user=this.userService.createUser(firstName,lastName,birthAt,urlImage,email,password,status);
