@@ -74,8 +74,11 @@ public class UserService {
 	public User createUser(UserDTO userDTO) {
 		if(userDTO.getEmail()!=null && this.findByEMail(userDTO.getEmail())==null){
 			User user=new User(userDTO.getFirstName(), userDTO.getLastName(), userDTO.getBirthAt(), userDTO.getUrlImage(), userDTO.getEmail(), userDTO.getPassword(), userDTO.getStatus());
+			System.out.println("user 1 => "+user.toString());
 			userRepository.save(user);
-			return user=this.addUserRole(userDTO.getEmail(), "Member");
+			user=this.addUserRole(userDTO.getEmail(), "Member");
+			System.out.println("user 2  => "+user.toString());
+			return user;
 			//return userRepository.save(user);
 		}else {
 			return null;
@@ -130,13 +133,20 @@ public class UserService {
 		List<Role> roles;
 		User user=this.findByEMail(email);
 		Role role=roleService.findByName(name);
+		System.out.println("user 1 addRole  => "+user.toString());
 		if(user!=null && role!=null) {
 			roles=user.getRoles();
+			System.out.println("role 1 => "+role.toString());
 			//System.out.println(role.getId());
 			roles.add(role);
+			System.out.println("roles => "+roles.toString());
 			user.setRoles(roles);
+			userRepository.save(user);
+			System.out.println("user 2 addRole  => "+user.toString());
 			return user;
-		}else {return null;}
+		}else {
+			System.out.println("user 0 addRole  => "+user.toString());
+			return null;}
 
 	}
 
