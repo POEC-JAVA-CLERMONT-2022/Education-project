@@ -37,12 +37,12 @@ public class UserServiceTest {
 
     @Mock
     private UserRepository mockedUserRepository;
-/*
+
 @Mock
 private UserService mockedUserService;
 @Mock
 private RoleService mockedRoleService;
-*/
+
 
 
     @Mock
@@ -94,10 +94,10 @@ private RoleService mockedRoleService;
         //
         List<User> users=new LinkedList<User>();
         when(mockedRoleRepository.save(Mockito.any(Role.class))).thenReturn(new Role("Member"));
-        //when(mockedRoleService.findByName(Mockito.any(String.class))).thenReturn(new Role("Member"));
+        when(mockedRoleService.findByName(Mockito.any(String.class))).thenReturn(new Role("Member"));
         when(mockedUserRepository.save(Mockito.any(User.class))).thenReturn(this.createUser());
-        //when(mockedUserService.findByEMail(Mockito.any(String.class))).thenReturn(new User(firstName,lastName,birthAt,urlImage,email,password,status));
-        users.add( new User(firstName,lastName,birthAt,urlImage,email,password,status));
+        when(mockedUserService.findByEMail(Mockito.any(String.class))).thenReturn(new User(firstName,lastName,birthAt,urlImage,email,password,status));
+        //users.add( new User(firstName,lastName,birthAt,urlImage,email,password,status));
         System.out.println("list users  => "+users.toString());
         System.out.println("list roles  => "+roles.toString());
         when(mockedUserRepository.findAll()).thenReturn(users);
@@ -112,8 +112,8 @@ private RoleService mockedRoleService;
         Role testRole=roleService.createRole("Member");
         List<Role> rs=new LinkedList<Role>();
         rs.add(testRole);
-        User testUser = new User(firstName,lastName,birthAt,urlImage,email,password,status);
-      //  User testUser = userService.createUser(userDTO);
+        //User testUser = new User(firstName,lastName,birthAt,urlImage,email,password,status);
+        User testUser = userService.createUser(userDTO);
        // testUser.setRoles(roles);
        //System.out.println(testUser.toString());
         /* test null */
@@ -153,9 +153,9 @@ private RoleService mockedRoleService;
 
 
         verify(mockedRoleRepository, times(2)).save(any(Role.class));
-      //  verify(mockedRoleService, times(2)).findByName(any(String.class));
+        verify(mockedRoleService, times(2)).findByName(any(String.class));
         verify(mockedUserRepository, times(3)).save(any(User.class));
-       // verify(mockedUserService, times(2)).findByEMail(any(String.class));
+        verify(mockedUserService, times(2)).findByEMail(any(String.class));
 
         verify(mockedUserRepository, times(3)).findAll();
         verify(mockedRoleRepository, times(3)).findAll();

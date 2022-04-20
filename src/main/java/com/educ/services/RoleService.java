@@ -68,7 +68,7 @@ public class RoleService {
 				role=this.roleRepository.save(role);
 				return role;
 			}else{
-				return null;
+				return this.findByName(name);
 			}
 		}else{
 			return null;

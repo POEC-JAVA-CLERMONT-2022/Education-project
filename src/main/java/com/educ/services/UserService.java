@@ -37,6 +37,7 @@ public class UserService {
 			List<User> users=this.findAll();
 			for (User user:users){
 				if(user.getEmail().equals(email)){
+					System.out.println("*******"+user.toString());
 					return user;
 				}
 			}
@@ -44,7 +45,6 @@ public class UserService {
 		}else{
 			return null;
 		}
-
 	}
 
 	@Transactional(readOnly = true)
