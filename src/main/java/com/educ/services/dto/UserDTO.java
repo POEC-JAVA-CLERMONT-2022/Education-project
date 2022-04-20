@@ -2,6 +2,7 @@ package com.educ.services.dto;
 import com.educ.entity.Review;
 import com.educ.entity.Role;
 import java.time.LocalDate;
+import java.util.LinkedList;
 import java.util.List;
 
 public class UserDTO {
@@ -25,8 +26,8 @@ public class UserDTO {
         this.email = email;
         this.password = password;
         this.status = status;
-        this.roles=null;
-        this.reviews=null;
+        this.roles=new LinkedList<Role>();
+        this.reviews=new LinkedList<Review>();
     }
 
     public Long getId() {

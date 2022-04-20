@@ -1,6 +1,8 @@
 package com.educ;
 
 
+import java.time.LocalDate;
+import java.util.LinkedList;
 import java.util.List;
 
 import com.educ.data.LessonRepository;
@@ -8,6 +10,7 @@ import com.educ.data.RoleRepository;
 import com.educ.entity.*;
 
 import com.educ.entity.Role;
+import com.educ.services.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -50,15 +53,27 @@ public class EducationApplication {
 	
 	@EventListener(classes= {ApplicationStartedEvent.class})
 	public void applicationStarted() {
+
+		/* Load roles by default */
 		Role roleM=this.roleService.createRole("Member");
 		Role roleA=this.roleService.createRole("Admin");
 		Role roleT=this.roleService.createRole("Teacher");
 		Role roleS=this.roleService.createRole("Student");
 
-		Role ejemplo = roleRepository.findByName("Member");
-		System.out.println(ejemplo.getId());
-		System.out.println(ejemplo.getName());
-		System.out.println(this.roleService.findByName("Admin"));
+		/* Load user ADMIN */
+
+		String firstName="Admin";
+		String lastName="Admin";
+		LocalDate birthAt=LocalDate.of(2022,04,20);
+		String urlImage="https://thumbs.dreamstime.com/z/test.jpg";
+		String email="admin@gmail.com";
+		String password="xxxx";
+		String status="Admin application";
+		LinkedList<Role> roles ;
+		UserDTO userDTO=new UserDTO(firstName,lastName,birthAt,urlImage,email,password,status);
+		User userAdmin = this.userService.createUser(userDTO);
+		//User userAdmin = this.userService.createUser(userDTO);
+		//userService.add(userDTO.getEmail(), "Admin");
 
 		/*
 		List<Lesson> lessons=lessonService.findAll();
