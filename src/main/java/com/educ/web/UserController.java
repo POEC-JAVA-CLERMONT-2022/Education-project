@@ -14,7 +14,7 @@ public class UserController {
 	private UserService userService;
 
 	@GetMapping("/users")
-	public List<User> getUsers(){
+	public List<User> getUsers(){ /* ask for findAll DTO*/
 		List<User> users = userService.findAll();
 		return users;
 	}
