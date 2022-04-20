@@ -38,8 +38,8 @@ public class UserController {
 	@ResponseBody
 	public UserDTO addUser(@RequestBody UserDTO userDTO){
 		User user = userService.createUser(userDTO);
-		UserDTO userDTO = new UserDTO(user)
-		return user;
+		UserDTO userDTO1 = new UserDTO(user);
+		return userDTO1;
 	}
 
 	@PutMapping("users/{id}")
