@@ -66,7 +66,7 @@ public class EducationApplication {
 
 
 		/* Load user ADMIN */
-
+/*
 		String firstName="Admin";
 		String lastName="Admin";
 		LocalDate birthAt=LocalDate.of(2022,04,20);
@@ -79,6 +79,10 @@ public class EducationApplication {
 		User userAdmin = this.userService.createUser(userDTO);
 		//User userAdmin = this.userService.createUser(userDTO);
 		//userService.add(userDTO.getEmail(), "Admin");
+
+*/
+
+
 
 
 

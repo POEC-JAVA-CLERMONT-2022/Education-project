@@ -7,6 +7,7 @@ import java.util.List;
 
 public class UserDTO {
 
+    private User user;
     private Long id;
     private String firstName;
     private String lastName;
@@ -28,6 +29,10 @@ public class UserDTO {
         this.status = status;
         this.roles=new LinkedList<Role>();
         this.reviews=new LinkedList<Review>();
+    }
+
+    public UserDTO(User user) {
+        this.firstName=user.g
     }
 
     public Long getId() {
