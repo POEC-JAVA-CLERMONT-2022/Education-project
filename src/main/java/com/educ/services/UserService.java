@@ -76,7 +76,7 @@ public class UserService {
 		if(userDTO.getEmail()!=null && this.findByEMail(userDTO.getEmail())==null){
 			User user=new User(userDTO.getFirstName(), userDTO.getLastName(), userDTO.getBirthAt(), userDTO.getUrlImage(), userDTO.getEmail(), userDTO.getPassword(), userDTO.getStatus());
 
-			userRepository.save(user);
+			user = userRepository.save(user);
 			AddUserRoleDTO addUserRoleDTO=new AddUserRoleDTO(userDTO.getEmail(), "Member");
 			user=this.addUserRole(addUserRoleDTO);
 
@@ -143,7 +143,7 @@ public class UserService {
 			roles.add(role);
 
 			user.setRoles(roles);
-			userRepository.save(user);
+			user = userRepository.save(user);
 
 			return user;
 		}else {
@@ -152,10 +152,7 @@ public class UserService {
 			}else{
 				return null;
 			}
-
-
 		}
-
 	}
 
 }
