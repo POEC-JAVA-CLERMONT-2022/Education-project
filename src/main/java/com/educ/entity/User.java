@@ -75,7 +75,7 @@ public class User {
 		this.email = email;
 		this.password = password;
 		this.status = status;
-		this.roles=null;
+		this.roles=new LinkedList<Role>();
 		this.reviews=null;
 	}
 
