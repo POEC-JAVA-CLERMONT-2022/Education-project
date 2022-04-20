@@ -56,7 +56,7 @@ public class EducationApplication {
 
 
 		/* Load roles by default */
-		Role roleM=this.roleService.createRole("Member");
+		//Role roleM=this.roleService.createRole("Member");
 
 		/*Role roleM=this.roleService.createRole("Member");
 
@@ -66,7 +66,7 @@ public class EducationApplication {
 
 
 		/* Load user ADMIN */
-
+/*
 		String firstName="Admin";
 		String lastName="Admin";
 		LocalDate birthAt=LocalDate.of(2022,04,20);
@@ -76,7 +76,7 @@ public class EducationApplication {
 		String status="Admin application";
 		LinkedList<Role> roles ;
 		UserDTO userDTO=new UserDTO(firstName,lastName,birthAt,urlImage,email,password,status);
-		User userAdmin = this.userService.createUser(userDTO);
+		User userAdmin = this.userService.createUser(userDTO); */
 		//User userAdmin = this.userService.createUser(userDTO);
 		//userService.add(userDTO.getEmail(), "Admin");
 

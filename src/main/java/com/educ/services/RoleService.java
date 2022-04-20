@@ -65,7 +65,7 @@ public class RoleService {
 		if(name != null){
 			if(this.findByName(name) == null){
 				Role role=new Role(name);
-				this.roleRepository.save(role);
+				role=this.roleRepository.save(role);
 				return role;
 			}else{
 				return null;
@@ -81,7 +81,7 @@ public class RoleService {
 			if(this.existId(id) && (this.findByName(name)==null)){
 				Role role=this.getById(id);
 				role.setName(name);
-				this.roleRepository.save(role);
+				role=this.roleRepository.save(role);
 			}
 		}
 	}
