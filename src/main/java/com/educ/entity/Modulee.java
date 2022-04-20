@@ -1,5 +1,6 @@
 package com.educ.entity;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
@@ -44,7 +45,7 @@ public class Modulee {
 	public Modulee(String title) {
 		super();
 		this.title = title;
-		this.reviews=null;
+		this.reviews=new LinkedList<Review>();
 		this.lesson=null;
 		this.video=null;
 	}
