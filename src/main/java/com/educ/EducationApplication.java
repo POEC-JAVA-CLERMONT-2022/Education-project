@@ -54,19 +54,16 @@ public class EducationApplication {
 	@EventListener(classes= {ApplicationStartedEvent.class})
 	public void applicationStarted() {
 
-
 		/* Load roles by default */
-		//Role roleM=this.roleService.createRole("Member");
-
-		/*Role roleM=this.roleService.createRole("Member");
-
+/*
+		Role roleM=this.roleService.createRole("Member");
 		Role roleA=this.roleService.createRole("Admin");
 		Role roleT=this.roleService.createRole("Teacher");
 		Role roleS=this.roleService.createRole("Student");
-
+*/
 
 		/* Load user ADMIN */
-/*
+		/*
 		String firstName="Admin";
 		String lastName="Admin";
 		LocalDate birthAt=LocalDate.of(2022,04,20);
@@ -76,35 +73,24 @@ public class EducationApplication {
 		String status="Admin application";
 		LinkedList<Role> roles ;
 		UserDTO userDTO=new UserDTO(firstName,lastName,birthAt,urlImage,email,password,status);
-		User userAdmin = this.userService.createUser(userDTO); */
+		User userAdmin = this.userService.createUser(userDTO);
 		//User userAdmin = this.userService.createUser(userDTO);
+
 		//userService.add(userDTO.getEmail(), "Admin");*/
 
+		//userService.add(userDTO.getEmail(), "Admin");
+/*
 
 
-
-
-		/*
 		List<Lesson> lessons=lessonService.findAll();
 		System.out.println(lessons.size()+" Lessons trouvées");
 
 		List<Lesson> lessons = lessonService.findAllLessonsModules();
 		System.out.println(lessons);
-
-
-
 		System.out.println("Application démarée");
 
 		List<User> users=userService.findAll();
 		System.out.println(users.size()+" users trouvés");
-
-
-
-
-
-
-
-
 
 
 		List<Lesson> lessons=lessonService.findAll();
