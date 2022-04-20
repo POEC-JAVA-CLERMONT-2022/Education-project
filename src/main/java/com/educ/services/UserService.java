@@ -76,10 +76,11 @@ public class UserService {
 		if(userDTO.getEmail()!=null && this.findByEMail(userDTO.getEmail())==null){
 			User user=new User(userDTO.getFirstName(), userDTO.getLastName(), userDTO.getBirthAt(), userDTO.getUrlImage(), userDTO.getEmail(), userDTO.getPassword(), userDTO.getStatus());
 
-			user = userRepository.save(user);
-			AddUserRoleDTO addUserRoleDTO=new AddUserRoleDTO(userDTO.getEmail(), "Member");
-			user=this.addUserRole(addUserRoleDTO);
-
+			//user = userRepository.save(user);
+			//AddUserRoleDTO addUserRoleDTO=new (userDTO.getEmail(), "Member");
+			//user=this.addUserRole(addUserRoleDTO);
+			user=this.addUserRole(user,"Member");
+			//System.out.println("creationUser + role => "+user.toString());
 			return user;
 			//return userRepository.save(user);
 		}else {
@@ -132,10 +133,12 @@ public class UserService {
 
 
 	//private User addUserRole(String email, String name) {
-	private User addUserRole(AddUserRoleDTO addUserRoleDTO) {
+	//private User addUserRole(AddUserRoleDTO addUserRoleDTO) {
+		private User addUserRole(User user, String name) {
 		List<Role> roles;
-		User user=this.findByEMail(addUserRoleDTO.getMail());
-		Role role=roleService.findByName(addUserRoleDTO.getName());
+		//User user=this.findByEMail(addUserRoleDTO.getMail());
+		//Role role=roleService.findByName(addUserRoleDTO.getName());
+		Role role=roleService.findByName(name);
 
 		if(user!=null && role!=null) {
 			roles=user.getRoles();

@@ -55,12 +55,12 @@ public class EducationApplication {
 	public void applicationStarted() {
 
 		/* Load roles by default */
-
+/*
 		Role roleM=this.roleService.createRole("Member");
 		Role roleA=this.roleService.createRole("Admin");
 		Role roleT=this.roleService.createRole("Teacher");
 		Role roleS=this.roleService.createRole("Student");
-
+*/
 
 		/* Load user ADMIN */
 		/*
@@ -75,7 +75,11 @@ public class EducationApplication {
 		UserDTO userDTO=new UserDTO(firstName,lastName,birthAt,urlImage,email,password,status);
 		User userAdmin = this.userService.createUser(userDTO);
 		//User userAdmin = this.userService.createUser(userDTO);
+
+		//userService.add(userDTO.getEmail(), "Admin");*/
+
 		//userService.add(userDTO.getEmail(), "Admin");
+/*
 
 
 		List<Lesson> lessons=lessonService.findAll();
