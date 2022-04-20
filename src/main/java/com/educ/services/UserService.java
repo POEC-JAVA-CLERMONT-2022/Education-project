@@ -7,6 +7,7 @@ import java.util.List;
 
 import com.educ.entity.Role;
 import com.educ.services.dto.UserDTO;
+import org.hibernate.result.Output;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -73,8 +74,9 @@ public class UserService {
 	public User createUser(UserDTO userDTO) {
 		if(userDTO.getEmail()!=null && this.findByEMail(userDTO.getEmail())==null){
 			User user=new User(userDTO.getFirstName(), userDTO.getLastName(), userDTO.getBirthAt(), userDTO.getUrlImage(), userDTO.getEmail(), userDTO.getPassword(), userDTO.getStatus());
-			user=this.addUserRole(userDTO.getEmail(), "Member");
-			return userRepository.save(user);
+			userRepository.save(user);
+			return user=this.addUserRole(userDTO.getEmail(), "Member");
+			//return userRepository.save(user);
 		}else {
 			return null;
 		}
@@ -124,8 +126,21 @@ public class UserService {
 	}
 
 
+	private User addUserRole(String email, String name) {
+		List<Role> roles;
+		User user=this.findByEMail(email);
+		Role role=roleService.findByName(name);
+		if(user!=null && role!=null) {
+			roles=user.getRoles();
+			//System.out.println(role.getId());
+			roles.add(role);
+			user.setRoles(roles);
+			return user;
+		}else {return null;}
 
+	}
 
+	/*
 	private User addUserRole(String email, String name) {
 		List<Role> roles;
 		User user=this.findByEMail(email);
@@ -138,6 +153,7 @@ public class UserService {
 		}else {return null;}
 
 	}
+	*/
 
 
 
