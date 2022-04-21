@@ -4,6 +4,8 @@ import com.educ.data.VideoRepository;
 import com.educ.entity.Video;
 import com.educ.services.VideoService;
 import com.educ.services.dto.VideoDTO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +16,7 @@ import java.util.List;
 @RestController
 public class VideoController {
 
-
+    Logger logger = LoggerFactory.getLogger(VideoController.class);
 
     @Autowired
     private VideoService videoService;
@@ -30,7 +32,8 @@ public class VideoController {
 
     @GetMapping("videos/{id}")
     public Video getVideoById(@PathVariable Long id){
-        Video video = videoRepository.getById(id);
+        logger.info("Given video {}",id);
+        Video video = videoService.getById(id);
         return video;
     }
 

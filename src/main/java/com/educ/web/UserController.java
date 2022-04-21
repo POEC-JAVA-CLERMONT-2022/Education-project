@@ -1,7 +1,10 @@
 package com.educ.web;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import com.educ.services.dto.UserDTO;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,7 +12,7 @@ import com.educ.entity.User;
 import com.educ.services.UserService;
 
 @RestController
-//TODO: /users
+@RequestMapping("/users")
 public class UserController {
 
 	private UserService userService;
@@ -20,32 +23,53 @@ public class UserController {
 	}
 
 	@GetMapping("/users")
-	public List<User> getUsers(){ /* ask for findAll DTO*/
+	public List<UserDTO> getUsers(){
 		List<User> users = userService.findAll();
-		return users;
+		List<UserDTO> userDTOS=new LinkedList<UserDTO>();
+		for (User user:users){
+			UserDTO userDTO=new UserDTO();
+
+			userDTOS.add(userDTO.copyUser(user));
+		}
+
+		return userDTOS;
 	}
 
-	@GetMapping("users/{id}")
-	public User getUserById(@PathVariable Long id){
-		User user = userService.getById(id);
-		return user;
+	@GetMapping("{id}")
+	public UserDTO getUserById(@PathVariable Long id){
+		UserDTO userDTO = new UserDTO();
+		userDTO.copyUser(userService.getById(id));
+		return userDTO;
+	}
+/*
+	public CookDTO getCookById(@PathVariable int id)
+	{
+		CookDTO cookDTO = new CookDTO();
+		cookDTO.setCookDTO(cookService.getCookById(id));
+		return cookDTO;
 	}
 
-	@PostMapping("users/add")
-	public User addUser(@RequestBody UserDTO userDTO){
-		User newUser = userService.createUser(userDTO);
+ */
+
+	/*
+	@PostMapping("add")
+	public UserDTO addUser(@RequestBody UserDTO userDTO){
+		//UserDTO userDTO = new UserDTO();
+		User userRequest = BeanUtils.copyProperties(user, userDTO);
+		User user = userService.createUser(userDTO);
 		//UserDTO userDTO1=new UserDTO(user.getFirstName(), user.getLastName(), user.getBirthAt(), user.getUrlImage(), user.getEmail(), user.getPassword(), user.getStatus());
 		return newUser;
 	}
 
+	 */
 
 
-	@PutMapping("users/{id}")
+	@PutMapping("{id}")
 	public void updateUser(@PathVariable Long id, UserDTO userDTO) { /* not working with @RequestBody */
 		userService.updateUser(id, userDTO);
 	}
 
-	@DeleteMapping("users/{id}")
+	@DeleteMapping("{id}")
 	//@ResponseBody
 	public void deleteUser(@PathVariable Long id){
 		userService.deleteUser(id);
