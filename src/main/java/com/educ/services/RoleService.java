@@ -46,6 +46,7 @@ public class RoleService {
 	public Role findByName(String name){
 		if(name!=null){
 			List<Role> roles=this.findAll();
+			//TODO: utilisation des repo
 			for(Role role:roles){
 				if (role.getName().equals(name)){
 					return role;

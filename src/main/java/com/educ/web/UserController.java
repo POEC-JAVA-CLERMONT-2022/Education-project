@@ -9,6 +9,7 @@ import com.educ.entity.User;
 import com.educ.services.UserService;
 
 @RestController
+//TODO: /users
 public class UserController {
 	@Autowired
 	private UserService userService;

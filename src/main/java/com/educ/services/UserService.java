@@ -131,7 +131,8 @@ public class UserService {
 		}
 	}
 
-
+	//TODO : à supprimer
+	//TODO : indentation
 	//private User addUserRole(String email, String name) {
 	//private User addUserRole(AddUserRoleDTO addUserRoleDTO) {
 		private User addUserRole(User user, String name) {

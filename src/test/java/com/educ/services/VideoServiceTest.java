@@ -42,12 +42,18 @@ public class VideoServiceTest {
     @DisplayName("creation video test")
     public void testCreationVideo(){
         //create data
+
+        //ARRANGE
         String title="Spring Boot Tutorial";
         String url="https://www.youtube.com/watch?v=c3gKseNAs9w&ab_channel=DailyCodeBuffer";
         LocalTime duration=LocalTime.of(3,11,17);
         when(mockVideoRepository.save(Mockito.any(Video.class))).thenReturn(new Video(title, url, duration));
         VideoDTO videoDTO=new VideoDTO(title, url, duration);
+
+        //ACT
         Video testVideo = videoService.createVideo(videoDTO);
+
+        //ASSERT
         assertNotNull(testVideo);
         assertEquals(testVideo.getId(), null);
         assertThat(testVideo).isNotNull();

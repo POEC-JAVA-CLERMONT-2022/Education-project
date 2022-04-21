@@ -43,7 +43,7 @@ public class LessonService {
 	}
 
 
-
+	//TODO : utiliser le repo
 	@Transactional(readOnly = true)
 	Lesson findByNameAndLevelAndLanguage(String name, Level level, Language language){
 		List<Lesson> lessons=this.lessonRepository.findAll();
@@ -56,6 +56,7 @@ public class LessonService {
 		//return this.lessonRepository.findByNameAndLevelAndLanguage(name, level, language);
 	}
 
+	//TODO : à supprimer
 	/*
 	@Transactional(readOnly = true)
 	public List<Lesson> findAllLessonsModules(){
@@ -98,7 +99,7 @@ public class LessonService {
 		}
 
 	}
-	
+	//TODO : à supprimer
 	/*private List<Lesson> lessons;
 	
 	public LessonService() {
