@@ -26,6 +26,7 @@ import com.educ.services.UserService;
 @SpringBootApplication
 public class EducationApplication {
 
+	//TODO: à supprimer
 	@Autowired
 	private UserService userService;
 	
@@ -54,6 +55,8 @@ public class EducationApplication {
 	@EventListener(classes= {ApplicationStartedEvent.class})
 	public void applicationStarted() {
 
+
+		//TODO: à supprimer
 		/* Load roles by default */
 /*
 		Role roleM=this.roleService.createRole("Member");
