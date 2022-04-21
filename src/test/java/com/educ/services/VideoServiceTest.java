@@ -30,14 +30,6 @@ public class VideoServiceTest {
     @Mock
     VideoRepository mockVideoRepository;
 
-    /*
-    @BeforeAll
-    static void initAll() {
-        System.out.println("beforeAll");
-
-
-    }*/
-
     @Test
     @DisplayName("creation video test")
     public void testCreationVideo(){
@@ -51,7 +43,7 @@ public class VideoServiceTest {
         VideoDTO videoDTO=new VideoDTO(title, url, duration);
 
         //ACT
-        Video testVideo = videoService.createVideo(videoDTO);
+        Video testVideo = videoService.createVideo(title, url, duration);
 
         //ASSERT
         assertNotNull(testVideo);
@@ -61,8 +53,6 @@ public class VideoServiceTest {
         assertThat(testVideo).isEqualTo(new Video(title, url, duration));
         assertThat(testVideo).usingRecursiveComparison().isEqualTo(new Video(title, url, duration));
         verify(mockVideoRepository, times(1)).save(any(Video.class));
-
-
     }
 /*
     @Test

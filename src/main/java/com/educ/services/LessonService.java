@@ -14,14 +14,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class LessonService {
+
 	@Autowired
 	private LessonRepository lessonRepository;
 
-	@Transactional (readOnly = true)
+
 	public List<Lesson> findAll(){ return lessonRepository.findAll();
 	}
 
-	@Transactional(readOnly = true)
+
 	public boolean existId(Long id) {
 		List<Lesson> lessons=this.lessonRepository.findAll();
 		for(Lesson lesson:lessons){
@@ -32,7 +33,6 @@ public class LessonService {
 		return false;
 	}
 
-	@Transactional(readOnly = true)
 	public Lesson getById(Long id) {
 		if(this.existId(id)){
 			Lesson lesson=this.lessonRepository.getById(id);
@@ -42,40 +42,19 @@ public class LessonService {
 		}
 	}
 
-
-	//TODO : utiliser le repo
-	@Transactional(readOnly = true)
 	Lesson findByNameAndLevelAndLanguage(String name, Level level, Language language){
-		List<Lesson> lessons=this.lessonRepository.findAll();
-		for(Lesson lesson:lessons){
-			if(lesson.getName().equals(name) &&(lesson.getLanguage().equals(language) && lesson.getLevel().equals(level))){
-				return lesson;
-			}
-		}
-		return null;
-		//return this.lessonRepository.findByNameAndLevelAndLanguage(name, level, language);
+		return this.lessonRepository.findByNameAndLevelAndLanguage(name,level,language);
 	}
-
-	//TODO : à supprimer
-	/*
-	@Transactional(readOnly = true)
-	public List<Lesson> findAllLessonsModules(){
-		return lessonRepository.findAllLessonsModules();
-	}
-
-	 */
 
 	@Transactional
 	public Lesson createLesson(String name, String description, Float price, Language language, Level level) {
-
 		if(this.findByNameAndLevelAndLanguage(name, level, language) == null){
 			Lesson lesson=new Lesson(name, description, price, language, level);
 			this.lessonRepository.save(lesson);
 			return lesson;
 		}else {
-			return null;
+			return this.findByNameAndLevelAndLanguage(name, level, language);
 		}
-
 	}
 
 	@Transactional
@@ -99,15 +78,4 @@ public class LessonService {
 		}
 
 	}
-	//TODO : à supprimer
-	/*private List<Lesson> lessons;
-	
-	public LessonService() {
-		super();
-		this.lessons = new LinkedList<Lesson>();
-	}
-	
-
-	*/
-
 }

@@ -33,8 +33,7 @@ public class UserController {
 
 	@PostMapping("users/add")
 	public User addUser(@RequestBody UserDTO userDTO){
-		User newUser = userService.createUser(userDTO);
-		//UserDTO userDTO1=new UserDTO(user.getFirstName(), user.getLastName(), user.getBirthAt(), user.getUrlImage(), user.getEmail(), user.getPassword(), user.getStatus());
+		User newUser = userService.createUser(userDTO.getFirstName(),userDTO.getLastName(), userDTO.getBirthAt(), userDTO.getUrlImage(),userDTO.getEmail(), userDTO.getPassword(), userDTO.getStatus());
 		return newUser;
 	}
 
@@ -42,7 +41,7 @@ public class UserController {
 
 	@PutMapping("users/{id}")
 	public void updateUser(@PathVariable Long id, UserDTO userDTO) { /* not working with @RequestBody */
-		userService.updateUser(id, userDTO);
+		userService.updateUser(id, userDTO.getFirstName(),userDTO.getLastName(), userDTO.getBirthAt(), userDTO.getUrlImage(),userDTO.getEmail(), userDTO.getPassword(), userDTO.getStatus());
 	}
 
 	@DeleteMapping("users/{id}")

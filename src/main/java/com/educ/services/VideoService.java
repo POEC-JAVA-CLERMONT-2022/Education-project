@@ -14,15 +14,18 @@ import java.util.List;
 
 @Service
 public class VideoService {
-	@Autowired
+
 	private VideoRepository videoRepository;
 
-	@Transactional(readOnly = true)
+	@Autowired
+	public VideoService(VideoRepository videoRepository) {
+		this.videoRepository = videoRepository;
+	}
+
 	public List<Video> findAll(){
 		return videoRepository.findAll();
 	}
 
-	@Transactional(readOnly = true)
 	public boolean existId(Long id) {
 		List<Video> videos=this.videoRepository.findAll();
 		for(Video video:videos){
@@ -33,54 +36,40 @@ public class VideoService {
 		return false;
 	}
 
-	@Transactional(readOnly = true)
 	public Video getById(Long id) {
 		if(this.existId(id)){
 			return videoRepository.getById(id);
-		}else{
-			return null;
 		}
+		return null;
+
 	}
 
-	@Transactional(readOnly = true)
 	public Video findByUrl(String url){
-		if(url!=null){
-			List<Video> videos=this.findAll();
-			for (Video video:videos){
-				if (video.getUrl().equals(url)){
-					return video;
-				}
-			}
+		if (url==null){
 			return null;
-		}else { return null;}
-	}
-
-
-	@Transactional
-	//public Video createVideo(String title, String url, LocalTime duration){
-	public Video createVideo(VideoDTO videoDTO){
-			if ((videoDTO.getUrl() != null) && this.findByUrl(videoDTO.getUrl()) == null){
-				Video video=new Video(videoDTO.getTitle(), videoDTO.getUrl(), videoDTO.getDuration());
-				this.videoRepository.save(video);
-				return video;
-			}else{
-				return null;
-			}
-	}
-
-	@Transactional
-	//public void updateVideo (Long id, String title, String url, LocalTime duration){
-	public void updateVideo (Long id, VideoDTO videoDTO){
-		if(videoDTO.getUrl() != null){
-			if (this.existId(id) &&  (this.findByUrl(videoDTO.getUrl())==null)){
-				Video video=this.getById(id);
-				video.setTitle(videoDTO.getTitle());
-				video.setUrl(videoDTO.getUrl());
-				video.setDuration(videoDTO.getDuration());
-				this.videoRepository.save(video);
-			}
 		}
+		return this.videoRepository.findByUrl(url);
+	}
 
+
+	@Transactional
+	public Video createVideo(String title, String url, LocalTime duration){
+		if(url==null){ return null; }
+		if(this.findByUrl(url) != null){ return this.findByUrl(url); }
+		Video video=new Video(title, url, duration);
+		video=this.videoRepository.save(video);
+		return video;
+	}
+
+	@Transactional
+	public void updateVideo (Long id, String title, String url, LocalTime duration){
+		if (url!=null && (this.existId(id) &&  this.findByUrl(url)==null)){
+			Video video=this.getById(id);
+			video.setTitle(title);
+			video.setUrl(url);
+			video.setDuration(duration);
+			this.videoRepository.save(video);
+		}
 	}
 
 	@Transactional
@@ -90,5 +79,4 @@ public class VideoService {
 			this.videoRepository.delete(video);
 		}
 	}
-
 }

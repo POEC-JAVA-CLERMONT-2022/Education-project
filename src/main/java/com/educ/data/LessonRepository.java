@@ -14,8 +14,10 @@ public interface LessonRepository extends JpaRepository<Lesson, Long>  {
 
     public List<Lesson> findAll();
 
-    @Query("select l from Lesson l where l.name = :name and l.level= :level and l.language= :language")
-    Lesson findByNameAndLevelAndLanguage(@Param("name")String name, @Param("level") Level level, @Param("language") Language language);
+    /* @Query("select l from Lesson l where l.name = :name and l.level= :level and l.language= :language") */
+    Lesson findByNameAndLevelAndLanguage(String name, Level level, Language language);
+
+
 
     //@Query("select l from Lesson l join  l.modules m where l.id = :id")
     //public List<Lesson> getLessonAndModulesById();

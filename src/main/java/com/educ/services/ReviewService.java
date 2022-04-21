@@ -13,16 +13,18 @@ import java.util.List;
 @Service
 
 public class ReviewService {
-	@Autowired
+
 	private ReviewRepository reviewRepository;
 
+	@Autowired
+	public ReviewService(ReviewRepository reviewRepository) {
+		this.reviewRepository = reviewRepository;
+	}
 
-	@Transactional(readOnly = true)
 	public List<Review> findAll(){
 		return reviewRepository.findAll();
 	}
 
-	@Transactional(readOnly = true)
 	public boolean existId(Long id) {
 		List<Review> reviews=this.reviewRepository.findAll();
 		for(Review review:reviews){
@@ -33,7 +35,6 @@ public class ReviewService {
 		return false;
 	}
 
-	@Transactional(readOnly = true)
 	public Review getById(Long id) {
 		if(this.existId(id)){
 			return reviewRepository.getById(id);
@@ -67,8 +68,6 @@ public class ReviewService {
 			this.reviewRepository.delete(review);
 		}
 	}
-	
-	
 
 }
 
