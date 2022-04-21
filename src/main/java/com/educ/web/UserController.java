@@ -10,8 +10,13 @@ import com.educ.services.UserService;
 
 @RestController
 public class UserController {
-	@Autowired
+
 	private UserService userService;
+
+	@Autowired
+	public UserController(UserService userService){
+		this.userService = userService;
+	}
 
 	@GetMapping("/users")
 	public List<User> getUsers(){ /* ask for findAll DTO*/
@@ -27,9 +32,12 @@ public class UserController {
 
 	@PostMapping("users/add")
 	public User addUser(@RequestBody UserDTO userDTO){
-		User user = userService.createUser(userDTO);
-		return user;
+		User newUser = userService.createUser(userDTO);
+		//UserDTO userDTO1=new UserDTO(user.getFirstName(), user.getLastName(), user.getBirthAt(), user.getUrlImage(), user.getEmail(), user.getPassword(), user.getStatus());
+		return newUser;
 	}
+
+
 
 	@PutMapping("users/{id}")
 	public void updateUser(@PathVariable Long id, UserDTO userDTO) { /* not working with @RequestBody */

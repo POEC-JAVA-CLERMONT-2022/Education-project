@@ -36,7 +36,8 @@ public class UserDTO {
     public UserDTO(){
 
     }
-    /*
+
+
     public UserDTO(User user) {
         this.firstName=user.getFirstName();
         this.lastName=user.getLastName();
@@ -48,8 +49,6 @@ public class UserDTO {
         this.roles=user.getRoles();
         this.reviews=user.getReviews();
     }
-
-     */
 
     public Long getId() {
         return id;
