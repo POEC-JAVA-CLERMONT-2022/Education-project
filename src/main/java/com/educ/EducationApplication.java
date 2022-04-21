@@ -27,5 +27,6 @@ public class EducationApplication {
 		Role roleA=this.roleService.createRole("Admin");
 		Role roleT=this.roleService.createRole("Teacher");
 		Role roleS=this.roleService.createRole("Student");
+
 	}
 }

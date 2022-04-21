@@ -28,10 +28,8 @@ public class UserController {
 		List<UserDTO> userDTOS=new LinkedList<UserDTO>();
 		for (User user:users){
 			UserDTO userDTO=new UserDTO();
-
 			userDTOS.add(userDTO.copyUser(user));
 		}
-
 		return userDTOS;
 	}
 
@@ -51,6 +49,7 @@ public class UserController {
 
  */
 
+
 	/*
 	@PostMapping("add")
 	public UserDTO addUser(@RequestBody UserDTO userDTO){
@@ -60,13 +59,12 @@ public class UserController {
 		//UserDTO userDTO1=new UserDTO(user.getFirstName(), user.getLastName(), user.getBirthAt(), user.getUrlImage(), user.getEmail(), user.getPassword(), user.getStatus());
 		return newUser;
 	}
-
 	 */
 
 
 	@PutMapping("{id}")
 	public void updateUser(@PathVariable Long id, UserDTO userDTO) { /* not working with @RequestBody */
-		userService.updateUser(id, userDTO);
+		userService.updateUser(id, userDTO.getFirstName(),userDTO.getLastName(), userDTO.getBirthAt(), userDTO.getUrlImage(),userDTO.getEmail(), userDTO.getPassword(), userDTO.getStatus());
 	}
 
 	@DeleteMapping("{id}")

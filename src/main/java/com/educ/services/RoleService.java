@@ -13,16 +13,17 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class RoleService {
-
-	@Autowired
 	RoleRepository roleRepository;
 
-	@Transactional(readOnly = true)
+	@Autowired
+	public RoleService(RoleRepository roleRepository) {
+		this.roleRepository = roleRepository;
+	}
+
 	public List<Role> findAll(){
 		return roleRepository.findAll();
 	}
 
-	@Transactional(readOnly = true)
 	public boolean existId(Long id) {
 		List<Role> roles=this.roleRepository.findAll();
 		for(Role role:roles){
@@ -33,7 +34,6 @@ public class RoleService {
 		return false;
 	}
 
-	@Transactional(readOnly = true)
 	public Role getById(Long id) {
 		if(this.existId(id)){
 			return roleRepository.getById(id);
@@ -42,48 +42,28 @@ public class RoleService {
 		}
 	}
 
-	@Transactional(readOnly = true)
-	public Role findByName(String name){
-		if(name!=null){
-			List<Role> roles=this.findAll();
-			//TODO: utilisation des repo
-			for(Role role:roles){
-				if (role.getName().equals(name)){
-					return role;
-				}
-			}
-			return null;
-		}else {
+	public Role findByName(String name) {
+		if (name == null) {
 			return null;
 		}
-		//return this.roleRepository.findByName(name);
+		return this.roleRepository.findByName(name);
 	}
-
-
 
 	@Transactional
 	public Role createRole(String name){
-		if(name != null){
-			if(this.findByName(name) == null){
-				Role role=new Role(name);
-				role=this.roleRepository.save(role);
-				return role;
-			}else{
-				return this.findByName(name);
-			}
-		}else{
-			return null;
-		}
+		if(name==null){ return null;}
+		if(this.findByName(name) != null){ return this.findByName(name);}
+		Role role=new Role(name);
+		role=this.roleRepository.save(role);
+		return role;
 	}
 
 	@Transactional
 	public void updateRole (Long id, String name){
-		if(name!=null){
-			if(this.existId(id) && (this.findByName(name)==null)){
-				Role role=this.getById(id);
-				role.setName(name);
-				role=this.roleRepository.save(role);
-			}
+		if(name!=null && (this.existId(id) && this.findByName(name)==null)){
+			Role role=this.getById(id);
+			role.setName(name);
+			role=this.roleRepository.save(role);
 		}
 	}
 
