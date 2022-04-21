@@ -2,6 +2,7 @@ package com.educ.services.dto;
 import com.educ.entity.Review;
 import com.educ.entity.Role;
 import com.educ.entity.User;
+import org.springframework.beans.BeanUtils;
 
 import java.time.LocalDate;
 import java.util.LinkedList;
@@ -37,7 +38,7 @@ public class UserDTO {
 
     }
 
-
+/*
     public UserDTO(User user) {
         this.firstName=user.getFirstName();
         this.lastName=user.getLastName();
@@ -49,6 +50,8 @@ public class UserDTO {
         this.roles=user.getRoles();
         this.reviews=user.getReviews();
     }
+
+ */
 
     public Long getId() {
         return id;
@@ -129,4 +132,10 @@ public class UserDTO {
     public void setReviews(List<Review> reviews) {
         this.reviews = reviews;
     }
+
+    public UserDTO copyUser(User user){
+        BeanUtils.copyProperties(user, this);
+        return this;
+    }
+
 }
