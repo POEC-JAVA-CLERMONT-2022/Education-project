@@ -1,10 +1,8 @@
 package com.educ.web;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 import com.educ.services.dto.UserDTO;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,10 +26,8 @@ public class UserController {
 		List<UserDTO> userDTOS=new LinkedList<UserDTO>();
 		for (User user:users){
 			UserDTO userDTO=new UserDTO();
-
 			userDTOS.add(userDTO.copyUser(user));
 		}
-
 		return userDTOS;
 	}
 
