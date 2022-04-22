@@ -1,60 +1,47 @@
 package com.educ.services;
-
 import com.educ.data.VideoRepository;
-import com.educ.entity.Review;
 import com.educ.entity.Video;
-import com.educ.services.dto.VideoDTO;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalTime;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 @SpringBootTest
 @DisplayName("test du video service")
 public class VideoServiceTest {
 
-    @InjectMocks
+    @Autowired
     VideoService videoService;
 
-    @Mock
-    VideoRepository mockVideoRepository;
+    @Autowired
+    VideoRepository videoRepository;
+
+    @BeforeAll
+    static void initAll() {
+        System.out.println("beforeAll");
+    }
 
     @Test
     @DisplayName("creation video test")
     public void testCreationVideo(){
-        //create data
-
-        //ARRANGE
         String title="Spring Boot Tutorial";
         String url="https://www.youtube.com/watch?v=c3gKseNAs9w&ab_channel=DailyCodeBuffer";
         LocalTime duration=LocalTime.of(3,11,17);
-        when(mockVideoRepository.save(Mockito.any(Video.class))).thenReturn(new Video(title, url, duration));
-        VideoDTO videoDTO=new VideoDTO(title, url, duration);
+        Video video=this.videoService.createVideo(title,url,duration);
+        List<Video> videos=videoService.findAll();
+        assertNotNull(video);
+        assertTrue(video.getTitle().equals("Spring Boot Tutorial") && video.getUrl().equals("https://www.youtube.com/watch?v=c3gKseNAs9w&ab_channel=DailyCodeBuffer"));
+        assertNotNull(videos);
+        assertEquals(videos.size(),1);
+        }
 
-        //ACT
-        Video testVideo = videoService.createVideo(title, url, duration);
-
-        //ASSERT
-        assertNotNull(testVideo);
-        assertEquals(testVideo.getId(), null);
-        assertThat(testVideo).isNotNull();
-        assertThat(testVideo.getId()).isNull();
-        assertThat(testVideo).isEqualTo(new Video(title, url, duration));
-        assertThat(testVideo).usingRecursiveComparison().isEqualTo(new Video(title, url, duration));
-        verify(mockVideoRepository, times(1)).save(any(Video.class));
-    }
-/*
     @Test
     @DisplayName("update video test")
     public void testUpdateVideo(){
@@ -95,10 +82,5 @@ public class VideoServiceTest {
         videos=this.videoService.findAll();
         assertTrue(videos.contains(video));
 
-
     }
-
- */
-
-
 }
