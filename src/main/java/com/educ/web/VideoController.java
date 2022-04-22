@@ -1,48 +1,56 @@
 package com.educ.web;
 
-import com.educ.data.VideoRepository;
 import com.educ.entity.Video;
 import com.educ.services.VideoService;
 import com.educ.services.dto.VideoDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalTime;
+import java.util.LinkedList;
 import java.util.List;
 
 @RestController
+@RequestMapping("/videos")
 public class VideoController {
 
     Logger logger = LoggerFactory.getLogger(VideoController.class);
 
-    @Autowired
     private VideoService videoService;
 
     @Autowired
-    VideoRepository videoRepository;
-
-
-
-    @GetMapping("/videos")
-    public List<Video> getVideos(){
-        List<Video> videos = videoRepository.findAll();
-        return videos;
+    public VideoController(VideoService videoService){
+        this.videoService = videoService;
     }
 
-    @GetMapping("videos/{id}")
-    public Video getVideoById(@PathVariable Long id){
+    @GetMapping()
+    public List<VideoDTO> getVideos(){
+        List<Video> videos = videoService.findAll();
+        List<VideoDTO> videoDTOS = new LinkedList<VideoDTO>();
+        for (Video video:videos){
+            VideoDTO videoDTO = new VideoDTO();
+            videoDTOS.add(videoDTO.copyVideo(video));
+        }
+        return videoDTOS;
+    }
+
+    @GetMapping("{id}")
+    public VideoDTO getVideoById(@PathVariable Long id){
         logger.info("Given video {}",id);
-        Video video = videoService.getById(id);
-        return video;
+        VideoDTO videoDTO = new VideoDTO();
+        videoDTO.copyVideo(videoService.getById(id));
+        return videoDTO;
+    }
+    /*
+    @PostMapping("add")
+    public Video addVideo(@RequestBody VideoDTO videoDTO){
+        VideoDTO videoDTO1 = new VideoDTO();
+        Video video = videoService.createVideo(videoDTO);
+        return videoDTO1.copyVideo(video);
     }
 
-    @PostMapping("videos/add")
-    public Video addVideo(@RequestBody VideoDTO videoDTO){
-        return null;//videoService.createVideo(videoDTO);
-    }
+     */
 
     /* mouvaise pratique :
     @PutMapping("videos/{id}")
@@ -56,13 +64,13 @@ public class VideoController {
     }
      */
 
-    @PutMapping("videos/{id}")
+    @PutMapping("{id}")
     public void updateVideo(@PathVariable Long id, @RequestParam VideoDTO videoDTO){
         //videoService.updateVideo(id, videoDTO);
     }
 
-    @DeleteMapping("videos/{id}")
+    @DeleteMapping("{id}")
     public void deleteVideo(@PathVariable Long id){
-        videoRepository.deleteById(id);
+        videoService.deleteVideo(id);
     }
 }

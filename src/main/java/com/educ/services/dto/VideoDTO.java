@@ -1,6 +1,8 @@
 package com.educ.services.dto;
 
 import com.educ.entity.Modulee;
+import com.educ.entity.Video;
+import org.springframework.beans.BeanUtils;
 
 import java.time.LocalTime;
 
@@ -51,5 +53,10 @@ public class VideoDTO {
 
     public void setModule(Modulee module) {
         this.module = module;
+    }
+
+    public VideoDTO copyVideo(Video video){
+        BeanUtils.copyProperties(video, this);
+        return this;
     }
 }
