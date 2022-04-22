@@ -81,7 +81,7 @@ public class UserService {
 	@Transactional
 	public void updateUser(Long id, String firstName, String lastName, LocalDate birthAt, String urlImage, String email, String password, String status) {
 		if(email != null && this.existId(id)){
-			if ((this.getById(id) != null) &&  (this.findByEmail(email)==null)){
+			if ((this.getById(id) != null) &&  (this.findByEmail(email)!=null)){
 				User user=this.userRepository.getById(id);
 				user.setFirstName(firstName);
 				user.setLastName(lastName);
@@ -90,7 +90,7 @@ public class UserService {
 				user.setEmail(email);
 				user.setPassword(password);
 				user.setStatus(status);
-				this.userRepository.save(user);
+				user=this.userRepository.save(user);
 			}
 		}
 	}
@@ -103,8 +103,6 @@ public class UserService {
 		}
 	}
 
-	//TODO : à supprimer
-	//TODO : indentation
 	private User addUserRole(User user, String name) {
 		List<Role> roles;
 		Role role=roleService.findByName(name);

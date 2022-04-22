@@ -57,7 +57,7 @@ public class ModuleeService {
 	@Transactional
 	public Modulee updateModule(Long id, String title) {
 		if(title!=null && this.existId(id)){
-			if ((this.getById(id) != null) && (this.moduleRepository.findByTitle(title)==null)){
+			if ((this.getById(id) != null) && (this.moduleRepository.findByTitle(title)!=null)){
 				Modulee modulee=this.getById(id);
 				modulee.setTitle(title);
 				this.moduleRepository.save(modulee);
