@@ -30,26 +30,16 @@ import static org.mockito.Mockito.*;
 @SpringBootTest
 @DisplayName("test du user service")
 public class UserServiceTest {
-    @InjectMocks
+    @Autowired
     UserService userService;
 
-    /* @Autowired
-    UserRepository userRepository; */
+     @Autowired
+    UserRepository userRepository;
 
-    @Mock
-    private UserRepository mockedUserRepository;
-
-@Mock
-private UserService mockedUserService;
-@Mock
-private RoleService mockedRoleService;
-
-
-
-    @Mock
+    @Autowired
     private RoleRepository mockedRoleRepository;
 
-    @InjectMocks
+    @Autowired
     private RoleService roleService;
 
     private  List<User> users;
@@ -57,29 +47,6 @@ private RoleService mockedRoleService;
     @BeforeAll
     static void initAll() {
         System.out.println("beforeAll");
-    }
-
-    private User createUser(){
-        String firstName="Salsabil";
-        String lastName="Grouche";
-        LocalDate birthAt=LocalDate.of(1988,7,19);
-        String urlImage="https://thumbs.dreamstime.com/z/ic%C3%B4ne-de-fille-avatar-femme-visage-type-dessin-anim%C3%A9-vecteur-89897086.jpg";
-        String email="salsabilgrouche@yahoo.fr";
-        String password="xxxx";
-        String status="Developpeuse";
-        UserDTO userDTO=new UserDTO(firstName,lastName,birthAt,urlImage,email,password,status);
-       List<Role> roles=new LinkedList<Role>();
-        roles.add(new Role("Member"));
-        User user=new User(firstName,lastName,birthAt,urlImage,email,password,status);
-        user.setRoles(roles);
-   /*     if(users.contains(user)){
-            int i=users.indexOf(user);
-            Collections.replaceAll(users,users.get(i),user);
-
-        }else{
-            users.add(user);
-        } */
-        return user;
     }
 
     @Test
@@ -93,87 +60,7 @@ private RoleService mockedRoleService;
         String email="salsabilgrouche@yahoo.fr";
         String password="xxxx";
         String status="Developpeuse";
-        UserDTO userDTO=new UserDTO(firstName,lastName,birthAt,urlImage,email,password,status);
-       List<Role> roles=new LinkedList<Role>();
-        roles.add(new Role("Member"));
-        /*User user=new User(firstName,lastName,birthAt,urlImage,email,password,status);
-        user.setRoles(roles);*/
 
-        /* comportamiento */
-        //
-        //
-        /*List<User> */
-        users=new LinkedList<User>();
-        System.out.println("000 users =>"+users.toString());
-        when(mockedRoleRepository.save(Mockito.any(Role.class))).thenReturn(new Role("Member"));
-        when(mockedRoleService.findByName(Mockito.any(String.class))).thenReturn(new Role("Member"));
-        when(mockedUserRepository.save(Mockito.any(User.class))).thenReturn(this.createUser());
-        when(mockedUserService.findByEMail(Mockito.any(String.class))).thenReturn(new User(firstName,lastName,birthAt,urlImage,email,password,status));
-        //users.add( new User(firstName,lastName,birthAt,urlImage,email,password,status));
-        System.out.println("list users  => "+users.toString());
-        System.out.println("list roles  => "+roles.toString());
-        when(mockedUserRepository.findAll()).thenReturn(users);
-        when(mockedRoleRepository.findAll()).thenReturn(roles);
-
-                /*(()->{
-
-                        return user;
-        }
-                );*/
-        /* on appele le service */
-        Role testRole=roleService.createRole("Member");
-        List<Role> rs=new LinkedList<Role>();
-        rs.add(testRole);
-        System.out.println("users =>"+users.toString());
-        //User testUser = new User(firstName,lastName,birthAt,urlImage,email,password,status);
-        User testUser = userService.createUser(userDTO);
-       // testUser.setRoles(roles);
-       //System.out.println(testUser.toString());
-        /* test null */
-        assertNotNull(testUser);
-        /* test id not null */
-        assertEquals(testUser.getId(), null);
-        /* test objet not null */
-        assertThat(testUser).isNotNull();
-        /* test objet id not null */
-        assertThat(testUser.getId()).isNull();
-
-
-
-        /* si les references sont egales */
-        assertThat(testUser).isEqualTo(new User(firstName,lastName,birthAt,urlImage,email,password,status));
-        /* si tous les champs sont ok par rapport au premier argument */
-        //assertThat(testUser).usingRecursiveComparison().isEqualTo(new User(firstName,lastName,birthAt,urlImage,email,password,status));
-
-
-        /*firstName="Ilyan";
-        lastName="Guerilli";
-        birthAt=LocalDate.of(2020,4,8);
-        urlImage="https://i.unimedias.fr/2012/06/06/Bebe-a-2-mois1_0.jpg?auto=format%2Ccompress&crop=faces&cs=tinysrgb&fit=crop&h=453&w=806";
-        email="salsabilgrouche@yahoo.fr";
-        password="yyyy";
-        status="Dev";*/
-
-        /* comportamiento */
-        when(mockedUserRepository.save(Mockito.any(User.class))).thenReturn(null);
-        /* on appele le service */
-        //mockedUserRepository.save(new User(firstName,lastName,birthAt,urlImage,email,password,status));
-       User userJunior = userService.createUser(userDTO);
-        /* test objet not null */
-        assertThat(userJunior).isNull();
-
-    /* Verifie une fois l'utilisation de repo mocked avec un user mocked */
-
-/*
-        verify(mockedRoleRepository, times(1)).save(any(Role.class));
-        //verify(mockedRoleService, times(2)).findByName(any(String.class));
-        verify(mockedUserRepository, times(1)).save(any(User.class));
-       // verify(mockedUserService, times(2)).findByEMail(any(String.class));
-
-      //  verify(mockedUserRepository, times(3)).findAll();
-        verify(mockedRoleRepository, times(3)).findAll();*/
-
-        /*
         User user=this.userService.createUser(firstName,lastName,birthAt,urlImage,email,password,status);
         List<User> users=userService.findAll();
         assertNotNull(user);
@@ -188,18 +75,18 @@ private RoleService mockedRoleService;
         password="yyyy";
         status="Dev";
         User userJunior=this.userService.createUser(firstName,lastName,birthAt,urlImage,email,password,status);
-        assertNull(userJunior);
+        assertNotNull(userJunior);
         users=userService.findAll();
         assertEquals(users.size(),1);
         email="ilyanIlyan@yahoo.fr";
         userJunior=this.userService.createUser(firstName,lastName,birthAt,urlImage,email,password,status);
         assertNotNull(userJunior);
         users=userService.findAll();
-        assertEquals(users.size(),2);  */
+        assertEquals(users.size(),2);
 
     }
 
-    /*@Test
+    @Test
     @DisplayName("update user test")
     public void testUpdateUser(){
         String firstName="Salsabil";
@@ -225,7 +112,7 @@ private RoleService mockedRoleService;
 
     @Test
     @DisplayName("update user test")
-    public void testUpdateFirstNameLastNameByEmail(){
+    public void testUpdateByEmail(){
         String firstName="Salsabil";
         String lastName="Grouche";
         LocalDate birthAt=LocalDate.of(1988,7,19);
@@ -235,19 +122,18 @@ private RoleService mockedRoleService;
         String status="Developpeuse";
         User user=this.userService.createUser(firstName,lastName,birthAt,urlImage,email,password,status);
         List<User> users=userService.findAll();
-        User userUpdated=this.userService.updateFirstNameLastNameByEmail("Ilyan","Guerilli","salsabilgrouche@yahoo.fr");
+
+        User userUpdated=this.userService.updateByEmail("Ilyan","Guerilli",birthAt,null,"salsabilgrouche@yahoo.fr","qqq","");
         List<User> usersUpdated=this.userService.findAll();
         assertEquals(users.size(),usersUpdated.size());
         assertTrue(userUpdated.getFirstName().equals("Ilyan")) ;
-        this.userService.updateFirstNameLastNameByEmail("A","B","c@gmail.com");
+        this.userService.updateByEmail("A","B",birthAt,null,"cc@yahoo.fr","qqq","");
         usersUpdated=userService.findAll();
         assertFalse(usersUpdated.get(0).getFirstName().equals("A"));
-        this.userService.updateFirstNameLastNameByEmail("D","E",null);
+        this.userService.updateByEmail("Ilyan","Guerilli",birthAt,null,null,"qqq","");
         users=this.userService.findAll();
         assertFalse(usersUpdated.get(0).getFirstName().equals("D"));
     }
-
-
 
     @Test
     @DisplayName("delete user test")
@@ -271,14 +157,6 @@ private RoleService mockedRoleService;
         this.userService.deleteUser(10L);
         users=this.userService.findAll();
         assertTrue(users.contains(user));
-
-
     }
-*/
-
-
-
-
-
 }
 

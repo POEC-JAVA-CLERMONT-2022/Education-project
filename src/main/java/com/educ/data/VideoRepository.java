@@ -16,8 +16,8 @@ public interface VideoRepository extends JpaRepository<Video, Long>{
 
     public Video getById(Long id);
 
-    @Query("select v from Video v where v.url= :url")
-    Video findByUrl(@Param("url")String url);
+    /* @Query("select v from Video v where v.url= :url")*/
+    Video findByUrl(String url);
 
 
 }

@@ -13,6 +13,6 @@ public interface ModuleeRepository extends JpaRepository<Modulee, Long>
 
     public List<Modulee> findAll();
 
-    @Query("select m from Modulee m where m.title = :title")
-    Modulee findByTitle(@Param("title")String title);
+    /*@Query("select m from Modulee m where m.title = :title")*/
+    Modulee findByTitle(String title);
 }

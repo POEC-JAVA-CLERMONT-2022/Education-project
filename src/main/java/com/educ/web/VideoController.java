@@ -24,6 +24,8 @@ public class VideoController {
     @Autowired
     VideoRepository videoRepository;
 
+
+
     @GetMapping("/videos")
     public List<Video> getVideos(){
         List<Video> videos = videoRepository.findAll();
@@ -39,7 +41,7 @@ public class VideoController {
 
     @PostMapping("videos/add")
     public Video addVideo(@RequestBody VideoDTO videoDTO){
-        return videoService.createVideo(videoDTO);
+        return null;//videoService.createVideo(videoDTO);
     }
 
     /* mouvaise pratique :
@@ -56,7 +58,7 @@ public class VideoController {
 
     @PutMapping("videos/{id}")
     public void updateVideo(@PathVariable Long id, @RequestParam VideoDTO videoDTO){
-        videoService.updateVideo(id, videoDTO);
+        //videoService.updateVideo(id, videoDTO);
     }
 
     @DeleteMapping("videos/{id}")

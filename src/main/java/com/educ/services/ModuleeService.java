@@ -13,48 +13,45 @@ import java.util.List;
 @Service
 public class ModuleeService {
 	
-	@Autowired
+
 	private ModuleeRepository moduleRepository;
 
-	@Transactional(readOnly = true)
+	@Autowired
+	public ModuleeService(ModuleeRepository moduleRepository) {
+		this.moduleRepository = moduleRepository;
+	}
+
 	public List<Modulee> findAll(){
 		return moduleRepository.findAll();
 	}
 
-	@Transactional(readOnly = true)
 	public boolean existId(Long id) {
 		List<Modulee> modulees=this.moduleRepository.findAll();
 		for(Modulee modulee:modulees){
-			if(modulee.getId()==id){
-				return true;
-			}
+			if(modulee.getId()==id){ return true; }
 		}
 		return false;
 	}
 
-	@Transactional(readOnly = true)
 	public Modulee getById(Long id) {
 		if(this.existId(id)){
 			Modulee modulee=this.moduleRepository.getById(id);
 			return modulee;
-		}else{
-			return null;
-		}
+		}else{ return null; }
 	}
 
-	@Transactional(readOnly = true)
-	Modulee findByTitle(String title) { return moduleRepository.findByTitle(title);
+	Modulee findByTitle(String title) {
+		if (title==null){ return null; }
+		return moduleRepository.findByTitle(title);
 	}
 
 	@Transactional
 	public Modulee createModule(String title) {
-		if((title!=null) && this.moduleRepository.findByTitle(title) == null){
-			Modulee module = new Modulee(title);
-			this.moduleRepository.save(module);
-			return module;
-		}else {
-			return null;
-		}
+		if (title==null){ return null; }
+		if (this.findByTitle(title) != null){ return this.findByTitle(title);}
+		Modulee module = new Modulee(title);
+		this.moduleRepository.save(module);
+		return module;
 	}
 
 	@Transactional
@@ -82,12 +79,5 @@ public class ModuleeService {
 	public void calculRating() {
 		
 	}
-
-	/*
-	@Transactional(readOnly = true)
-	public List<Lesson> findAllByLesson(){ return moduleRepository.findAllByLesson();
-	}
-	*/
-
 }
 

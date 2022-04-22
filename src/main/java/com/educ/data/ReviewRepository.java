@@ -15,11 +15,6 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     public List<Review> findAll();
 
     public Review getById(Long id);
-    /*
-    @EntityGraph(attributePaths = {"item", "reviewer"})
-    List<Review> findByScoreAfter(Integer score);
 
-    List<Review> findAll();
 
-     */
 }
