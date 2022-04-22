@@ -15,9 +15,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class LessonService {
 
-	@Autowired
-	private LessonRepository lessonRepository;
 
+	private LessonRepository lessonRepository;
+	@Autowired
+	public LessonService(LessonRepository lessonRepository) {
+		this.lessonRepository = lessonRepository;
+	}
 
 	public List<Lesson> findAll(){ return lessonRepository.findAll();
 	}
@@ -59,7 +62,7 @@ public class LessonService {
 
 	@Transactional
 	public void updateLesson(Long id, String name, String description, Float price, Language language, Level level){
-		if (this.existId(id) && (this.lessonRepository.getById(id) != null && this.findByNameAndLevelAndLanguage(name, level, language)!=null)){
+		if(this.existId(id) && this.findByNameAndLevelAndLanguage(name, level, language)==null){
 			Lesson lesson=this.lessonRepository.getById(id);
 			lesson.setName(name);
 			lesson.setDescription(description);

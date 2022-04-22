@@ -1,10 +1,7 @@
 package com.educ.services;
 
 import com.educ.data.LessonRepository;
-import com.educ.entity.Language;
-import com.educ.entity.Lesson;
-import com.educ.entity.Level;
-import com.educ.entity.Video;
+import com.educ.entity.*;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalTime;
+import java.util.LinkedList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -54,16 +52,20 @@ public class LessonServiceTest {
         String description="MVC";
         Float price=12.4f;
         Language language= Language.FR;
-        Level level=Level.BEGINNER;
-        Lesson lesson=this.lessonService.createLesson(name, description, price, language, level);
+        Level l=Level.BEGINNER;
+        Lesson lesson=this.lessonService.createLesson(name, description, price, language, l);
         List<Lesson> lessons=lessonService.findAll();
         language = Language.EN;
-        level = Level.ADVANCE;
-        this.lessonService.updateLesson(1L, name, description, price, language, level);
+        l = Level.ADVANCE;
+
+        this.lessonService.updateLesson(1L, name, description, price, language, l);
+
         List<Lesson> lessonsUpdated=this.lessonService.findAll();
+
         assertEquals(lessons.size(),lessonsUpdated.size());
-        assertTrue(lessonsUpdated.get(0).getLanguage().equals(language) && lessonsUpdated.get(0).getLevel().equals(level)) ;
-        this.lessonService.updateLesson(9L,"POO", description, price, language, level);
+        assertTrue(lessonsUpdated.get(0).getLanguage().equals(language) && lessonsUpdated.get(0).getLevel().equals(l)) ;
+
+        this.lessonService.updateLesson(9L,"POO", description, price, language, l);
         lessons=this.lessonService.findAll();
         assertTrue(lessons.size()==1 && lessons.get(0).getId()!=9L);
     }

@@ -63,7 +63,7 @@ public class Lesson {
 		this.price = price;
 		this.language = language;
 		this.level = level;
-		this.modules=new LinkedList<Modulee>();
+ 		this.modules=new LinkedList<Modulee>();
 	}
 
 	public void setName(String name) {
@@ -77,11 +77,11 @@ public class Lesson {
 	public void setPrice(float price) {
 		this.price = price;
 	}
-	/*
-	public void setModules(List<Modulee> modules) {
+
+	/*public void setModules(List<Modulee> modules) {
 		this.modules = modules;
-	}
-	*/
+	}*/
+
 
 	public Long getId() {
 		return id;
@@ -139,13 +139,8 @@ public class Lesson {
 		return Objects.equals(name, other.name);
 	}
 
-
 	@Override
 	public String toString() {
 		return "Lesson {id=" + id + ", name=" + name + ", description=" + description + ", price=" + price + ", modules=" + modules + ", level=" + level + ", language=" + language + "}";
 	}
-	
-	
-	
-	
 }
