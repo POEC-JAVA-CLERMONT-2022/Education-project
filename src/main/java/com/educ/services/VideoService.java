@@ -63,7 +63,7 @@ public class VideoService {
 
 	@Transactional
 	public void updateVideo (Long id, String title, String url, LocalTime duration){
-		if (url!=null && (this.existId(id) &&  this.findByUrl(url)==null)){
+		if (url!=null && (this.existId(id) &&  this.findByUrl(url)!=null)){
 			Video video=this.getById(id);
 			video.setTitle(title);
 			video.setUrl(url);
