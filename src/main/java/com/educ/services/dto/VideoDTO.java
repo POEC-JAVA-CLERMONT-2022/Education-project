@@ -55,7 +55,7 @@ public class VideoDTO {
         this.module = module;
     }
 
-    public VideoDTO copyUser(Video video){
+    public VideoDTO copyVideo(Video video){
         BeanUtils.copyProperties(video, this);
         return this;
     }

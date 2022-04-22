@@ -29,7 +29,7 @@ public class UserController {
 		this.userService = userService;
 	}
 
-	@GetMapping("")
+	@GetMapping()
 	public List<UserDTO> getUsers(){
 		List<User> users = userService.findAll();
 		List<UserDTO> userDTOS=new LinkedList<UserDTO>();

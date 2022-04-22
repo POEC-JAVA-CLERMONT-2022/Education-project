@@ -1,16 +1,14 @@
 package com.educ.web;
 
-import com.educ.data.VideoRepository;
 import com.educ.entity.Video;
 import com.educ.services.VideoService;
 import com.educ.services.dto.VideoDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalTime;
+import java.util.LinkedList;
 import java.util.List;
 
 @RestController
@@ -27,22 +25,32 @@ public class VideoController {
     }
 
     @GetMapping()
-    public List<Video> getVideos(){
+    public List<VideoDTO> getVideos(){
         List<Video> videos = videoService.findAll();
-        return videos;
+        List<VideoDTO> videoDTOS = new LinkedList<VideoDTO>();
+        for (Video video:videos){
+            VideoDTO videoDTO = new VideoDTO();
+            videoDTOS.add(videoDTO.copyVideo(video));
+        }
+        return videoDTOS;
     }
 
     @GetMapping("{id}")
-    public Video getVideoById(@PathVariable Long id){
+    public VideoDTO getVideoById(@PathVariable Long id){
         logger.info("Given video {}",id);
-        Video video = videoService.getById(id);
-        return video;
+        VideoDTO videoDTO = new VideoDTO();
+        videoDTO.copyVideo(videoService.getById(id));
+        return videoDTO;
     }
-
+    /*
     @PostMapping("add")
     public Video addVideo(@RequestBody VideoDTO videoDTO){
-        return null;//videoService.createVideo(videoDTO);
+        VideoDTO videoDTO1 = new VideoDTO();
+        Video video = videoService.createVideo(videoDTO);
+        return videoDTO1.copyVideo(video);
     }
+
+     */
 
     /* mouvaise pratique :
     @PutMapping("videos/{id}")
