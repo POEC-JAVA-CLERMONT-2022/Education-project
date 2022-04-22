@@ -23,10 +23,10 @@ public class EducationApplication {
 	public void applicationStarted() {
 
 		/* Load roles by default */
-		Role roleM= roleService.createRole("Member");
+		/*Role roleM= roleService.createRole("Member");
 		Role roleA=this.roleService.createRole("Admin");
 		Role roleT=this.roleService.createRole("Teacher");
-		Role roleS=this.roleService.createRole("Student");
+		Role roleS=this.roleService.createRole("Student");*/
 
 	}
 }

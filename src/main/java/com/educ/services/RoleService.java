@@ -60,10 +60,13 @@ public class RoleService {
 
 	@Transactional
 	public void updateRole (Long id, String name){
-		if(name!=null && (this.existId(id) && this.findByName(name)!=null)){
-			Role role=this.getById(id);
-			role.setName(name);
-			role=this.roleRepository.save(role);
+		if(name!=null && this.existId(id)) {
+			Role r = this.findByName(name);
+			if (r == null || r.getId() == id) {
+				Role role = this.getById(id);
+				role.setName(name);
+				role = this.roleRepository.save(role);
+			}
 		}
 	}
 

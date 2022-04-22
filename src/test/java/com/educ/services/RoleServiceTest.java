@@ -41,15 +41,15 @@ public class RoleServiceTest {
         assertNotNull(roles);
         Role role_exist=this.roleService.createRole(name);
         roles=roleService.findAll();
-        assertNull(role_exist);
-        assertNotEquals(role,role_exist);
+        assertNotNull(role_exist);
+        assertEquals(role,role_exist);
         Role role1=this.roleService.createRole(n);
         roles=roleService.findAll();
         assertNotNull(role1);
         assertEquals(roles.size(),2);
         assertNotEquals(roles.size(),3);
    }
-    /*
+
     @Test
     @DisplayName("update role test")
     public void testUpdateRole(){
@@ -70,7 +70,6 @@ public class RoleServiceTest {
         roles_update=roleService.findAll();
         assertNotSame(role.getName(),roles_update.get(0).getName());
         assertNotEquals(roles_update.get(0).getName(),null,"Erreur name null");
-
     }
 
     @Test
@@ -93,5 +92,4 @@ public class RoleServiceTest {
         assertTrue(roles.contains(role));
     }
 
-    */
 }
