@@ -14,32 +14,32 @@ import java.time.LocalTime;
 import java.util.List;
 
 @RestController
+@RequestMapping("/videos")
 public class VideoController {
 
     Logger logger = LoggerFactory.getLogger(VideoController.class);
 
-    @Autowired
     private VideoService videoService;
 
     @Autowired
-    VideoRepository videoRepository;
+    public VideoController(VideoService videoService){
+        this.videoService = videoService;
+    }
 
-
-
-    @GetMapping("/videos")
+    @GetMapping()
     public List<Video> getVideos(){
-        List<Video> videos = videoRepository.findAll();
+        List<Video> videos = videoService.findAll();
         return videos;
     }
 
-    @GetMapping("videos/{id}")
+    @GetMapping("{id}")
     public Video getVideoById(@PathVariable Long id){
         logger.info("Given video {}",id);
         Video video = videoService.getById(id);
         return video;
     }
 
-    @PostMapping("videos/add")
+    @PostMapping("add")
     public Video addVideo(@RequestBody VideoDTO videoDTO){
         return null;//videoService.createVideo(videoDTO);
     }
@@ -56,13 +56,13 @@ public class VideoController {
     }
      */
 
-    @PutMapping("videos/{id}")
+    @PutMapping("{id}")
     public void updateVideo(@PathVariable Long id, @RequestParam VideoDTO videoDTO){
         //videoService.updateVideo(id, videoDTO);
     }
 
-    @DeleteMapping("videos/{id}")
+    @DeleteMapping("{id}")
     public void deleteVideo(@PathVariable Long id){
-        videoRepository.deleteById(id);
+        videoService.deleteVideo(id);
     }
 }
