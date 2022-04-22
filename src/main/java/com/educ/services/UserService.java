@@ -81,7 +81,8 @@ public class UserService {
 	@Transactional
 	public void updateUser(Long id, String firstName, String lastName, LocalDate birthAt, String urlImage, String email, String password, String status) {
 		if(email != null && this.existId(id)){
-			if ((this.getById(id) != null) &&  (this.findByEmail(email)!=null)){
+			User u=this.findByEmail(email);
+			if(u==null || u.getId()==id){
 				User user=this.userRepository.getById(id);
 				user.setFirstName(firstName);
 				user.setLastName(lastName);

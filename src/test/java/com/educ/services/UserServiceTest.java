@@ -101,7 +101,7 @@ public class UserServiceTest {
         this.userService.updateUser(1L,"","",LocalDate.now(),"","dsd@gmail.com","","");
         List<User> usersUpdated=this.userService.findAll();
         assertEquals(users.size(),usersUpdated.size());
-        assertTrue(usersUpdated.get(0).getEmail().equals("dsd@gmail.com")) ;
+        assertTrue(usersUpdated.get(0).getFirstName().equals("")); ;
         this.userService.updateUser(1L,"xx","",LocalDate.now(),"",null,"","");
         usersUpdated=userService.findAll();
         assertFalse(usersUpdated.get(0).getFirstName().equals("xx"));
