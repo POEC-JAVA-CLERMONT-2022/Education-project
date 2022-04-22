@@ -62,14 +62,17 @@ public class LessonService {
 
 	@Transactional
 	public void updateLesson(Long id, String name, String description, Float price, Language language, Level level){
-		if(this.existId(id) && this.findByNameAndLevelAndLanguage(name, level, language)==null){
-			Lesson lesson=this.lessonRepository.getById(id);
-			lesson.setName(name);
-			lesson.setDescription(description);
-			lesson.setLevel(level);
-			lesson.setPrice(price);
-			lesson.setLanguage(language);
-			this.lessonRepository.save(lesson);
+		if(this.existId(id) ){
+			Lesson l=this.findByNameAndLevelAndLanguage(name, level, language);
+			if (l==null || l.getId()==id){
+				Lesson lesson=this.lessonRepository.getById(id);
+				lesson.setName(name);
+				lesson.setDescription(description);
+				lesson.setLevel(level);
+				lesson.setPrice(price);
+				lesson.setLanguage(language);
+				this.lessonRepository.save(lesson);
+			}
 		}
 	}
 
