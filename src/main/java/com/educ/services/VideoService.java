@@ -51,7 +51,6 @@ public class VideoService {
 		return this.videoRepository.findByUrl(url);
 	}
 
-
 	@Transactional
 	public Video createVideo(String title, String url, LocalTime duration){
 		if(url==null){ return null; }
@@ -63,12 +62,15 @@ public class VideoService {
 
 	@Transactional
 	public void updateVideo (Long id, String title, String url, LocalTime duration){
-		if (url!=null && (this.existId(id) &&  this.findByUrl(url)!=null)){
-			Video video=this.getById(id);
-			video.setTitle(title);
-			video.setUrl(url);
-			video.setDuration(duration);
-			this.videoRepository.save(video);
+		if(url!=null && this.existId(id)){
+			Video v=this.findByUrl(url);
+			if(v==null || v.getId()==id){
+				Video video=this.getById(id);
+				video.setTitle(title);
+				video.setUrl(url);
+				video.setDuration(duration);
+				this.videoRepository.save(video);
+			}
 		}
 	}
 
