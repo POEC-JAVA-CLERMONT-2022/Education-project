@@ -63,7 +63,13 @@ public class Modulee {
 		return video;
 	}
 
+	public Lesson getLesson() {
+		return lesson;
+	}
 
+	public List<Review> getReviews() {
+		return reviews;
+	}
 
 	public void setTitle(String title) {
 		this.title = title;

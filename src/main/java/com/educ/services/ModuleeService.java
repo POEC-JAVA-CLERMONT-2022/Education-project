@@ -2,6 +2,7 @@ package com.educ.services;
 
 
 import com.educ.entity.Modulee;
+import com.educ.entity.Review;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -77,9 +78,15 @@ public class ModuleeService {
 		}
 	}
 
-	@Transactional(readOnly = true)
-	public void calculRating() {
-		
+
+	public Double calculRating(String title) {
+		Modulee modulee=this.findByTitle(title);
+		if (modulee == null){ return null;}
+		List<Review> reviews=modulee.getReviews();
+		if(reviews==null){ return 0.0;}
+		int somme=0;
+		for (Review review:reviews){somme+=review.getNote();}
+		return Double.valueOf(somme/reviews.size());
 	}
 }
 
