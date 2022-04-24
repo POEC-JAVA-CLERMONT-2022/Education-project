@@ -6,6 +6,8 @@ import com.educ.services.dto.VideoDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.LinkedList;
@@ -30,7 +32,7 @@ public class VideoController {
         List<VideoDTO> videoDTOS = new LinkedList<VideoDTO>();
         for (Video video:videos){
             VideoDTO videoDTO = new VideoDTO();
-            videoDTOS.add(videoDTO.copyVideo(video));
+            videoDTOS.add(videoDTO.convertTo(video));
         }
         return videoDTOS;
     }
@@ -39,38 +41,35 @@ public class VideoController {
     public VideoDTO getVideoById(@PathVariable Long id){
         logger.info("Given video {}",id);
         VideoDTO videoDTO = new VideoDTO();
-        videoDTO.copyVideo(videoService.getById(id));
+        videoDTO.convertTo(videoService.getById(id));
         return videoDTO;
     }
     /*
     @PostMapping("add")
-    public Video addVideo(@RequestBody VideoDTO videoDTO){
-        VideoDTO videoDTO1 = new VideoDTO();
-        Video video = videoService.createVideo(videoDTO);
-        return videoDTO1.copyVideo(video);
+    public ResponseEntity<VideoDTO> addVideo(@RequestBody VideoDTO videoDTO){
+        Video videoRequest = new Video();
+        Video video = videoService.createVideo(videoRequest);
+        VideoDTO videoResponse = videoDTO.convertTo(video);
+        return new ResponseEntity<VideoDTO>(videoResponse, HttpStatus.CREATED);
     }
+    */
 
-     */
-
-    /* mouvaise pratique :
-    @PutMapping("videos/{id}")
-    public Video updateVideo(@PathVariable Long id, @RequestBody Video videoInfo){
-        Video video  = videoRepository.getById(id);
-        video.setTitle(videoInfo.getTitle());
-        video.setDuration(videoInfo.getDuration());
-        video.setUrl(videoInfo.getUrl());
-        videoRepository.save(video);
-        return video;
+    @PostMapping("add") /* Salsabil check this */
+    public ResponseEntity<VideoDTO> addVideo(@RequestBody VideoDTO videoDTO){
+        VideoDTO newVideo = new VideoDTO();
+        //Video video = videoService.createVideo(videoDTO.getTitle(), videoDTO.getUrl(), videoDTO.getDuration());
+        newVideo.convertTo(videoService.createVideo(videoDTO.getTitle(), videoDTO.getUrl(), videoDTO.getDuration()));
+        return new ResponseEntity<>(newVideo, HttpStatus.OK);
     }
-     */
 
     @PutMapping("{id}")
-    public void updateVideo(@PathVariable Long id, @RequestParam VideoDTO videoDTO){
-        //videoService.updateVideo(id, videoDTO);
+    public void updateVideo(@PathVariable Long id, @RequestBody VideoDTO videoDTO){
+        videoService.updateVideo(id, videoDTO.getTitle(), videoDTO.getUrl(), videoDTO.getDuration());
     }
 
     @DeleteMapping("{id}")
-    public void deleteVideo(@PathVariable Long id){
+    public ResponseEntity<Video> deleteVideo(@PathVariable Long id){
         videoService.deleteVideo(id);
+        return ResponseEntity.ok().build();
     }
 }

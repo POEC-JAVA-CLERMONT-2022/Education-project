@@ -1,43 +1,51 @@
 package com.educ.web;
-
-import com.educ.data.LessonRepository;
-import com.educ.entity.Language;
 import com.educ.entity.Lesson;
-import com.educ.entity.Level;
 import com.educ.services.LessonService;
+import com.educ.services.dto.LessonDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @RestController
-//TODO: requestmapping
+@RequestMapping("/lessons")
 public class LessonController {
-    @Autowired
+
     private LessonService lessonService;
 
     @Autowired
-    private LessonRepository lessonRepository;
-
-    @GetMapping("/lessons/{id}")
-    public Lesson getLessonById(@PathVariable Long id){
-        Lesson lesson = lessonRepository.getById(id);
-        return lesson;
+    public LessonController(LessonService lessonService){
+        this.lessonService = lessonService;
     }
 
-    @PostMapping("lessons/add")
-    public Lesson addLesson(@RequestBody Lesson lesson){
-        return lessonRepository.save(lesson);
-
+    @GetMapping("{id}")
+    public ResponseEntity<LessonDTO> getLessonById(@PathVariable Long id){
+        LessonDTO findLesson = new LessonDTO();
+        findLesson.convertTo(lessonService.getById(id));
+        return new ResponseEntity<>(findLesson, HttpStatus.OK);
     }
+
+
+    @PostMapping("add") /* Salsabil check this */
+    public ResponseEntity<LessonDTO> addLesson(@RequestBody LessonDTO lessonDTO){
+        LessonDTO newLesson = new LessonDTO();
+        newLesson.convertTo(lessonService.createLesson(lessonDTO.getName(), lessonDTO.getDescription(), lessonDTO.getPrice(), lessonDTO.getLanguage(), lessonDTO.getLevel()));
+        return new ResponseEntity<>(newLesson, HttpStatus.CREATED);
+    }
+
     //Postman language & level : FR / MIDDLE
     //Postman price 150.20
-    @PutMapping("lessons/{id}")
-    public void updateLesson(@PathVariable Long id, @RequestParam String name,@RequestParam String description, @RequestParam Float price, @RequestParam Language language, @RequestParam Level level){
-        lessonService.updateLesson(id, name, description, price, language, level);
+    @PutMapping("{id}")
+    public void updateLesson(@PathVariable Long id, @RequestBody LessonDTO lessonDTO){
+        lessonService.updateLesson(id, lessonDTO.getName(), lessonDTO.getDescription(), lessonDTO.getPrice(), lessonDTO.getLanguage(), lessonDTO.getLevel());
 
     }
 
-    @DeleteMapping("lessons/{id}")
-    public void deleteLesson(@PathVariable Long id){ lessonRepository.deleteById(id);}
+    @DeleteMapping("{id}")
+    public ResponseEntity<Lesson> deleteLesson(@PathVariable Long id){
+        lessonService.deleteLesson(id);
+        return ResponseEntity.ok().build();
+    }
+
 }
