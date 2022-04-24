@@ -53,11 +53,13 @@ public class VideoService {
 
 	@Transactional
 	public Video createVideo(String title, String url, LocalTime duration){
+	//public Video createVideo(Video video){
 		if(url==null){ return null; }
 		if(this.findByUrl(url) != null){ return this.findByUrl(url); }
 		Video video=new Video(title, url, duration);
 		video=this.videoRepository.save(video);
 		return video;
+		//return videoRepository.save(video);
 	}
 
 	@Transactional
