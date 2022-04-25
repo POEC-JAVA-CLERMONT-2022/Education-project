@@ -38,12 +38,15 @@ public class VideoController {
     }
 
     @GetMapping("{id}")
-    public VideoDTO getVideoById(@PathVariable Long id){
+    public ResponseEntity<VideoDTO> getVideoById(@PathVariable Long id){
         logger.info("Given video {}",id);
         VideoDTO videoDTO = new VideoDTO();
         videoDTO.convertTo(videoService.getById(id));
-        return videoDTO;
+        return ResponseEntity.ok(videoDTO);
+
     }
+
+
     /*
     @PostMapping("add")
     public ResponseEntity<VideoDTO> addVideo(@RequestBody VideoDTO videoDTO){
@@ -54,7 +57,7 @@ public class VideoController {
     }
     */
 
-    @PostMapping("add") /* Salsabil check this */
+    @PostMapping("add")
     public ResponseEntity<VideoDTO> addVideo(@RequestBody VideoDTO videoDTO){
         VideoDTO newVideo = new VideoDTO();
         //Video video = videoService.createVideo(videoDTO.getTitle(), videoDTO.getUrl(), videoDTO.getDuration());

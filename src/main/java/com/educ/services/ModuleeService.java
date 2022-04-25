@@ -19,6 +19,7 @@ public class ModuleeService {
 
 	@Autowired
 	public ModuleeService(ModuleeRepository moduleRepository) {
+
 		this.moduleRepository = moduleRepository;
 	}
 
@@ -41,7 +42,7 @@ public class ModuleeService {
 		}else{ return null; }
 	}
 
-	Modulee findByTitle(String title) {
+	public Modulee findByTitle(String title) {
 		if (title==null){ return null; }
 		return moduleRepository.findByTitle(title);
 	}
@@ -78,7 +79,7 @@ public class ModuleeService {
 		}
 	}
 
-
+/*
 	public Double calculRating(String title) {
 		Modulee modulee=this.findByTitle(title);
 		if (modulee == null){ return null;}
@@ -88,5 +89,7 @@ public class ModuleeService {
 		for (Review review:reviews){somme+=review.getNote();}
 		return Double.valueOf(somme/reviews.size());
 	}
+
+ */
 }
 

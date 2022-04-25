@@ -34,7 +34,8 @@ public class ReviewController {
     //check this for insert module & user
     @PostMapping("reviews/add")
     public Review addReview(@RequestBody Review review){
-        return reviewRepository.save(review);
+
+        return reviewService.createReview(review.getNote(), review.getComment());
     }
 
     //check this for insert module & user

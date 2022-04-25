@@ -4,34 +4,38 @@ import com.educ.data.ModuleeRepository;
 import com.educ.entity.Modulee;
 import com.educ.services.ModuleeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.nio.file.Path;
 import java.util.List;
 
 @RestController
+@RequestMapping("/modules")
 public class ModuleeController {
-    @Autowired
+
     private ModuleeService moduleeService;
 
     @Autowired
-    private ModuleeRepository moduleeRepository;
+    public ModuleeController(ModuleeService moduleeService){
+        this.moduleeService = moduleeService;
+    }
 
-    @GetMapping("/modules")
+    @GetMapping()
     public List<Modulee> getModules(){
-        List<Modulee> modulees = moduleeRepository.findAll();
+        List<Modulee> modulees = moduleeService.findAll();
         return modulees;
     }
 
-    @GetMapping("modules/{id}")
+    @GetMapping("{id}")
     public Modulee getModuleById(@PathVariable Long id){
-        Modulee modulee = moduleeRepository.getById(id);
+        Modulee modulee = moduleeService.getById(id);
         return modulee;
     }
 
-    @PostMapping("modules/add")
+    @PostMapping("add")
     public Modulee addModule(@RequestBody Modulee modulee){
-        return moduleeRepository.save(modulee);
+        return moduleeService.createModule(modulee.getTitle());
     }
 
     //check this for update another attrib
@@ -47,16 +51,16 @@ public class ModuleeController {
 
      */
 
-    @PutMapping("modules/{id}")
-    public Modulee updateModule(@PathVariable Long id, @RequestParam String title){
+    @PutMapping("{id}")
+    public Modulee updateModule(@PathVariable Long id, @RequestBody String title){
         Modulee modulee = moduleeService.updateModule(id, title);
         return modulee;
     }
 
-    @DeleteMapping("modules/{id}")
-    public void deleteModule(@PathVariable Long id){
-
-        this.moduleeRepository.deleteById(id);
+    @DeleteMapping("{id}")
+    public ResponseEntity<Modulee> deleteModule(@PathVariable Long id){
+        moduleeService.deleteModule(id);
+        return ResponseEntity.ok().build();
     }
 
 
