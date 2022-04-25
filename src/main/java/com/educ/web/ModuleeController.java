@@ -19,7 +19,7 @@ public class ModuleeController {
 
     @GetMapping("/modules")
     public List<Modulee> getModules(){
-        List<Modulee> modulees = moduleeRepository.findAll();
+        List<Modulee> modulees = moduleeService.findAll();
         return modulees;
     }
 

@@ -54,9 +54,12 @@ public class User {
 	private String status;
 	
 	/*@OneToMany(mappedBy ="user", fetch = FetchType.LAZY)*/
-	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade=CascadeType.REMOVE, orphanRemoval = true)
+	//@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade=CascadeType.REMOVE, orphanRemoval = true)
+	//
+	@OneToMany
+	@JoinColumn(name = "user_id")
 	private List<Review> reviews;
-	
+	//private Review review;
 
 	@JoinColumn(name="role_id")
 	@ManyToMany
@@ -77,6 +80,7 @@ public class User {
 		this.status = status;
 		this.roles=new LinkedList<Role>();
 		this.reviews=new LinkedList<Review>();
+		//this.review=null;
 	}
 
 	public void setFirstName(String firstName) {
@@ -110,6 +114,8 @@ public class User {
 	public void setRoles(List<Role> roles) {
 		this.roles = roles;
 	}
+
+
 
 	public String getFirstName() {
 		return firstName;
@@ -150,6 +156,10 @@ public class User {
 	public List<Review> getReviews() {
 		return reviews;
 	}
+
+	/*public Review getReview() {
+		return review;
+	}*/
 
 	@Override
 	public int hashCode() {

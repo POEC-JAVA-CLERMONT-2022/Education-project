@@ -4,18 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name="modules")
@@ -29,12 +18,20 @@ public class Modulee {
 	@Column(name="title", unique = true, nullable = false)
 	private String title;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	private Lesson lesson;
+	//@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToMany
+	@JoinColumn(name = "lesson_id")
+	private List<Lesson> lessons;
 	
-	@OneToMany(mappedBy = "module", fetch = FetchType.LAZY, cascade=CascadeType.REMOVE, orphanRemoval = true)
-	private List<Review> reviews; 
-	
+	//@OneToMany(mappedBy = "module", fetch = FetchType.LAZY, cascade=CascadeType.REMOVE, orphanRemoval = true)
+	@OneToMany
+	@JoinColumn(name = "module_id")
+	//private Review review;
+	private List<Review> reviews;
+
+	/*@OneToOne(mappedBy = "module")
+	private Review review;*/
+
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "video_id", referencedColumnName = "id")
 	private Video video;
@@ -46,7 +43,8 @@ public class Modulee {
 		super();
 		this.title = title;
 		this.reviews=new LinkedList<Review>();
-		this.lesson=null;
+		//this.review=null;
+		this.lessons=new LinkedList<Lesson>();
 		this.video=null;
 	}
 
@@ -63,21 +61,27 @@ public class Modulee {
 		return video;
 	}
 
-	public Lesson getLesson() {
-		return lesson;
+	public List<Lesson> getLessons() {
+		return lessons;
 	}
 
 	public List<Review> getReviews() {
 		return reviews;
 	}
 
+	/*public Review getReview() {
+		return review;
+	}*/
+
 	public void setTitle(String title) {
 		this.title = title;
 	}
 
+
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(lesson, title);
+		return Objects.hash(title);
 	}
 
 	@Override
@@ -89,13 +93,18 @@ public class Modulee {
 		if (getClass() != obj.getClass())
 			return false;
 		Modulee other = (Modulee) obj;
-		return Objects.equals(lesson, other.lesson) && Objects.equals(title, other.title);
+		return  Objects.equals(title, other.title);
 	}
 
 	@Override
 	public String toString() {
-		return "Module {id=" + id + ", title=" + title + ", lesson=" + lesson + ", reviews=" + reviews + ", video="
-				+ video + "}";
+		return "Modulee{" +
+				"id=" + id +
+				", title='" + title + '\'' +
+				", lessons=" + lessons +
+				", reviews=" + reviews +
+				", video=" + video +
+				'}';
 	}
 }
 
