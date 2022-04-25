@@ -41,7 +41,8 @@ public class Lesson {
 	/*private List<User> students;
 	private List<User> admins;*/
 	
-	@OneToMany(mappedBy = "lesson", cascade=CascadeType.REMOVE, orphanRemoval = true)
+	//@OneToMany(mappedBy = "lesson", cascade=CascadeType.REMOVE, orphanRemoval = true)
+	@OneToMany(mappedBy = "lesson")
 	private List<Modulee> modules;
 	
 	@Column(name="level")

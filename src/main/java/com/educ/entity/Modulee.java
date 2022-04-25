@@ -4,18 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name="modules")
@@ -29,12 +18,20 @@ public class Modulee {
 	@Column(name="title", unique = true, nullable = false)
 	private String title;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	//@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
+	@JoinColumn(name = "lesson_id")
 	private Lesson lesson;
 	
-	@OneToMany(mappedBy = "module", fetch = FetchType.LAZY, cascade=CascadeType.REMOVE, orphanRemoval = true)
-	private List<Review> reviews; 
-	
+	//@OneToMany(mappedBy = "module", fetch = FetchType.LAZY, cascade=CascadeType.REMOVE, orphanRemoval = true)
+	@OneToMany
+	@JoinColumn(name = "module_id")
+	//private Review review;
+	private List<Review> reviews;
+
+	/*@OneToOne(mappedBy = "module")
+	private Review review;*/
+
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "video_id", referencedColumnName = "id")
 	private Video video;
@@ -46,6 +43,7 @@ public class Modulee {
 		super();
 		this.title = title;
 		this.reviews=new LinkedList<Review>();
+		//this.review=null;
 		this.lesson=null;
 		this.video=null;
 	}
@@ -71,13 +69,19 @@ public class Modulee {
 		return reviews;
 	}
 
+	/*public Review getReview() {
+		return review;
+	}*/
+
 	public void setTitle(String title) {
 		this.title = title;
 	}
 
+
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(lesson, title);
+		return Objects.hash(title);
 	}
 
 	@Override
@@ -89,13 +93,18 @@ public class Modulee {
 		if (getClass() != obj.getClass())
 			return false;
 		Modulee other = (Modulee) obj;
-		return Objects.equals(lesson, other.lesson) && Objects.equals(title, other.title);
+		return  Objects.equals(title, other.title);
 	}
 
 	@Override
 	public String toString() {
-		return "Module {id=" + id + ", title=" + title + ", lesson=" + lesson + ", reviews=" + reviews + ", video="
-				+ video + "}";
+		return "Modulee{" +
+				"id=" + id +
+				", title='" + title + '\'' +
+				", lesson=" + lesson +
+				", reviews=" + reviews +
+				", video=" + video +
+				'}';
 	}
 }
 

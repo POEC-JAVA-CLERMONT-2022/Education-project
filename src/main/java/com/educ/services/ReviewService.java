@@ -1,7 +1,9 @@
 package com.educ.services;
 
+import com.educ.entity.Modulee;
 import com.educ.entity.Review;
 import com.educ.entity.Role;
+import com.educ.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,9 +18,20 @@ public class ReviewService {
 
 	private ReviewRepository reviewRepository;
 
-	@Autowired
+	private ModuleeService moduleeService;
+
+	private UserService userService;
+
+	/* @Autowired
 	public ReviewService(ReviewRepository reviewRepository) {
 		this.reviewRepository = reviewRepository;
+	} */
+
+	@Autowired
+	public ReviewService(ReviewRepository reviewRepository, ModuleeService moduleeService, UserService userService) {
+		this.reviewRepository = reviewRepository;
+		this.moduleeService = moduleeService;
+		this.userService = userService;
 	}
 
 	public List<Review> findAll(){
@@ -44,8 +57,11 @@ public class ReviewService {
 	}
 
 	@Transactional
+	//public Review createReview(int note, String comment, String title, String email){
 	public Review createReview(int note, String comment){
 		Review review=new Review(note,comment);
+		//review=this.addReviewModule(review,title);
+		//review=this.addReviewUser(review,email);
 		this.reviewRepository.save(review);
 		return review;
 	}
@@ -68,6 +84,33 @@ public class ReviewService {
 			this.reviewRepository.delete(review);
 		}
 	}
+/*
+	private Review addReviewModule(Review review, String title){
+		try {
+			Modulee modulee=moduleeService.findByTitle(title);
+			if(review==null){ return null;}
+			if(modulee==null) { return review;}
+			review.setModule(modulee);
+			return review;
+		}catch (NullPointerException e){
+			System.out.println("Erreur Module title null");
+			return review;
+		}
+
+	}
+	private Review addReviewUser(Review review, String email){
+		try {
+			User user=userService.findByEmail(email);
+			if(review==null){ return null;}
+			if(user==null){ return review;}
+			review.setUser(user);
+			return review;
+		}catch (NullPointerException e){
+			System.out.println("Erreur user email null");
+			return review;
+		}
+
+	}*/
 
 }
 

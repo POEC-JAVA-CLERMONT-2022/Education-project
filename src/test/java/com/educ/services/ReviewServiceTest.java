@@ -1,8 +1,10 @@
 package com.educ.services;
 
 import com.educ.data.ReviewRepository;
+import com.educ.entity.Modulee;
 import com.educ.entity.Review;
 import com.educ.entity.Role;
+import com.educ.entity.User;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,6 +25,12 @@ public class ReviewServiceTest {
     @Autowired
     ReviewRepository reviewRepository;
 
+    @Autowired
+    UserService userService;
+
+    @Autowired
+    ModuleeService moduleeService;
+
     @BeforeAll
     static void initAll() {
         System.out.println("beforeAll");
@@ -34,6 +42,8 @@ public class ReviewServiceTest {
         //create data
         int note=9;
         String comment="Tres bien";
+        User user=this.userService.createUser("sasa","grgr", null,"","salsa@gmail.com","","");
+        Modulee modulee=moduleeService.createModule("Java");
         Review review=this.reviewService.createReview(note, comment);
         List<Review> reviews=reviewService.findAll();
         assertNotNull(review);
@@ -77,10 +87,5 @@ public class ReviewServiceTest {
         this.reviewService.deleteReview(10L);
         reviews=this.reviewService.findAll();
         assertTrue(reviews.contains(review));
-
-
     }
-
-
-
 }

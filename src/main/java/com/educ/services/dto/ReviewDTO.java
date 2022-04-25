@@ -22,4 +22,20 @@ public class ReviewDTO {
         this.module=null;
         this.user=null;
     }
+
+    public int getNote() {
+        return note;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public Modulee getModule() {
+        return module;
+    }
+
+    public User getUser() {
+        return user;
+    }
 }
