@@ -19,9 +19,9 @@ public class Modulee {
 	private String title;
 	
 	//@ManyToOne(fetch = FetchType.LAZY)
-	@ManyToOne
+	@ManyToMany
 	@JoinColumn(name = "lesson_id")
-	private Lesson lesson;
+	private List<Lesson> lessons;
 	
 	//@OneToMany(mappedBy = "module", fetch = FetchType.LAZY, cascade=CascadeType.REMOVE, orphanRemoval = true)
 	@OneToMany
@@ -44,7 +44,7 @@ public class Modulee {
 		this.title = title;
 		this.reviews=new LinkedList<Review>();
 		//this.review=null;
-		this.lesson=null;
+		this.lessons=new LinkedList<Lesson>();
 		this.video=null;
 	}
 
@@ -61,8 +61,8 @@ public class Modulee {
 		return video;
 	}
 
-	public Lesson getLesson() {
-		return lesson;
+	public List<Lesson> getLessons() {
+		return lessons;
 	}
 
 	public List<Review> getReviews() {
@@ -101,7 +101,7 @@ public class Modulee {
 		return "Modulee{" +
 				"id=" + id +
 				", title='" + title + '\'' +
-				", lesson=" + lesson +
+				", lessons=" + lessons +
 				", reviews=" + reviews +
 				", video=" + video +
 				'}';

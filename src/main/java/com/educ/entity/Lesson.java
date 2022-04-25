@@ -42,8 +42,9 @@ public class Lesson {
 	private List<User> admins;*/
 	
 	//@OneToMany(mappedBy = "lesson", cascade=CascadeType.REMOVE, orphanRemoval = true)
-	@OneToMany(mappedBy = "lesson")
-	private List<Modulee> modules;
+	/*@OneToMany
+	@JoinColumn(name = "lesson_id")
+	private List<Modulee> modules;*/
 	
 	@Column(name="level")
 	private Level level;
@@ -64,7 +65,7 @@ public class Lesson {
 		this.price = price;
 		this.language = language;
 		this.level = level;
- 		this.modules=new LinkedList<Modulee>();
+ 		//this.modules=new LinkedList<Modulee>();
 	}
 
 	public void setName(String name) {
@@ -108,9 +109,9 @@ public class Lesson {
 		return language;
 	}
 
-	public List<Modulee> getModules() {
+	/* public List<Modulee> getModules() {
 		return modules;
-	}
+	} */
 
 
 
@@ -142,6 +143,6 @@ public class Lesson {
 
 	@Override
 	public String toString() {
-		return "Lesson {id=" + id + ", name=" + name + ", description=" + description + ", price=" + price + ", modules=" + modules + ", level=" + level + ", language=" + language + "}";
+		return "Lesson {id=" + id + ", name=" + name + ", description=" + description + ", price=" + price +", level=" + level + ", language=" + language + "}";
 	}
 }
