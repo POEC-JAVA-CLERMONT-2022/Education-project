@@ -40,7 +40,6 @@ public class VideoController {
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
     }
 
     @GetMapping("{id}")
@@ -54,34 +53,17 @@ public class VideoController {
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Video not found");
         }
-
-
     }
 
-
-    /*
     @PostMapping("add")
-    public ResponseEntity<VideoDTO> addVideo(@RequestBody VideoDTO videoDTO){
-        Video videoRequest = new Video();
-        Video video = videoService.createVideo(videoRequest);
-        VideoDTO videoResponse = videoDTO.convertTo(video);
-        return new ResponseEntity<VideoDTO>(videoResponse, HttpStatus.CREATED);
-    }
-    */
-
-    @PostMapping("add") /* Preguntar si c'est ok sin Video video */
     public ResponseEntity<VideoDTO> addVideo(@RequestBody VideoDTO videoDTO){
         try{
             VideoDTO newVideo = new VideoDTO();
-            //Video video = videoService.createVideo(videoDTO.getTitle(), videoDTO.getUrl(), videoDTO.getDuration());
             newVideo.convertTo(videoService.createVideo(videoDTO.getTitle(), videoDTO.getUrl(), videoDTO.getDuration()));
-            return new ResponseEntity<>(newVideo, HttpStatus.OK);
+            return new ResponseEntity<>(newVideo, HttpStatus.CREATED); /* CODE 201 */
         } catch (Exception e) {
-            //return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Error to create video : ", e);
-            //return ResponseEntity.badRequest().build();
         }
-
     }
 
     @PutMapping("{id}")
@@ -91,8 +73,6 @@ public class VideoController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
     }
 
     @DeleteMapping("{id}")
@@ -102,8 +82,7 @@ public class VideoController {
             return ResponseEntity.ok().build();
         } catch (Exception e){
             e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Video not found");
         }
-
     }
 }
