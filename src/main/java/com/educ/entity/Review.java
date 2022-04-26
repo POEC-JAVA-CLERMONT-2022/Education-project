@@ -34,7 +34,6 @@ public class Review {
 	*/
 	
 	public Review() {
-		
 	}
 
 	public Review(int note, String comment) {

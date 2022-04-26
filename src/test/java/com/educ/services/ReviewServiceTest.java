@@ -40,7 +40,7 @@ public class ReviewServiceTest {
         int note=9;
         String comment="Tres bien";
         User user=this.userService.createUser("sasa","grgr", null,"","salsa@gmail.com","","");
-        Modulee modulee=moduleeService.createModule("Java", "", Level.ADVANCE, Language.EN);
+        Modulee modulee=moduleeService.createModule("Java", "", Level.ADVANCE, Language.EN,1L);
         Review review=this.reviewService.createReview(note, comment);
         List<Review> reviews=reviewService.findAll();
         assertNotNull(review);
