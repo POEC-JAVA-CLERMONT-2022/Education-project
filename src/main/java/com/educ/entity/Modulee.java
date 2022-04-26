@@ -77,7 +77,9 @@ public class Modulee {
 		this.title = title;
 	}
 
-
+	public void setLessons(List<Lesson> lessons) {
+		this.lessons = lessons;
+	}
 
 	@Override
 	public int hashCode() {
