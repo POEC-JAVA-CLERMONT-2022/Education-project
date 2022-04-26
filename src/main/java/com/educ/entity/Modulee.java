@@ -43,7 +43,7 @@ public class Modulee {
 		super();
 		this.title = title;
 		this.reviews=new LinkedList<Review>();
-		//this.review=null;
+
 		this.lessons=new LinkedList<Lesson>();
 		this.video=null;
 	}
@@ -69,9 +69,6 @@ public class Modulee {
 		return reviews;
 	}
 
-	/*public Review getReview() {
-		return review;
-	}*/
 
 	public void setTitle(String title) {
 		this.title = title;
@@ -79,6 +76,14 @@ public class Modulee {
 
 	public void setLessons(List<Lesson> lessons) {
 		this.lessons = lessons;
+	}
+
+	public void setReviews(List<Review> reviews) {
+		this.reviews = reviews;
+	}
+
+	public void setVideo(Video video) {
+		this.video = video;
 	}
 
 	@Override

@@ -38,7 +38,7 @@ public class ModuleeController {
 
     @PostMapping("add")
     public Modulee addModule(@RequestBody ModuleeDTO moduleeDTO){
-        Modulee modulee= moduleeService.createModule(moduleeDTO.getTitle(), "Java", Level.MIDDLE, Language.EN);
+        Modulee modulee= moduleeService.createModule(moduleeDTO.getTitle(), "Java", Level.MIDDLE, Language.EN,1L);
         return modulee;
     }
 

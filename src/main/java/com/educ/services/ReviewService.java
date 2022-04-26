@@ -18,22 +18,23 @@ public class ReviewService {
 
 	private ReviewRepository reviewRepository;
 
-	private ModuleeService moduleeService;
+	/*private ModuleeService moduleeService;
 
-	private UserService userService;
+	private UserService userService;*/
 
-	/* @Autowired
+	@Autowired
 	public ReviewService(ReviewRepository reviewRepository) {
 		this.reviewRepository = reviewRepository;
-	} */
+	}
 
+	/*
 	@Autowired
 	public ReviewService(ReviewRepository reviewRepository, ModuleeService moduleeService, UserService userService) {
 		this.reviewRepository = reviewRepository;
 		this.moduleeService = moduleeService;
 		this.userService = userService;
 	}
-
+*/
 	public List<Review> findAll(){
 		return reviewRepository.findAll();
 	}
