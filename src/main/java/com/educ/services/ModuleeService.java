@@ -13,15 +13,20 @@ import java.util.List;
 @Service
 public class ModuleeService {
 
-
 	private ModuleeRepository moduleRepository;
 
 	private LessonService lessonService;
 
+	private ReviewService reviewService;
+
+	private VideoService videoService;
+
 	@Autowired
-	public ModuleeService(ModuleeRepository moduleRepository, LessonService lessonService) {
+	public ModuleeService(ModuleeRepository moduleRepository, LessonService lessonService, ReviewService reviewService, VideoService videoService) {
 		this.moduleRepository = moduleRepository;
 		this.lessonService = lessonService;
+		this.reviewService = reviewService;
+		this.videoService = videoService;
 	}
 
 	public List<Modulee> findAll(){
@@ -47,15 +52,16 @@ public class ModuleeService {
 			if (title==null){
 				return null; }
 			return moduleRepository.findByTitle(title);
-
 	}
 
 	@Transactional
-	public Modulee createModule(String title, String name, Level level, Language language) {
+	public Modulee createModule(String title, String name, Level level, Language language, Long id, String url) {
 		if (title==null){ return null; }
 		if (this.findByTitle(title) != null){ return this.findByTitle(title);}
 		Modulee module = new Modulee(title);
 		module =this.addModuleeLesson(module, name,level,language);
+		module=this.addModuleeReview(module,id);
+		module=this.addModuleeVideo(module,url);
 		this.moduleRepository.save(module);
 		return module;
 	}
@@ -82,7 +88,7 @@ public class ModuleeService {
 		}
 	}
 
-	private Modulee addModuleeLesson(Modulee modulee, String name, Level level, Language language){
+	public Modulee addModuleeLesson(Modulee modulee, String name, Level level, Language language){
 		List<Lesson> lessons;
 		Lesson lesson=lessonService.findByNameAndLevelAndLanguage(name,level,language);
 		if(modulee==null){ return null;}
@@ -93,7 +99,26 @@ public class ModuleeService {
 		return modulee;
 	}
 
-/*
+	private Modulee addModuleeReview(Modulee modulee, Long id){
+		List<Review> reviews;
+		Review review=reviewService.getById(id);
+		if(modulee==null){ return null;}
+		if(review==null){ return modulee;}
+		reviews=modulee.getReviews();
+		reviews.add(review);
+		modulee.setReviews(reviews);
+		return modulee;
+	}
+
+	private Modulee addModuleeVideo(Modulee modulee, String url){
+		Video video=videoService.findByUrl(url);
+		if(modulee==null){ return null;}
+		if(video==null){ return modulee;}
+		modulee.setVideo(video);
+		return modulee;
+	}
+
+
 	public Double calculRating(String title) {
 		Modulee modulee=this.findByTitle(title);
 		if (modulee == null){ return null;}
@@ -103,7 +128,7 @@ public class ModuleeService {
 		for (Review review:reviews){somme+=review.getNote();}
 		return Double.valueOf(somme/reviews.size());
 	}
-*/
+
 
 }
 
