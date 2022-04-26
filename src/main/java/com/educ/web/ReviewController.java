@@ -34,11 +34,13 @@ public class ReviewController {
 
     //check this for insert module & user
     @PostMapping("reviews/add")
+
     public Review addReview(@RequestBody ReviewDTO reviewDTO){
         String title="JS";
         String email="salsabilgrouche@yahoo.fr";
         Review review=this.reviewService.createReview(reviewDTO.getNote(),reviewDTO.getComment());
         return review;
+
     }
 
     //check this for insert module & user

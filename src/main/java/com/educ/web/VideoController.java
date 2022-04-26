@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -27,23 +28,37 @@ public class VideoController {
     }
 
     @GetMapping()
-    public List<VideoDTO> getVideos(){
-        List<Video> videos = videoService.findAll();
-        List<VideoDTO> videoDTOS = new LinkedList<VideoDTO>();
-        for (Video video:videos){
-            VideoDTO videoDTO = new VideoDTO();
-            videoDTOS.add(videoDTO.convertTo(video));
+    public ResponseEntity<List<VideoDTO>> getVideos(){
+        try {
+            List<Video> videos = videoService.findAll();
+            List<VideoDTO> videoDTOS = new LinkedList<VideoDTO>();
+            for (Video video:videos){
+                VideoDTO videoDTO = new VideoDTO();
+                videoDTOS.add(videoDTO.convertTo(video));
+            }
+            return new ResponseEntity<>(videoDTOS, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return videoDTOS;
+
     }
 
     @GetMapping("{id}")
-    public VideoDTO getVideoById(@PathVariable Long id){
-        logger.info("Given video {}",id);
-        VideoDTO videoDTO = new VideoDTO();
-        videoDTO.convertTo(videoService.getById(id));
-        return videoDTO;
+    public ResponseEntity<VideoDTO> getVideoById(@PathVariable Long id){
+        try {
+            logger.info("Given video {}",id);
+            VideoDTO videoDTO = new VideoDTO();
+            videoDTO.convertTo(videoService.getById(id));
+            //return ResponseEntity.ok(videoDTO);
+            return new ResponseEntity<> (videoDTO, HttpStatus.OK);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Video not found");
+        }
+
+
     }
+
+
     /*
     @PostMapping("add")
     public ResponseEntity<VideoDTO> addVideo(@RequestBody VideoDTO videoDTO){
@@ -54,22 +69,41 @@ public class VideoController {
     }
     */
 
-    @PostMapping("add") /* Salsabil check this */
+    @PostMapping("add") /* Preguntar si c'est ok sin Video video */
     public ResponseEntity<VideoDTO> addVideo(@RequestBody VideoDTO videoDTO){
-        VideoDTO newVideo = new VideoDTO();
-        //Video video = videoService.createVideo(videoDTO.getTitle(), videoDTO.getUrl(), videoDTO.getDuration());
-        newVideo.convertTo(videoService.createVideo(videoDTO.getTitle(), videoDTO.getUrl(), videoDTO.getDuration()));
-        return new ResponseEntity<>(newVideo, HttpStatus.OK);
+        try{
+            VideoDTO newVideo = new VideoDTO();
+            //Video video = videoService.createVideo(videoDTO.getTitle(), videoDTO.getUrl(), videoDTO.getDuration());
+            newVideo.convertTo(videoService.createVideo(videoDTO.getTitle(), videoDTO.getUrl(), videoDTO.getDuration()));
+            return new ResponseEntity<>(newVideo, HttpStatus.OK);
+        } catch (Exception e) {
+            //return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Error to create video : ", e);
+            //return ResponseEntity.badRequest().build();
+        }
+
     }
 
     @PutMapping("{id}")
     public void updateVideo(@PathVariable Long id, @RequestBody VideoDTO videoDTO){
-        videoService.updateVideo(id, videoDTO.getTitle(), videoDTO.getUrl(), videoDTO.getDuration());
+        try {
+            videoService.updateVideo(id, videoDTO.getTitle(), videoDTO.getUrl(), videoDTO.getDuration());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
     }
 
     @DeleteMapping("{id}")
     public ResponseEntity<Video> deleteVideo(@PathVariable Long id){
-        videoService.deleteVideo(id);
-        return ResponseEntity.ok().build();
+        try{
+            videoService.deleteVideo(id);
+            return ResponseEntity.ok().build();
+        } catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
 }

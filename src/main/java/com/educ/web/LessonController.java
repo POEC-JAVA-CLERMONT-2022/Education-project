@@ -41,7 +41,7 @@ public class LessonController {
     }
 
 
-    @PostMapping("add") /* Salsabil check this */
+    @PostMapping("add")
     public ResponseEntity<LessonDTO> addLesson(@RequestBody LessonDTO lessonDTO){
         LessonDTO newLesson = new LessonDTO();
         newLesson.convertTo(lessonService.createLesson(lessonDTO.getName(), lessonDTO.getDescription(), lessonDTO.getPrice(), lessonDTO.getLanguage(), lessonDTO.getLevel()));
@@ -51,9 +51,9 @@ public class LessonController {
     //Postman language & level : FR / MIDDLE
     //Postman price 150.20
     @PutMapping("{id}")
-    public void updateLesson(@PathVariable Long id, @RequestBody LessonDTO lessonDTO){
+    public ResponseEntity<LessonDTO> updateLesson(@PathVariable Long id, @RequestBody LessonDTO lessonDTO){
         lessonService.updateLesson(id, lessonDTO.getName(), lessonDTO.getDescription(), lessonDTO.getPrice(), lessonDTO.getLanguage(), lessonDTO.getLevel());
-
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     @DeleteMapping("{id}")
