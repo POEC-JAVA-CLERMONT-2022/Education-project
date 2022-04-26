@@ -19,11 +19,14 @@ public class ModuleeService {
 
 	private ReviewService reviewService;
 
+	private VideoService videoService;
+
 	@Autowired
-	public ModuleeService(ModuleeRepository moduleRepository, LessonService lessonService, ReviewService reviewService) {
+	public ModuleeService(ModuleeRepository moduleRepository, LessonService lessonService, ReviewService reviewService, VideoService videoService) {
 		this.moduleRepository = moduleRepository;
 		this.lessonService = lessonService;
 		this.reviewService = reviewService;
+		this.videoService = videoService;
 	}
 
 	public List<Modulee> findAll(){
@@ -52,12 +55,13 @@ public class ModuleeService {
 	}
 
 	@Transactional
-	public Modulee createModule(String title, String name, Level level, Language language, Long id) {
+	public Modulee createModule(String title, String name, Level level, Language language, Long id, String url) {
 		if (title==null){ return null; }
 		if (this.findByTitle(title) != null){ return this.findByTitle(title);}
 		Modulee module = new Modulee(title);
 		module =this.addModuleeLesson(module, name,level,language);
 		module=this.addModuleeReview(module,id);
+		module=this.addModuleeVideo(module,url);
 		this.moduleRepository.save(module);
 		return module;
 	}
@@ -106,7 +110,15 @@ public class ModuleeService {
 		return modulee;
 	}
 
-/*
+	private Modulee addModuleeVideo(Modulee modulee, String url){
+		Video video=videoService.findByUrl(url);
+		if(modulee==null){ return null;}
+		if(video==null){ return modulee;}
+		modulee.setVideo(video);
+		return modulee;
+	}
+
+
 	public Double calculRating(String title) {
 		Modulee modulee=this.findByTitle(title);
 		if (modulee == null){ return null;}
@@ -116,7 +128,7 @@ public class ModuleeService {
 		for (Review review:reviews){somme+=review.getNote();}
 		return Double.valueOf(somme/reviews.size());
 	}
-*/
+
 
 }
 
