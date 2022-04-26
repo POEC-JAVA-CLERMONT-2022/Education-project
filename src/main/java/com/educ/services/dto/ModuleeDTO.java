@@ -6,12 +6,13 @@ import com.educ.entity.Review;
 import com.educ.entity.Video;
 import org.springframework.beans.BeanUtils;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class ModuleeDTO {
     private Long id;
     private String title;
-    private Lesson lesson;
+    private List<Lesson> lessons;
     private List<Review> reviews;
     private Video video;
 
@@ -21,8 +22,8 @@ public class ModuleeDTO {
     public ModuleeDTO(String title) {
         super();
         this.title = title;
-        this.reviews=null;
-        this.lesson=null;
+        this.reviews=new LinkedList<Review>();
+        this.lessons=new LinkedList<Lesson>();
         this.video=null;
     }
 
@@ -30,8 +31,8 @@ public class ModuleeDTO {
         return title;
     }
 
-    public Lesson getLesson() {
-        return lesson;
+    public List<Lesson> getLessons() {
+        return lessons;
     }
 
     public List<Review> getReviews() {
@@ -46,8 +47,8 @@ public class ModuleeDTO {
         this.title = title;
     }
 
-    public void setLesson(Lesson lesson) {
-        this.lesson = lesson;
+    public void setLessons(List<Lesson> lessons) {
+        this.lessons = lessons;
     }
 
     public void setReviews(List<Review> reviews) {
