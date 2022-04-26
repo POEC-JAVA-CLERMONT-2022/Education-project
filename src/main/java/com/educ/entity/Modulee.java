@@ -31,6 +31,7 @@ public class Modulee {
 	/*@OneToOne(mappedBy = "module")
 	private Review review;*/
 
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "video_id", referencedColumnName = "id")
     private Video video;

@@ -53,21 +53,19 @@ public class UserController {
 			return new ResponseEntity<> (userDTO, HttpStatus.OK);
 		} catch (Exception e) {
 			/*e.printStackTrace();*/ /* error en console */
-			//return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR); /* page blanche "cette page ne fonctionne pas "*/
 			//throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found :", e); /* Error long in pageweb */
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"); /* Error long in pageweb */
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
 		}
-
 	}
 
 	@PostMapping("add")
 	public ResponseEntity<UserDTO> addUser(@RequestBody UserDTO userDTO){
-		logger.debug("REST request to save User : {}", userDTO);
+		//logger.debug("REST request to save User : {}", userDTO);
 		try{
 			UserDTO createdUser = new UserDTO();
 			User user = userService.createUser(userDTO.getFirstName(), userDTO.getLastName(), userDTO.getBirthAt(), userDTO.getUrlImage(), userDTO.getEmail(), userDTO.getPassword(), userDTO.getStatus());
 			createdUser.copyUser(user);
-			return new ResponseEntity(createdUser, HttpStatus.CREATED);
+			return new ResponseEntity(createdUser, HttpStatus.CREATED); /* OK*/
 		} catch (Exception e) { /* check when email exist */
 			e.printStackTrace();
 			//return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
