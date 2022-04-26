@@ -38,7 +38,7 @@ public class VideoController {
             }
             return new ResponseEntity<>(videoDTOS, HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Video not found");
         }
     }
 
@@ -63,6 +63,7 @@ public class VideoController {
             return new ResponseEntity<>(newVideo, HttpStatus.CREATED); /* CODE 201 */
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Error to create video : ", e);
+            //return  ResponseEntity.status((HttpStatus.CONFLICT);
         }
     }
 
