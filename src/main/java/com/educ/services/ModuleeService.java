@@ -1,8 +1,7 @@
 package com.educ.services;
 
 
-import com.educ.entity.Modulee;
-import com.educ.entity.Review;
+import com.educ.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,14 +12,16 @@ import java.util.List;
 
 @Service
 public class ModuleeService {
-	
+
 
 	private ModuleeRepository moduleRepository;
 
-	@Autowired
-	public ModuleeService(ModuleeRepository moduleRepository) {
+	private LessonService lessonService;
 
+	@Autowired
+	public ModuleeService(ModuleeRepository moduleRepository, LessonService lessonService) {
 		this.moduleRepository = moduleRepository;
+		this.lessonService = lessonService;
 	}
 
 	public List<Modulee> findAll(){
@@ -50,10 +51,11 @@ public class ModuleeService {
 	}
 
 	@Transactional
-	public Modulee createModule(String title) {
+	public Modulee createModule(String title, String name, Level level, Language language) {
 		if (title==null){ return null; }
 		if (this.findByTitle(title) != null){ return this.findByTitle(title);}
 		Modulee module = new Modulee(title);
+		module =this.addModuleeLesson(module, name,level,language);
 		this.moduleRepository.save(module);
 		return module;
 	}
@@ -80,6 +82,17 @@ public class ModuleeService {
 		}
 	}
 
+	private Modulee addModuleeLesson(Modulee modulee, String name, Level level, Language language){
+		List<Lesson> lessons;
+		Lesson lesson=lessonService.findByNameAndLevelAndLanguage(name,level,language);
+		if(modulee==null){ return null;}
+		if(lesson==null){ return modulee;}
+		lessons=modulee.getLessons();
+		lessons.add(lesson);
+		modulee.setLessons(lessons);
+		return modulee;
+	}
+
 /*
 	public Double calculRating(String title) {
 		Modulee modulee=this.findByTitle(title);
@@ -90,7 +103,7 @@ public class ModuleeService {
 		for (Review review:reviews){somme+=review.getNote();}
 		return Double.valueOf(somme/reviews.size());
 	}
+*/
 
- */
 }
 
