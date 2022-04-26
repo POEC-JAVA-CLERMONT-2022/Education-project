@@ -13,91 +13,88 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="videos")
+@Table(name = "videos")
 public class Video {
-	@Id
-	@Column(name="id", nullable=false)
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	
-	@Column(name="title")
-	private String title;
-	
-	@Column(name="url", unique = true, nullable = false)
-	private String url;
+    @Id
+    @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	@Column(name="duration")
-	private LocalTime duration;
-	
-	
-	@OneToOne(mappedBy = "video")
-	private Modulee module;
-	
-	public Video() {
-		this.url="";
-	}
-	
-	public Video(String title, String url, LocalTime duration) {
-		super();
-		this.title = title;
-		this.url = url;
-		this.duration = duration;
-		this.module=null;
-	}
+    @Column(name = "title")
+    private String title;
 
-	public Long getId() {
-		return id;
-	}
+    @Column(name = "url", unique = true, nullable = false)
+    private String url;
 
-	public String getTitle() {
-		return title;
-	}
+    @Column(name = "duration")
+    private LocalTime duration;
 
-	public String getUrl() {
-		return url;
-	}
 
-	public LocalTime getDuration() {
-		return duration;
-	}
-/*
-	public Modulee getModule() {
-		return module;
-	}
-*/
-	public void setTitle(String title) {
-		this.title = title;
-	}
+    @OneToOne(mappedBy = "video")
+    private Modulee module;
 
-	public void setUrl(String url) {
-		this.url = url;
-	}
+    public Video() {
+        this.url = "";
+    }
 
-	public void setDuration(LocalTime duration) {
-		this.duration = duration;
-	}
+    public Video(String title, String url, LocalTime duration) {
+        super();
+        this.title = title;
+        this.url = url;
+        this.duration = duration;
+        this.module = null;
+    }
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(url);
-	}
+    public Long getId() {
+        return id;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Video other = (Video) obj;
-		return Objects.equals(url, other.url);
-	}
+    public String getTitle() {
+        return title;
+    }
 
-	@Override
-	public String toString() {
-		return "Video {id=" + id + ", title=" + title + ", url=" + url + ", duration=" + duration + ", module=" + module
-				+ "}";
-	}
+    public String getUrl() {
+        return url;
+    }
+
+    public LocalTime getDuration() {
+        return duration;
+    }
+
+    /*
+        public Modulee getModule() {
+            return module;
+        }
+    */
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public void setDuration(LocalTime duration) {
+        this.duration = duration;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(url);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
+        Video other = (Video) obj;
+        return Objects.equals(url, other.url);
+    }
+
+    @Override
+    public String toString() {
+        return "Video {id=" + id + ", title=" + title + ", url=" + url + ", duration=" + duration + ", module=" + module + "}";
+    }
 
 }
