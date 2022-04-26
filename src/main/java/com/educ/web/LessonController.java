@@ -1,11 +1,16 @@
 package com.educ.web;
 import com.educ.entity.Lesson;
+import com.educ.entity.User;
 import com.educ.services.LessonService;
 import com.educ.services.dto.LessonDTO;
+import com.educ.services.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.LinkedList;
+import java.util.List;
 
 
 @RestController
@@ -16,8 +21,17 @@ public class LessonController {
 
     @Autowired
     public LessonController(LessonService lessonService){
+
         this.lessonService = lessonService;
     }
+    @GetMapping()
+    public List<Lesson> getLessons(){
+        List<Lesson> lessons = lessonService.findAll();
+
+        return lessons;
+    }
+
+
 
     @GetMapping("{id}")
     public ResponseEntity<LessonDTO> getLessonById(@PathVariable Long id){

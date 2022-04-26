@@ -5,6 +5,7 @@ import com.educ.entity.Modulee;
 import com.educ.entity.Review;
 import com.educ.entity.User;
 import com.educ.services.ReviewService;
+import com.educ.services.dto.ReviewDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,9 +34,13 @@ public class ReviewController {
 
     //check this for insert module & user
     @PostMapping("reviews/add")
-    public Review addReview(@RequestBody Review review){
 
-        return reviewService.createReview(review.getNote(), review.getComment());
+    public Review addReview(@RequestBody ReviewDTO reviewDTO){
+        String title="JS";
+        String email="salsabilgrouche@yahoo.fr";
+        Review review=this.reviewService.createReview(reviewDTO.getNote(),reviewDTO.getComment());
+        return review;
+
     }
 
     //check this for insert module & user

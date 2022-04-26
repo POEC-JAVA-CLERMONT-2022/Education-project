@@ -25,12 +25,13 @@ public class Review {
 	
 	@Column(name="comment")
 	private String comment;
-	
+	/*
 	@ManyToOne()
 	private Modulee module;
 	
 	@ManyToOne()
 	private User user;
+	*/
 	
 	public Review() {
 		
@@ -40,8 +41,8 @@ public class Review {
 		super();
 		this.note = note;
 		this.comment = comment;
-		this.module=null;
-		this.user=null;
+	//	this.module=null;
+	//	this.user=null;
 	}
 
 	public Long getId() {
@@ -64,13 +65,21 @@ public class Review {
 		this.comment = comment;
 	}
 
-	public Modulee getModule() {
+	/* public Modulee getModule() {
 		return module;
 	}
 
 	public User getUser() {
 		return user;
 	}
+
+	public void setModule(Modulee module) {
+		this.module = module;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	} */
 
 	@Override
 	public int hashCode() {
@@ -89,13 +98,16 @@ public class Review {
 		return Objects.equals(id, other.id);
 	}
 
+
 	@Override
 	public String toString() {
-		return "Review {id=" + id + ", note=" + note + ", comment=" + comment + ", module=" + module + "}";
+		return "Review{" +
+				"id=" + id +
+				", note=" + note +
+				", comment='" + comment + '\'' +
+				 /*", module=" + module +
+				", user=" + user +*/
+				'}';
 	}
-	
-	
-	
-	
 }
 

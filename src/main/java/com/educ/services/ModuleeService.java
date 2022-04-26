@@ -42,9 +42,11 @@ public class ModuleeService {
 		}else{ return null; }
 	}
 
-	public Modulee findByTitle(String title) {
-		if (title==null){ return null; }
-		return moduleRepository.findByTitle(title);
+	public Modulee findByTitle(String title) {	
+			if (title==null){
+				return null; }
+			return moduleRepository.findByTitle(title);
+
 	}
 
 	@Transactional
@@ -67,7 +69,6 @@ public class ModuleeService {
 			this.moduleRepository.save(modulee);
 			return modulee;
 		}
-
 		return null;
 	}
 
