@@ -1,8 +1,11 @@
 package com.educ.web;
 
 import com.educ.data.ModuleeRepository;
+import com.educ.entity.Language;
+import com.educ.entity.Level;
 import com.educ.entity.Modulee;
 import com.educ.services.ModuleeService;
+import com.educ.services.dto.ModuleeDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,8 +37,9 @@ public class ModuleeController {
     }
 
     @PostMapping("add")
-    public Modulee addModule(@RequestBody Modulee modulee){
-        return moduleeService.createModule(modulee.getTitle());
+    public Modulee addModule(@RequestBody ModuleeDTO moduleeDTO){
+        Modulee modulee= moduleeService.createModule(moduleeDTO.getTitle(), "Java", Level.MIDDLE, Language.EN);
+        return modulee;
     }
 
     //check this for update another attrib

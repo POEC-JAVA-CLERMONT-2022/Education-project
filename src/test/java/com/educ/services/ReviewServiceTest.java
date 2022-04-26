@@ -1,10 +1,7 @@
 package com.educ.services;
 
 import com.educ.data.ReviewRepository;
-import com.educ.entity.Modulee;
-import com.educ.entity.Review;
-import com.educ.entity.Role;
-import com.educ.entity.User;
+import com.educ.entity.*;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -43,7 +40,7 @@ public class ReviewServiceTest {
         int note=9;
         String comment="Tres bien";
         User user=this.userService.createUser("sasa","grgr", null,"","salsa@gmail.com","","");
-        Modulee modulee=moduleeService.createModule("Java");
+        Modulee modulee=moduleeService.createModule("Java", "", Level.ADVANCE, Language.EN);
         Review review=this.reviewService.createReview(note, comment);
         List<Review> reviews=reviewService.findAll();
         assertNotNull(review);
