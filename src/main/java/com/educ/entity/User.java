@@ -115,7 +115,9 @@ public class User {
 		this.roles = roles;
 	}
 
-
+	public void setReviews(List<Review> reviews) {
+		this.reviews = reviews;
+	}
 
 	public String getFirstName() {
 		return firstName;

@@ -5,6 +5,7 @@ package com.educ.services;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.educ.entity.Review;
 import com.educ.entity.Role;
 import com.educ.services.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,13 +22,15 @@ public class UserService {
 
 	private UserRepository userRepository;
 
-
 	private RoleService roleService;
 
+	private ReviewService reviewService;
+
 	@Autowired
-	public UserService(UserRepository userRepository, RoleService roleService) {
+	public UserService(UserRepository userRepository, RoleService roleService, ReviewService reviewService) {
 		this.userRepository = userRepository;
 		this.roleService = roleService;
+		this.reviewService = reviewService;
 	}
 
 	public List<User> findAll(){
@@ -55,11 +58,12 @@ public class UserService {
 	}
 
 	@Transactional
-	public User createUser(String firstName, String lastName, LocalDate birthAt, String urlImage, String email, String password, String status) {
+	public User createUser(String firstName, String lastName, LocalDate birthAt, String urlImage, String email, String password, String status, Long id) {
 		if (email==null){ return null; }
 		if (this.findByEmail(email) != null){ return this.findByEmail(email); }
 		User user=new User(firstName, lastName, birthAt, urlImage, email, password, status);
 		user=this.addUserRole(user,"Member");
+		user=this.addUserReview(user,id);
 		user =this.userRepository.save(user);
 		return user;
 	}
@@ -105,14 +109,36 @@ public class UserService {
 	}
 
 	private User addUserRole(User user, String name) {
-		List<Role> roles;
-		Role role=roleService.findByName(name);
-		if(user==null){ return null; }
-		if(role==null){	return user; }
-		roles=user.getRoles();
-		roles.add(role);
-		user.setRoles(roles);
-		return user;
+		try {
+			List<Role> roles;
+			Role role=roleService.findByName(name);
+			if(user==null){ return null; }
+			if(role==null){	return user; }
+			roles=user.getRoles();
+			roles.add(role);
+			user.setRoles(roles);
+			return user;
+		}catch (NullPointerException e) {
+			System.out.println("Erreur relation user Role null");
+			return user;
+		}
+	}
+
+	private User addUserReview(User user, Long id){
+		try {
+			List<Review> reviews;
+			Review review=reviewService.getById(id);
+			if(user==null){ return null;}
+			if(review==null){ return user;}
+			reviews=user.getReviews();
+			reviews.add(review);
+			user.setReviews(reviews);
+			return user;
+		}catch (NullPointerException e) {
+			System.out.println("Erreur relation user Review null");
+			return user;
+		}
+
 	}
 
 }

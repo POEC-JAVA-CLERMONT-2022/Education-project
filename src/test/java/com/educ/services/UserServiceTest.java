@@ -61,7 +61,7 @@ public class UserServiceTest {
         String password="xxxx";
         String status="Developpeuse";
 
-        User user=this.userService.createUser(firstName,lastName,birthAt,urlImage,email,password,status);
+        User user=this.userService.createUser(firstName,lastName,birthAt,urlImage,email,password,status,1L);
         List<User> users=userService.findAll();
         assertNotNull(user);
         assertTrue(user.getEmail().equals("salsabilgrouche@yahoo.fr"));
@@ -74,12 +74,12 @@ public class UserServiceTest {
         email="salsabilgrouche@yahoo.fr";
         password="yyyy";
         status="Dev";
-        User userJunior=this.userService.createUser(firstName,lastName,birthAt,urlImage,email,password,status);
+        User userJunior=this.userService.createUser(firstName,lastName,birthAt,urlImage,email,password,status,1L);
         assertNotNull(userJunior);
         users=userService.findAll();
         assertEquals(users.size(),1);
         email="ilyanIlyan@yahoo.fr";
-        userJunior=this.userService.createUser(firstName,lastName,birthAt,urlImage,email,password,status);
+        userJunior=this.userService.createUser(firstName,lastName,birthAt,urlImage,email,password,status,1L);
         assertNotNull(userJunior);
         users=userService.findAll();
         assertEquals(users.size(),2);
@@ -96,7 +96,7 @@ public class UserServiceTest {
         String email="salsabilgrouche@yahoo.fr";
         String password="xxxx";
         String status="Developpeuse";
-        User user=this.userService.createUser(firstName,lastName,birthAt,urlImage,email,password,status);
+        User user=this.userService.createUser(firstName,lastName,birthAt,urlImage,email,password,status,1L);
         List<User> users=userService.findAll();
         this.userService.updateUser(1L,"","",LocalDate.now(),"","dsd@gmail.com","","");
         List<User> usersUpdated=this.userService.findAll();
@@ -120,7 +120,7 @@ public class UserServiceTest {
         String email="salsabilgrouche@yahoo.fr";
         String password="xxxx";
         String status="Developpeuse";
-        User user=this.userService.createUser(firstName,lastName,birthAt,urlImage,email,password,status);
+        User user=this.userService.createUser(firstName,lastName,birthAt,urlImage,email,password,status,1L);
         List<User> users=userService.findAll();
 
         User userUpdated=this.userService.updateByEmail("Ilyan","Guerilli",birthAt,null,"salsabilgrouche@yahoo.fr","qqq","");
@@ -145,13 +145,13 @@ public class UserServiceTest {
         String email="salsabilgrouche@yahoo.fr";
         String password="xxxx";
         String status="Developpeuse";
-        User user=this.userService.createUser(firstName,lastName,birthAt,urlImage,email,password,status);
+        User user=this.userService.createUser(firstName,lastName,birthAt,urlImage,email,password,status,1L);
         this.userService.deleteUser(1L);
         List<User> users=userService.findAll();
         assertEquals(users.size(),0);
         assertFalse(users.contains(user));
         email="gfff@gmail.com";
-        user=this.userService.createUser(firstName,lastName,birthAt,urlImage,email,password,status);
+        user=this.userService.createUser(firstName,lastName,birthAt,urlImage,email,password,status,1L);
         users=this.userService.findAll();
         assertEquals(users.size(),1);
         this.userService.deleteUser(10L);
