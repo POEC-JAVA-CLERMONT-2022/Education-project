@@ -3,6 +3,7 @@ package com.educ.web;
 import com.educ.entity.Video;
 import com.educ.services.VideoService;
 import com.educ.services.dto.VideoDTO;
+import com.educ.web.advice.ResponseCodeMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,7 +64,7 @@ public class VideoController {
             return new ResponseEntity<>(newVideo, HttpStatus.CREATED); /* CODE 201 */
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Error to create video : ", e);
-            //return  ResponseEntity.status((HttpStatus.CONFLICT);
+            //return ResponseEntity.status(HttpStatus.CONFLICT).body(new ResponseCodeMessage(409, e.getMessage()));
         }
     }
 

@@ -1,7 +1,10 @@
 package com.educ.services.dto;
 
 import com.educ.entity.Modulee;
+import com.educ.entity.Review;
 import com.educ.entity.User;
+import com.educ.entity.Video;
+import org.springframework.beans.BeanUtils;
 
 
 public class ReviewDTO {
@@ -37,5 +40,10 @@ public class ReviewDTO {
 
     public User getUser() {
         return user;
+    }
+
+    public ReviewDTO convertTo(Review review){
+        BeanUtils.copyProperties(review, this);
+        return this;
     }
 }
