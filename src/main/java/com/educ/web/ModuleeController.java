@@ -61,6 +61,7 @@ public class ModuleeController {
         }
     }
 
+
         @PostMapping("add")
         public ResponseEntity<ModuleeDTO> addModule(@RequestBody ModuleeDTO moduleeDTO){
             try {
@@ -109,6 +110,17 @@ public class ModuleeController {
         return modulee;
 
     }*/
+
+/*
+    @PostMapping("add")
+    public Modulee addModule(@RequestBody ModuleeDTO moduleeDTO){
+        Modulee modulee= moduleeService.createModule(moduleeDTO.getTitle(), "Java", Level.MIDDLE, Language.EN,1L, "www.google.com");
+        return modulee;
+
+    }
+
+ */
+
 /*
     @PostMapping("add")
     public ResponseEntity<ModuleeDTO> addModule(@RequestBody ModuleeDTO moduleeDTO){
