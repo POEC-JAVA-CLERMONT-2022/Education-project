@@ -56,8 +56,8 @@ public class User {
 	/*@OneToMany(mappedBy ="user", fetch = FetchType.LAZY)*/
 	//@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade=CascadeType.REMOVE, orphanRemoval = true)
 	//
-	@OneToMany
-	@JoinColumn(name = "user_id")
+	@OneToMany(mappedBy ="user", fetch = FetchType.LAZY)
+	//@JoinColumn(name = "user_id")
 	private List<Review> reviews;
 	//private Review review;
 

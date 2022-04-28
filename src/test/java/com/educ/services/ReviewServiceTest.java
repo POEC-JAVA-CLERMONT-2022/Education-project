@@ -41,7 +41,7 @@ public class ReviewServiceTest {
         String comment="Tres bien";
         User user=this.userService.createUser("sasa","grgr", null,"","salsa@gmail.com","","",1L);
         Modulee modulee=moduleeService.createModule("Java", "", Level.ADVANCE, Language.EN,1L,"");
-        Review review=this.reviewService.createReview(note, comment,user,modulee);
+        Review review=this.reviewService.createReview(note, comment,1L,1L);
         List<Review> reviews=reviewService.findAll();
         assertNotNull(review);
         assertTrue(review.getNote()==9 && review.getComment().equals("Tres bien"));

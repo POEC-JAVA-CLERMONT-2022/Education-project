@@ -42,9 +42,16 @@ public class ReviewService {
         return false;
     }
 
+    public Long findUserIdById(Long id){
+        Long user_id=this.reviewRepository.findUserIdById(id);
+        return user_id;
+    }
+
     public Review getById(Long id) {
         if (this.existId(id)) {
-            return reviewRepository.getById(id);
+            Review review=reviewRepository.getById(id);
+
+            return review;
         } else {
             return null;
         }

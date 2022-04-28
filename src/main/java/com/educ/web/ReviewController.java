@@ -2,10 +2,9 @@ package com.educ.web;
 
 import com.educ.entity.Modulee;
 import com.educ.entity.Review;
-import com.educ.entity.User;
-import com.educ.services.ModuleeService;
+
 import com.educ.services.ReviewService;
-import com.educ.services.UserService;
+
 import com.educ.services.dto.ReviewDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,13 +25,12 @@ public class ReviewController {
     Logger logger = LoggerFactory.getLogger(ReviewController.class);
 
     private ReviewService reviewService;
-    private UserService userService;
-    private ModuleeService moduleeService;
+
+
     @Autowired
-    public ReviewController(ReviewService reviewService, UserService userService, ModuleeService moduleeService) {
+    public ReviewController(ReviewService reviewService) {
         this.reviewService = reviewService;
-        this.userService = userService;
-        this.moduleeService = moduleeService;
+
     }
 
     @GetMapping()
@@ -56,6 +54,7 @@ public class ReviewController {
             logger.info("Given video {}",id);
             ReviewDTO reviewDTO = new ReviewDTO();
             reviewDTO.convertTo(reviewService.getById(id));
+           // reviewDTO.setUser_id(this.reviewService.findUserIdById(id));
             return new ResponseEntity<>(reviewDTO, HttpStatus.OK);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Review not found");
@@ -66,20 +65,8 @@ public class ReviewController {
     public ResponseEntity<ReviewDTO> addReview(@RequestBody ReviewDTO reviewDTO){
         try {
             ReviewDTO newReview = new ReviewDTO();
-            User user=userService.getById(1L);
-            Modulee modulee=moduleeService.getById(2L);
-            newReview.convertTo(reviewService.createReview(reviewDTO.getNote(),reviewDTO.getComment(),1L, 2L));
-
-            /*User user=userService.getById(1L);
-            Modulee modulee=moduleeService.getById(2L);*/
-
-            //newReview.convertTo(reviewService.createReview(reviewDTO.getNote(),reviewDTO.getComment(),user,modulee));
-
+            newReview.convertTo(reviewService.createReview(reviewDTO.getNote(),reviewDTO.getComment(),reviewDTO.getUser().getId(), reviewDTO.getModulee().getId()));
             return new ResponseEntity<>(newReview, HttpStatus.CREATED);
-            //String title="JS";
-            //String email="salsabilgrouche@yahoo.fr";
-            //Review review=this.reviewService.createReview(reviewDTO.getNote(),reviewDTO.getComment());
-            //return review;
 
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Error to create review");

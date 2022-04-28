@@ -3,9 +3,6 @@ package com.educ.services.dto;
 import com.educ.entity.*;
 import org.springframework.beans.BeanUtils;
 
-import java.util.LinkedList;
-import java.util.List;
-
 
 public class ReviewDTO {
     private Long id;
@@ -19,14 +16,15 @@ public class ReviewDTO {
 
     }
 
-    public ReviewDTO(int note, String comment) {
-        super();
+    public ReviewDTO(Long id, int note, String comment, Long user_id, Long modulee_id) {
+        this.id = id;
         this.note = note;
         this.comment = comment;
-        this.user= null;
-        this.modulee = null;
-
+        this.user = user;
+        this.modulee = modulee;
     }
+
+
 
     public int getNote() {
         return note;
@@ -52,7 +50,13 @@ public class ReviewDTO {
         this.comment = comment;
     }
 
+    public void setUser(User user) {
+        this.user = user;
+    }
 
+    public void setModulee(Modulee modulee) {
+        this.modulee = modulee;
+    }
 
     public ReviewDTO convertTo(Review review){
         BeanUtils.copyProperties(review, this);
