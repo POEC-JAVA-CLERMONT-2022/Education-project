@@ -36,9 +36,6 @@ public class ReviewController {
         this.moduleeService = moduleeService;
     }
 
-
-
-
     @GetMapping()
     public ResponseEntity<List<ReviewDTO>> getReviews(){
         try {
@@ -54,7 +51,7 @@ public class ReviewController {
         }
     }
 
-    @GetMapping("reviews/{id}")
+    @GetMapping("{id}")
     public ResponseEntity<ReviewDTO> getReviewById(@PathVariable Long id){
         try {
             logger.info("Given video {}",id);
@@ -66,7 +63,7 @@ public class ReviewController {
         }
     }
 
-    @PostMapping("reviews/add") /* check for user and module */
+    @PostMapping("add") /* check for user and module */
     public ResponseEntity<ReviewDTO> addReview(@RequestBody ReviewDTO reviewDTO){
         try {
             ReviewDTO newReview = new ReviewDTO();
@@ -85,7 +82,7 @@ public class ReviewController {
     }
 
     //check this for insert module & user
-    @PutMapping("reviews/{id}")
+    @PutMapping("{id}")
     public void updateReview(@PathVariable Long id, @RequestBody ReviewDTO reviewDTO){
         try {
             reviewService.updateReview(id, reviewDTO.getNote(), reviewDTO.getComment());
@@ -94,7 +91,7 @@ public class ReviewController {
         }
     }
 
-    @DeleteMapping("reviews/{id}")
+    @DeleteMapping("{id}")
     public void deleteReview(@PathVariable Long id){
         reviewService.deleteReview(id);
     }

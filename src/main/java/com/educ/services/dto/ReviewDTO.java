@@ -11,8 +11,7 @@ public class ReviewDTO {
     private Long id;
     private int note;
     private String comment;
-    private Modulee module;
-    private User user;
+
 
     public ReviewDTO() {
 
@@ -22,8 +21,7 @@ public class ReviewDTO {
         super();
         this.note = note;
         this.comment = comment;
-        this.module=null;
-        this.user=null;
+
     }
 
     public int getNote() {
@@ -34,14 +32,23 @@ public class ReviewDTO {
         return comment;
     }
 
-    public Modulee getModule() {
-        return module;
+    public void setNote(int note) {
+        this.note = note;
     }
 
-    public User getUser() {
-        return user;
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
+    /*
+        public Modulee getModule() {
+            return module;
+        }
+
+        public User getUser() {
+            return user;
+        }
+        */
     public ReviewDTO convertTo(Review review){
         BeanUtils.copyProperties(review, this);
         return this;

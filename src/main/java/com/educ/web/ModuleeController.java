@@ -33,7 +33,6 @@ public class ModuleeController {
     }
 
     @GetMapping()
-
     public ResponseEntity<List<ModuleeDTO>> getModules() {
         try {
             List<Modulee> modulees = moduleeService.findAll();
@@ -46,7 +45,6 @@ public class ModuleeController {
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Module not found", e);
         }
-
     }
 
     @GetMapping("{id}")
@@ -61,21 +59,19 @@ public class ModuleeController {
         }
     }
 
-        @PostMapping("add")
-        public ResponseEntity<ModuleeDTO> addModule(@RequestBody ModuleeDTO moduleeDTO){
-            try {
-                ModuleeDTO createdModulee = new ModuleeDTO();
-                Modulee modulee = moduleeService.createModule(moduleeDTO.getTitle(), "Java", Level.MIDDLE, Language.EN, 1L, "www.you.com");
-                createdModulee.convertTo(modulee);
-
-                return new ResponseEntity(createdModulee, HttpStatus.CREATED); /* OK*/
-            } catch (Exception e) { /* check when email exist */
-                e.printStackTrace();
-                //return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Error to create module", e);
-            }
-
+    @PostMapping("add")
+    public ResponseEntity<ModuleeDTO> addModule(@RequestBody ModuleeDTO moduleeDTO){
+        try {
+            ModuleeDTO createdModulee = new ModuleeDTO();
+            Modulee modulee = moduleeService.createModule(moduleeDTO.getTitle(), "Java", Level.MIDDLE, Language.EN, 1L, "www.you.com");
+            createdModulee.convertTo(modulee);
+            return new ResponseEntity(createdModulee, HttpStatus.CREATED); /* OK*/
+        } catch (Exception e) { /* check when email exist */
+            e.printStackTrace();
+            //return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Error to create module", e);
         }
+    }
 
     @PutMapping("{id}")
     public void updateModulee(@PathVariable Long id, @RequestBody ModuleeDTO moduleeDTO) {
@@ -88,7 +84,6 @@ public class ModuleeController {
             logger.info("Modulee : {}", id);
             e.printStackTrace();
         }
-
     }
 
     @DeleteMapping("{id}")
@@ -101,14 +96,23 @@ public class ModuleeController {
     }
 
 
-
-
    /* @PostMapping("add")
     public Modulee addModule(@RequestBody ModuleeDTO moduleeDTO) {
         Modulee modulee = moduleeService.createModule(moduleeDTO.getTitle(), "Java", Level.MIDDLE, Language.EN, 1L, "www.you.com");
         return modulee;
 
     }*/
+
+/*
+    @PostMapping("add")
+    public Modulee addModule(@RequestBody ModuleeDTO moduleeDTO){
+        Modulee modulee= moduleeService.createModule(moduleeDTO.getTitle(), "Java", Level.MIDDLE, Language.EN,1L, "www.google.com");
+        return modulee;
+
+    }
+
+ */
+
 /*
     @PostMapping("add")
     public ResponseEntity<ModuleeDTO> addModule(@RequestBody ModuleeDTO moduleeDTO){
