@@ -68,7 +68,7 @@ public class ReviewController {
         try {
             ReviewDTO newReview = new ReviewDTO();
             User user=userService.getById(1L);
-            Modulee modulee=moduleeService.getById(1L);
+            Modulee modulee=moduleeService.getById(2L);
             newReview.convertTo(reviewService.createReview(reviewDTO.getNote(),reviewDTO.getComment(),user,modulee));
             return new ResponseEntity<>(newReview, HttpStatus.CREATED);
             //String title="JS";

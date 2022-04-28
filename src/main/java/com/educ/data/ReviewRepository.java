@@ -5,6 +5,7 @@ import com.educ.entity.User;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.educ.entity.Review;
@@ -18,7 +19,7 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 
     public Review getById(Long id);
 
-    @Query(value = "SELECT * FROM reviews WHERE user_id = ?0 AND module_id= ?1", nativeQuery = true)
-    public Review findByUserAndModule(Long userId, Long moduleId);
+    @Query(value = "SELECT * FROM reviews WHERE user_id = :userId AND module_id= :moduleId", nativeQuery = true)
+    public Review findByUserAndModule(@Param("userId") Long userId, @Param("moduleId") Long moduleId);
 
 }
