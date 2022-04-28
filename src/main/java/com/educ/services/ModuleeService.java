@@ -17,15 +17,15 @@ public class ModuleeService {
 
     private LessonService lessonService;
 
-    private ReviewService reviewService;
+
 
     private VideoService videoService;
 
     @Autowired
-    public ModuleeService(ModuleeRepository moduleRepository, LessonService lessonService, ReviewService reviewService, VideoService videoService) {
+    public ModuleeService(ModuleeRepository moduleRepository, LessonService lessonService, VideoService videoService) {
         this.moduleRepository = moduleRepository;
         this.lessonService = lessonService;
-        this.reviewService = reviewService;
+
         this.videoService = videoService;
     }
 
@@ -69,7 +69,7 @@ public class ModuleeService {
         }
         Modulee module = new Modulee(title);
         module = this.addModuleeLesson(module, name, level, language);
-        module = this.addModuleeReview(module, id);
+        //module = this.addModuleeReview(module, id);
         module = this.addModuleeVideo(module, url);
         this.moduleRepository.save(module);
         return module;
@@ -119,26 +119,6 @@ public class ModuleeService {
         }
     }
 
-    private Modulee addModuleeReview(Modulee modulee, Long id) {
-        try {
-            List<Review> reviews;
-            Review review = reviewService.getById(id);
-            if (modulee == null) {
-                return null;
-            }
-            if (review == null) {
-                return modulee;
-            }
-            reviews = modulee.getReviews();
-            reviews.add(review);
-            modulee.setReviews(reviews);
-            return modulee;
-        } catch (NullPointerException e) {
-            System.out.println("Erreur relation Module Review null");
-            return modulee;
-        }
-
-    }
 
     private Modulee addModuleeVideo(Modulee modulee, String url) {
         try {

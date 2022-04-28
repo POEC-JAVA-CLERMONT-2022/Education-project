@@ -1,5 +1,7 @@
 package com.educ.services;
 
+import com.educ.data.ModuleeRepository;
+import com.educ.data.UserRepository;
 import com.educ.entity.Modulee;
 import com.educ.entity.Review;
 import com.educ.entity.Role;
@@ -17,10 +19,13 @@ import java.util.List;
 public class ReviewService {
 
     private ReviewRepository reviewRepository;
-
-	@Autowired
-    public ReviewService(ReviewRepository reviewRepository) {
+    private UserRepository userRepository;
+    private ModuleeRepository moduleeRepository;
+    @Autowired
+    public ReviewService(ReviewRepository reviewRepository, UserRepository userRepository, ModuleeRepository moduleeRepository) {
         this.reviewRepository = reviewRepository;
+        this.userRepository = userRepository;
+        this.moduleeRepository = moduleeRepository;
     }
 
     public List<Review> findAll() {
@@ -45,12 +50,28 @@ public class ReviewService {
         }
     }
 
-    @Transactional
+   @Transactional
+    public Review createReview(int note, String comment, User user, Modulee modulee) {
+
+      Review review=this.reviewRepository.findByUserAndModule(user.getId(),modulee.getId());
+      if (review != null){ return review;}
+      review=new Review(note, comment);
+      review=this.reviewRepository.save(review);
+       //Ajout de la review dans user et Module
+      user=this.addUserReview(user,review.getId());
+      modulee=this.addModuleeReview(modulee,review.getId());
+      user=this.userRepository.save(user);
+      modulee=this.moduleeRepository.save(modulee);
+      return review;
+    }
+
+
+   /* @Transactional
     public Review createReview(int note, String comment) {
         Review review = new Review(note, comment);
         this.reviewRepository.save(review);
         return review;
-    }
+    } */
 
     @Transactional
     public void updateReview(Long id, int note, String comment) {
@@ -70,6 +91,45 @@ public class ReviewService {
             this.reviewRepository.delete(review);
         }
     }
+
+    private User addUserReview(User user, Long id){
+        try {
+            List<Review> reviews;
+            Review review=this.getById(id);
+            if(user==null){ return null;}
+            if(review==null){ return user;}
+            reviews=user.getReviews();
+            reviews.add(review);
+            user.setReviews(reviews);
+            return user;
+        }catch (NullPointerException e) {
+            System.out.println("Erreur relation user Review null");
+            return user;
+        }
+
+    }
+
+    private Modulee addModuleeReview(Modulee modulee, Long id) {
+        try {
+            List<Review> reviews;
+            Review review = this.getById(id);
+            if (modulee == null) {
+                return null;
+            }
+            if (review == null) {
+                return modulee;
+            }
+            reviews = modulee.getReviews();
+            reviews.add(review);
+            modulee.setReviews(reviews);
+            return modulee;
+        } catch (NullPointerException e) {
+            System.out.println("Erreur relation Module Review null");
+            return modulee;
+        }
+
+    }
+
 
 }
 

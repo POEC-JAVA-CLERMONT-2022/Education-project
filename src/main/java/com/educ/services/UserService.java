@@ -24,13 +24,13 @@ public class UserService {
 
 	private RoleService roleService;
 
-	private ReviewService reviewService;
+
 
 	@Autowired
-	public UserService(UserRepository userRepository, RoleService roleService, ReviewService reviewService) {
+	public UserService(UserRepository userRepository, RoleService roleService) {
 		this.userRepository = userRepository;
 		this.roleService = roleService;
-		this.reviewService = reviewService;
+
 	}
 
 	public List<User> findAll(){
@@ -63,7 +63,7 @@ public class UserService {
 		if (this.findByEmail(email) != null){ return this.findByEmail(email); }
 		User user=new User(firstName, lastName, birthAt, urlImage, email, password, status);
 		user=this.addUserRole(user,"Member");
-		user=this.addUserReview(user,id);
+		//user=this.addUserReview(user,id);
 		user =this.userRepository.save(user);
 		return user;
 	}
@@ -124,21 +124,6 @@ public class UserService {
 		}
 	}
 
-	private User addUserReview(User user, Long id){
-		try {
-			List<Review> reviews;
-			Review review=reviewService.getById(id);
-			if(user==null){ return null;}
-			if(review==null){ return user;}
-			reviews=user.getReviews();
-			reviews.add(review);
-			user.setReviews(reviews);
-			return user;
-		}catch (NullPointerException e) {
-			System.out.println("Erreur relation user Review null");
-			return user;
-		}
 
-	}
 
 }
