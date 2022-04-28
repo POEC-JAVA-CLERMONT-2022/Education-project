@@ -1,6 +1,5 @@
 package com.educ.web;
 
-import com.educ.data.ReviewRepository;
 import com.educ.entity.Modulee;
 import com.educ.entity.Review;
 import com.educ.entity.User;
@@ -70,6 +69,12 @@ public class ReviewController {
             User user=userService.getById(1L);
             Modulee modulee=moduleeService.getById(2L);
             newReview.convertTo(reviewService.createReview(reviewDTO.getNote(),reviewDTO.getComment(),1L, 2L));
+
+            /*User user=userService.getById(1L);
+            Modulee modulee=moduleeService.getById(2L);*/
+
+            //newReview.convertTo(reviewService.createReview(reviewDTO.getNote(),reviewDTO.getComment(),user,modulee));
+
             return new ResponseEntity<>(newReview, HttpStatus.CREATED);
             //String title="JS";
             //String email="salsabilgrouche@yahoo.fr";

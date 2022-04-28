@@ -1,16 +1,18 @@
 package com.educ.services.dto;
 
-import com.educ.entity.Modulee;
-import com.educ.entity.Review;
-import com.educ.entity.User;
-import com.educ.entity.Video;
+import com.educ.entity.*;
 import org.springframework.beans.BeanUtils;
+
+import java.util.LinkedList;
+import java.util.List;
 
 
 public class ReviewDTO {
     private Long id;
     private int note;
     private String comment;
+    private User user;
+    private Modulee modulee;
 
 
     public ReviewDTO() {
@@ -21,6 +23,8 @@ public class ReviewDTO {
         super();
         this.note = note;
         this.comment = comment;
+        this.user= null;
+        this.modulee = null;
 
     }
 
@@ -32,6 +36,14 @@ public class ReviewDTO {
         return comment;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public Modulee getModulee() {
+        return modulee;
+    }
+
     public void setNote(int note) {
         this.note = note;
     }
@@ -40,15 +52,8 @@ public class ReviewDTO {
         this.comment = comment;
     }
 
-    /*
-        public Modulee getModule() {
-            return module;
-        }
 
-        public User getUser() {
-            return user;
-        }
-        */
+
     public ReviewDTO convertTo(Review review){
         BeanUtils.copyProperties(review, this);
         return this;
