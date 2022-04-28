@@ -51,10 +51,10 @@ public class ReviewService {
     }
 
    @Transactional
-    public Review createReview(int note, String comment, User user, Modulee modulee) {
+    public Review createReview(int note, String comment, Long userId, Long moduleeId) {
        Review review;
         try {
-            review=this.reviewRepository.findByUserAndModule(user.getId(),modulee.getId());
+            review=this.reviewRepository.findByUserAndModule(userId,moduleeId);
         }catch (Exception e){
             review=null;
         }
@@ -63,6 +63,8 @@ public class ReviewService {
       review=new Review(note, comment);
       review=this.reviewRepository.save(review);
        //Ajout de la review dans user et Module
+       User user=this.userRepository.getById(userId);
+       Modulee modulee=this.moduleeRepository.getById(moduleeId);
       user=this.addUserReview(user,review.getId());
       modulee=this.addModuleeReview(modulee,review.getId());
       user=this.userRepository.save(user);
