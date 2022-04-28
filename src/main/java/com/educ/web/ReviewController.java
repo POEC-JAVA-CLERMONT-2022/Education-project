@@ -4,7 +4,9 @@ import com.educ.data.ReviewRepository;
 import com.educ.entity.Modulee;
 import com.educ.entity.Review;
 import com.educ.entity.User;
+import com.educ.services.ModuleeService;
 import com.educ.services.ReviewService;
+import com.educ.services.UserService;
 import com.educ.services.dto.ReviewDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,11 +27,17 @@ public class ReviewController {
     Logger logger = LoggerFactory.getLogger(ReviewController.class);
 
     private ReviewService reviewService;
-
+    private UserService userService;
+    private ModuleeService moduleeService;
     @Autowired
-    public ReviewController(ReviewService reviewService){
+    public ReviewController(ReviewService reviewService, UserService userService, ModuleeService moduleeService) {
         this.reviewService = reviewService;
+        this.userService = userService;
+        this.moduleeService = moduleeService;
     }
+
+
+
 
     @GetMapping()
     public ResponseEntity<List<ReviewDTO>> getReviews(){
@@ -62,7 +70,9 @@ public class ReviewController {
     public ResponseEntity<ReviewDTO> addReview(@RequestBody ReviewDTO reviewDTO){
         try {
             ReviewDTO newReview = new ReviewDTO();
-            newReview.convertTo(reviewService.createReview(reviewDTO.getNote(),reviewDTO.getComment()));
+            User user=userService.getById(1L);
+            Modulee modulee=moduleeService.getById(1L);
+            newReview.convertTo(reviewService.createReview(reviewDTO.getNote(),reviewDTO.getComment(),user,modulee));
             return new ResponseEntity<>(newReview, HttpStatus.CREATED);
             //String title="JS";
             //String email="salsabilgrouche@yahoo.fr";
