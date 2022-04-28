@@ -23,8 +23,8 @@ public class Modulee {
     private List<Lesson> lessons;
 
     //@OneToMany(mappedBy = "module", fetch = FetchType.LAZY, cascade=CascadeType.REMOVE, orphanRemoval = true)
-    @OneToMany
-    @JoinColumn(name = "module_id")
+    @OneToMany(mappedBy = "module", fetch = FetchType.LAZY)
+    //@JoinColumn(name = "module_id")
     //private Review review;
     private List<Review> reviews;
 
