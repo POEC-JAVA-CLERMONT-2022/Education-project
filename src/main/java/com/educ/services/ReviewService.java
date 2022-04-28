@@ -52,8 +52,13 @@ public class ReviewService {
 
    @Transactional
     public Review createReview(int note, String comment, User user, Modulee modulee) {
+       Review review;
+        try {
+            review=this.reviewRepository.findByUserAndModule(user.getId(),modulee.getId());
+        }catch (Exception e){
+            review=null;
+        }
 
-      Review review=this.reviewRepository.findByUserAndModule(user.getId(),modulee.getId());
       if (review != null){ return review;}
       review=new Review(note, comment);
       review=this.reviewRepository.save(review);
