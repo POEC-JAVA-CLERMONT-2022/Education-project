@@ -35,8 +35,8 @@ public class Review {
 		super();
 		this.note = note;
 		this.comment = comment;
-		/*this.module=null;
-		this.user=null; */
+		this.module=null;
+		this.user=null;
 	}
 
 	public Long getId() {
@@ -59,7 +59,7 @@ public class Review {
 		this.comment = comment;
 	}
 
-/*	 public Modulee getModule() {
+	 public Modulee getModule() {
 		return module;
 	}
 
@@ -73,7 +73,7 @@ public class Review {
 
 	public void setUser(User user) {
 		this.user = user;
-	}  */
+	}
 
 	@Override
 	public int hashCode() {
@@ -99,7 +99,7 @@ public class Review {
 				"id=" + id +
 				", note=" + note +
 				", comment='" + comment + '\'' +
-				/* ", module=" + module +
+				/*", module=" + module +
 				", user=" + user +*/
 				'}';
 	}

@@ -58,12 +58,12 @@ public class UserService {
 	}
 
 	@Transactional
-	public User createUser(String firstName, String lastName, LocalDate birthAt, String urlImage, String email, String password, String status, Long id) {
+	public User createUser(String firstName, String lastName, LocalDate birthAt, String urlImage, String email, String password, String status) {
 		if (email==null){ return null; }
 		if (this.findByEmail(email) != null){ return this.findByEmail(email); }
 		User user=new User(firstName, lastName, birthAt, urlImage, email, password, status);
 		user=this.addUserRole(user,"Member");
-		//user=this.addUserReview(user,id);
+
 		user =this.userRepository.save(user);
 		return user;
 	}

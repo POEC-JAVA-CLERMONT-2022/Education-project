@@ -35,21 +35,21 @@ public class ModuleeServiceTest {
     public void testCreationModule(){
         //create data
         String title="Spring Boot";
-        Modulee modulee=this.moduleeService.createModule(title,"", Level.ADVANCE, Language.EN,1L,"");
+        Modulee modulee=this.moduleeService.createModule(title,"", Level.ADVANCE, Language.EN,"");
         List<Modulee> modulees=moduleeService.findAll();
         assertNotNull(modulee);
         assertTrue(modulee.getTitle().equals("Spring Boot") );
         assertNotNull(modulees);
         assertEquals(modulees.size(),1);
-        Modulee moduleeSecond=this.moduleeService.createModule(title,"", Level.ADVANCE, Language.EN,1L, "");
-        assertNull(moduleeSecond);
+        Modulee moduleeSecond=this.moduleeService.createModule(title,"", Level.ADVANCE, Language.EN,"");
+        assertNotNull(moduleeSecond);
     }
 
     @Test
     @DisplayName("update module test")
     public void testUpdateModule(){
         String title="Spring Boot";
-        Modulee modulee=this.moduleeService.createModule(title, "", Level.ADVANCE, Language.EN,1L,"");
+        Modulee modulee=this.moduleeService.createModule(title, "", Level.ADVANCE, Language.EN,"");
         List<Modulee> modulees=moduleeService.findAll();
         Modulee moduleeUp=this.moduleeService.updateModule(1L,"JAVA");
         assertTrue(moduleeUp.getTitle().equals("JAVA")) ;
@@ -67,14 +67,14 @@ public class ModuleeServiceTest {
     @DisplayName("delete module test")
     public void testDeleteModule(){
         String title="Spring Boot";
-        Modulee modulee=this.moduleeService.createModule(title,"", Level.ADVANCE, Language.EN,1L,"");
+        Modulee modulee=this.moduleeService.createModule(title,"", Level.ADVANCE, Language.EN,"");
         List<Modulee> modulees=moduleeService.findAll();
         assertTrue(modulees.contains(modulee));
         this.moduleeService.deleteModule(1L);
         modulees=moduleeService.findAll();
         assertEquals(modulees.size(),0);
         assertFalse(modulees.contains(modulee));
-        modulee=this.moduleeService.createModule(title, "", Level.ADVANCE, Language.EN,1L,"");
+        modulee=this.moduleeService.createModule(title, "", Level.ADVANCE, Language.EN,"");
         modulees=moduleeService.findAll();
         this.moduleeService.deleteModule(10L);
         modulees=moduleeService.findAll();

@@ -19,10 +19,13 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 
     public Review getById(Long id);
 
+    /*@EntityGraph(attributePaths = {"eventFiles", "eventFiles.eventFilePK.file"})
+    Page<Event> findByTo(User principal, Pageable pageable);*/
+
     @Query(value = "SELECT * FROM reviews WHERE user_id = :userId AND module_id= :moduleId", nativeQuery = true)
     public Review findByUserAndModule(@Param("userId") Long userId, @Param("moduleId") Long moduleId);
 
-    @Query(value = "SELECT r.user_id FROM reviews r WHERE id = :id", nativeQuery = true)
-    public Long findUserIdById(Long id);
+   /* @Query(value = "SELECT r.user_id FROM reviews r WHERE id = :id", nativeQuery = true)
+    public Long findUserIdById(Long id);*/
 
 }

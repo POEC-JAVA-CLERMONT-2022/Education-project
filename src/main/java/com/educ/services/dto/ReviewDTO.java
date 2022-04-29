@@ -16,7 +16,7 @@ public class ReviewDTO {
 
     }
 
-    public ReviewDTO(Long id, int note, String comment, Long user_id, Long modulee_id) {
+    public ReviewDTO(Long id, int note, String comment, User user, Modulee modulee) {
         this.id = id;
         this.note = note;
         this.comment = comment;

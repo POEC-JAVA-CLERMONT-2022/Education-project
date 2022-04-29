@@ -91,7 +91,7 @@ public class UserServiceTestMockito {
         Role testRole=roleService.createRole("Member");
         List<Role> rs=new LinkedList<Role>();
         rs.add(testRole);
-        User testUser = userService.createUser(firstName,lastName,birthAt,urlImage,email,password,status,1L);
+        User testUser = userService.createUser(firstName,lastName,birthAt,urlImage,email,password,status);
 
         //ASSERT
         assertNotNull(testUser);
@@ -112,7 +112,7 @@ public class UserServiceTestMockito {
         when(mockedUserRepository.save(Mockito.any(User.class))).thenReturn(null);
 
         //ACT
-        User userJunior = userService.createUser(firstName,lastName,birthAt,urlImage,email,password,status,1L);
+        User userJunior = userService.createUser(firstName,lastName,birthAt,urlImage,email,password,status);
 
         //ASSERT
         assertThat(userJunior).isNull();

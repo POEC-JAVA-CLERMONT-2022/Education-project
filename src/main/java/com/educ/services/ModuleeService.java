@@ -60,7 +60,7 @@ public class ModuleeService {
     }
 
     @Transactional
-    public Modulee createModule(String title, String name, Level level, Language language, Long id, String url) {
+    public Modulee createModule(String title, String name, Level level, Language language, String url) {
         if (title == null) {
             return null;
         }
@@ -69,7 +69,7 @@ public class ModuleeService {
         }
         Modulee module = new Modulee(title);
         module = this.addModuleeLesson(module, name, level, language);
-        //module = this.addModuleeReview(module, id);
+
         module = this.addModuleeVideo(module, url);
         this.moduleRepository.save(module);
         return module;
