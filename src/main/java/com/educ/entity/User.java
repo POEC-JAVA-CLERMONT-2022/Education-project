@@ -57,9 +57,8 @@ public class User {
 	//@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade=CascadeType.REMOVE, orphanRemoval = true)
 	//
 	@OneToMany(mappedBy ="user", fetch = FetchType.LAZY)
-	//@JoinColumn(name = "user_id")
 	private List<Review> reviews;
-	//private Review review;
+
 
 	@JoinColumn(name="role_id")
 	@ManyToMany
@@ -172,7 +171,8 @@ public class User {
 	public String toString() {
 		return "User {id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", birthAt=" + birthAt
 				+ ", urlImage=" + urlImage + ", email=" + email + ", password=" + password + ", status=" + status
-				+ ", review=" + reviews + ", roles=" + roles + "}";
+				/*+", review=" + reviews + ", roles=" + roles */
+				+ "}";
 	}
 	@Override
 	public boolean equals(Object obj) {

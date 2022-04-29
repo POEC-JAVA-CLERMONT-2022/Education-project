@@ -61,11 +61,14 @@ public class Video {
         return duration;
     }
 
-    /*
-        public Modulee getModule() {
-            return module;
-        }
-    */
+    public Modulee getModule() {
+        return module;
+    }
+
+    public void setModule(Modulee module) {
+        this.module = module;
+    }
+
     public void setTitle(String title) {
         this.title = title;
     }
@@ -94,7 +97,9 @@ public class Video {
 
     @Override
     public String toString() {
-        return "Video {id=" + id + ", title=" + title + ", url=" + url + ", duration=" + duration + ", module=" + module + "}";
+        return "Video {id=" + id + ", title=" + title + ", url=" + url + ", duration=" + duration
+              /*  + ", module=" + module */
+                + "}";
     }
 
 }

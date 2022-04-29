@@ -24,12 +24,9 @@ public class Modulee {
 
     //@OneToMany(mappedBy = "module", fetch = FetchType.LAZY, cascade=CascadeType.REMOVE, orphanRemoval = true)
     @OneToMany(mappedBy = "module", fetch = FetchType.LAZY)
-    //@JoinColumn(name = "module_id")
-    //private Review review;
     private List<Review> reviews;
 
-	/*@OneToOne(mappedBy = "module")
-	private Review review;*/
+
 
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -108,9 +105,9 @@ public class Modulee {
         return "Modulee{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
-                ", lessons=" + lessons +
+                /*", lessons=" + lessons +
                 ", reviews=" + reviews +
-                ", video=" + video +
+                ", video=" + video + */
                 '}';
     }
 }

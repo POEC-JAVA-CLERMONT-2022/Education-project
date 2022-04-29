@@ -12,21 +12,23 @@ public class ReviewDTO {
     private UserDTO userDTO;
     private ModuleeDTO moduleeDTO;
 
-    private UserService userService;
-
     public ReviewDTO() {
 
     }
-
-    public ReviewDTO(Long id, int note, String comment, UserDTO user, ModuleeDTO modulee) {
+    public ReviewDTO(Long id, int note, String comment) {
         this.id = id;
         this.note = note;
         this.comment = comment;
-        this.userDTO = user;
-        this.moduleeDTO = modulee;
+
     }
 
-
+    public ReviewDTO(Long id, int note, String comment, UserDTO userDTO, ModuleeDTO moduleeDTO) {
+        this.id = id;
+        this.note = note;
+        this.comment = comment;
+        this.userDTO = userDTO;
+        this.moduleeDTO = moduleeDTO;
+    }
 
     public int getNote() {
         return note;
@@ -64,18 +66,27 @@ public class ReviewDTO {
         this.comment = comment;
     }
 
-
     public ReviewDTO convertTo(Review review){
-        ReviewDTO reviewDTO=new ReviewDTO();
-        BeanUtils.copyProperties(review, reviewDTO);
+        ReviewDTO reviewDTO;
+        if(review!=null){
+            reviewDTO=new ReviewDTO(review.getId(),review.getNote(),review.getComment());
+            BeanUtils.copyProperties(review, reviewDTO);
 
-        UserDTO userDTO=new UserDTO();
-        userDTO.copyUser(review.getUser());
-        reviewDTO.setUserDTO(userDTO);
+            UserDTO userDTO=new UserDTO(review.getUser().getFirstName(),review.getUser().getLastName(),
+                    review.getUser().getBirthAt(),review.getUser().getUrlImage(), review.getUser().getEmail(),
+                    review.getUser().getPassword(),review.getUser().getStatus());
+            //userDTO.copyUser(review.getUser());
+            reviewDTO.setUserDTO(userDTO);
 
-        ModuleeDTO moduleeDTO=new ModuleeDTO();
-        moduleeDTO.convertTo(review.getModule());
-        reviewDTO.setModuleeDTO(moduleeDTO);
-        return reviewDTO;
+            ModuleeDTO moduleeDTO=new ModuleeDTO(review.getModule().getTitle());
+            //moduleeDTO.convertTo(review.getModule());
+            reviewDTO.setModuleeDTO(moduleeDTO);
+
+            return reviewDTO;
+        }else{
+            reviewDTO=new ReviewDTO();
+            return reviewDTO;
+        }
+
     }
 }

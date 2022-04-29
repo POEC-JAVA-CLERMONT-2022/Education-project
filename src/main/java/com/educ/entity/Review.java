@@ -98,8 +98,8 @@ public class Review {
 				"id=" + id +
 				", note=" + note +
 				", comment='" + comment + '\'' +
-				", module=" + module +
-				", user=" + user +
+				/*", module=" + module +
+				", user=" + user +*/
 				'}';
 	}
 }

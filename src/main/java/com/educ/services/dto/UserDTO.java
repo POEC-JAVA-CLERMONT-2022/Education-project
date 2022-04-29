@@ -119,8 +119,9 @@ public class UserDTO {
     }
 */
     public UserDTO copyUser(User user){
-        BeanUtils.copyProperties(user, this);
-        return this;
+        UserDTO userDTO=new UserDTO();
+        BeanUtils.copyProperties(user, userDTO);
+        return userDTO;
     }
 
 }
