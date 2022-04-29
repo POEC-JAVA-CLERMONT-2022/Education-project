@@ -19,8 +19,8 @@ public class UserDTO {
     private String email;
     private String password;
     private String status;
-    private List<Role> roles;
-    private List<Review> reviews;
+   //private List<Role> roles;
+    //private List<Review> reviews;
 
     public UserDTO(String firstName, String lastName, LocalDate birthAt, String urlImage, String email, String password, String status) {
         this.firstName = firstName;
@@ -30,8 +30,8 @@ public class UserDTO {
         this.email = email;
         this.password = password;
         this.status = status;
-        this.roles=new LinkedList<Role>();
-        this.reviews=new LinkedList<Review>();
+        //this.roles=new LinkedList<Role>();
+        //this.reviews=new LinkedList<Review>();
     }
 
     public UserDTO(){
@@ -70,13 +70,13 @@ public class UserDTO {
         return status;
     }
 
-    public List<Role> getRoles() {
+    /* public List<Role> getRoles() {
         return roles;
     }
 
     public List<Review> getReviews() {
         return reviews;
-    }
+    } */
 
     public void setId(Long id) {
         this.id = id;
@@ -110,14 +110,14 @@ public class UserDTO {
         this.status = status;
     }
 
-    public void setRoles(List<Role> roles) {
+    /* public void setRoles(List<Role> roles) {
         this.roles = roles;
-    }
-
+    } */
+/*
     public void setReviews(List<Review> reviews) {
         this.reviews = reviews;
     }
-
+*/
     public UserDTO copyUser(User user){
         BeanUtils.copyProperties(user, this);
         return this;

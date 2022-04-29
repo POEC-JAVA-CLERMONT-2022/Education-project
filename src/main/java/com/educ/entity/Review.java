@@ -35,8 +35,8 @@ public class Review {
 		super();
 		this.note = note;
 		this.comment = comment;
-		this.module=null;
-		this.user=null;
+		this.module=new Modulee();
+		this.user=new User();
 	}
 
 	public Long getId() {
@@ -92,15 +92,14 @@ public class Review {
 		return Objects.equals(id, other.id);
 	}
 
-
 	@Override
 	public String toString() {
 		return "Review{" +
 				"id=" + id +
 				", note=" + note +
 				", comment='" + comment + '\'' +
-				/*", module=" + module +
-				", user=" + user +*/
+				", module=" + module +
+				", user=" + user +
 				'}';
 	}
 }

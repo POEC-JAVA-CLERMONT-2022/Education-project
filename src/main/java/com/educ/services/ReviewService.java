@@ -48,13 +48,22 @@ public class ReviewService {
     }*/
 
     public Review getById(Long id) {
-        if (this.existId(id)) {
-            Review review=reviewRepository.getById(id);
+        try {
+            if (this.existId(id)) {
+                Review review=reviewRepository.getById(id);
 
-            return review;
-        } else {
+                return review;
+            } else {
+                return null;
+            }
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
+
+
     }
 
    @Transactional
