@@ -48,13 +48,25 @@ public class ReviewService {
     }*/
 
     public Review getById(Long id) {
-        if (this.existId(id)) {
-            Review review=reviewRepository.getById(id);
 
-            return review;
-        } else {
-            return null;
-        }
+            if (this.existId(id)) {
+                try {
+                    Review review=reviewRepository.getById(id);
+                    return review;
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                    return null;
+                }
+
+
+            } else {
+                return null;
+            }
+
+
+
+
     }
 
    @Transactional
@@ -75,10 +87,10 @@ public class ReviewService {
       review=this.reviewRepository.save(review);
        //Ajout de la review dans user et Module
 
-      user=this.addUserReview(user,review.getId());
+      /*user=this.addUserReview(user,review.getId());
       modulee=this.addModuleeReview(modulee,review.getId());
       user=this.userRepository.save(user);
-      modulee=this.moduleeRepository.save(modulee);
+      modulee=this.moduleeRepository.save(modulee);*/
       return review;
     }
 

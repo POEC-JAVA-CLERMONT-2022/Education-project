@@ -51,7 +51,7 @@ public class ReviewController {
     @GetMapping("{id}")
     public ResponseEntity<ReviewDTO> getReviewById(@PathVariable Long id){
         try {
-            logger.info("Given video {}",id);
+            logger.info("Given Review {}",id);
             ReviewDTO reviewDTO = new ReviewDTO();
             reviewDTO.convertTo(reviewService.getById(id));
            // reviewDTO.setUser_id(this.reviewService.findUserIdById(id));
@@ -65,7 +65,7 @@ public class ReviewController {
     public ResponseEntity<ReviewDTO> addReview(@RequestBody ReviewDTO reviewDTO){
         try {
             ReviewDTO newReview = new ReviewDTO();
-            newReview.convertTo(reviewService.createReview(reviewDTO.getNote(),reviewDTO.getComment(),reviewDTO.getUser().getId(), reviewDTO.getModulee().getId()));
+            newReview.convertTo(reviewService.createReview(reviewDTO.getNote(),reviewDTO.getComment(),reviewDTO.getUserDTO().getId(), reviewDTO.getModuleeDTO().getId()));
             return new ResponseEntity<>(newReview, HttpStatus.CREATED);
 
         } catch (Exception e) {

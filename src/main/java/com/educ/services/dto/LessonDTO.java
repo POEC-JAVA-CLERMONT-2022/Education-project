@@ -30,6 +30,10 @@ public class LessonDTO {
         this.modules=null;
     }
 
+    public Long getId() {
+        return id;
+    }
+
     public String getName() {
         return name;
     }
