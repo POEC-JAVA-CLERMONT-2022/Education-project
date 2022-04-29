@@ -17,7 +17,7 @@ public class VideoService {
 
 	private VideoRepository videoRepository;
 
-	@Autowired
+
 	public VideoService(VideoRepository videoRepository) {
 		this.videoRepository = videoRepository;
 	}
