@@ -63,7 +63,7 @@ public class ModuleeController {
     public ResponseEntity<ModuleeDTO> addModule(@RequestBody ModuleeDTO moduleeDTO) {
         try {
             ModuleeDTO createdModulee = new ModuleeDTO();
-            Modulee modulee = moduleeService.createModule(moduleeDTO.getTitle(), "Java", Level.MIDDLE, Language.EN, 1L, "www.you.com");
+            Modulee modulee = moduleeService.createModule(moduleeDTO.getTitle(), "Java", Level.MIDDLE, Language.EN, "www.you.com");
             createdModulee.convertTo(modulee);
             return new ResponseEntity(createdModulee, HttpStatus.CREATED); /* OK*/
         } catch (Exception e) { /* check when email exist */

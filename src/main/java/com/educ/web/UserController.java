@@ -63,7 +63,7 @@ public class UserController {
 		//logger.debug("REST request to save User : {}", userDTO);
 		try{
 			UserDTO createdUser = new UserDTO();
-			User user = userService.createUser(userDTO.getFirstName(), userDTO.getLastName(), userDTO.getBirthAt(), userDTO.getUrlImage(), userDTO.getEmail(), userDTO.getPassword(), userDTO.getStatus(),1L);
+			User user = userService.createUser(userDTO.getFirstName(), userDTO.getLastName(), userDTO.getBirthAt(), userDTO.getUrlImage(), userDTO.getEmail(), userDTO.getPassword(), userDTO.getStatus());
 			createdUser.copyUser(user);
 			return new ResponseEntity(createdUser, HttpStatus.CREATED); /* OK*/
 		} catch (Exception e) { /* check when email exist */
