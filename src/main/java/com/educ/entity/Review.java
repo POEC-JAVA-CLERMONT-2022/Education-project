@@ -35,8 +35,8 @@ public class Review {
 		super();
 		this.note = note;
 		this.comment = comment;
-		this.module=null;
-		this.user=null;
+		this.module=new Modulee();
+		this.user=new User();
 	}
 
 	public Long getId() {
@@ -91,7 +91,6 @@ public class Review {
 		Review other = (Review) obj;
 		return Objects.equals(id, other.id);
 	}
-
 
 	@Override
 	public String toString() {
