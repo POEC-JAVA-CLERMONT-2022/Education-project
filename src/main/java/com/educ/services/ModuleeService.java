@@ -136,7 +136,7 @@ public class ModuleeService {
             return modulee;
         }
     }
-
+/*
     public Double calculRating(String title) {
         Modulee modulee = this.findByTitle(title);
         if (modulee == null) {
@@ -152,5 +152,7 @@ public class ModuleeService {
         }
         return Double.valueOf(somme / reviews.size());
     }
+
+ */
 }
 

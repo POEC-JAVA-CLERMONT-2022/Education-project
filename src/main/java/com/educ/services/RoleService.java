@@ -35,11 +35,11 @@ public class RoleService {
 	}
 
 	public Role getById(Long id) {
-		if(this.existId(id)){
+		//if(this.existId(id)){
 			return roleRepository.getById(id);
-		}else{
-			return null;
-		}
+		//}else{
+			//return null;
+		//}
 	}
 
 	public Role findByName(String name) {
