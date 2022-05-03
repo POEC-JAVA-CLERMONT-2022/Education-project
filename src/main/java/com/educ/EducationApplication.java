@@ -46,24 +46,16 @@ public class EducationApplication {
 		Role roleS=this.roleService.createRole("Student");
 
 
-
-
-
-
 		//User user = userService.findByEmail("g@gmail.com");
 		//User user = userService.getById(1L);
 		//List<User> users=userService.findAll();
 		//System.out.println(user);
 
-
-
-
-
 		//Modulee modulee = moduleeService.getById(1L);
 		//System.out.println(modulee);
 		//Video video = videoService.findByUrl("https");
-		Video video = videoService.getById(1L);
-		System.out.println(video);
+		//Video video = videoService.getById(1L);
+		//System.out.println(video);
 
 		//Review review = reviewService.getById(1L);
 		//System.out.println(review);

@@ -34,7 +34,7 @@ public class ReviewController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<ReviewDTO>> getReviews(){
+    public ResponseEntity<?> getReviews(){
         try {
             List<Review> reviews = reviewService.findAll();
             List<ReviewDTO> reviewDTOS = new LinkedList<ReviewDTO>();
@@ -49,7 +49,7 @@ public class ReviewController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<ReviewDTO> getReviewById(@PathVariable Long id){
+    public ResponseEntity<?> getReviewById(@PathVariable Long id){
         try {
             logger.info("Given Review {}",id);
             ReviewDTO reviewDTO = new ReviewDTO();
@@ -61,7 +61,7 @@ public class ReviewController {
         }
     }
 
-    @PostMapping("add") /* check for user and module */
+    @PostMapping() /* check for user and module */
     public ResponseEntity<ReviewDTO> addReview(@RequestBody ReviewDTO reviewDTO){
         try {
             ReviewDTO newReview = new ReviewDTO();
