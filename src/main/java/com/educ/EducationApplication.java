@@ -16,7 +16,10 @@ public class EducationApplication {
 
 	@Autowired
 	private RoleService roleService;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 644384b (review module entite)
 	@Autowired
 	private ModuleeService moduleeService;
 
@@ -46,10 +49,6 @@ public class EducationApplication {
 		Role roleS=this.roleService.createRole("Student");
 
 
-
-
-
-
 		//User user = userService.findByEmail("g@gmail.com");
 		//User user = userService.getById(1L);
 		//List<User> users=userService.findAll();
@@ -66,7 +65,7 @@ public class EducationApplication {
 		System.out.println(video);
 
 		//Review review = reviewService.getById(1L);
-		//System.out.println(review);
+		//System.out.println(review)
 
 	}
 }
