@@ -16,10 +16,7 @@ public class EducationApplication {
 
 	@Autowired
 	private RoleService roleService;
-<<<<<<< HEAD
 
-=======
->>>>>>> 644384b (review module entite)
 	@Autowired
 	private ModuleeService moduleeService;
 
