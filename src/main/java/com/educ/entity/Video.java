@@ -42,7 +42,7 @@ public class Video {
         this.title = title;
         this.url = url;
         this.duration = duration;
-        this.module = null;
+        //this.module = null;
     }
 
     public Long getId() {
