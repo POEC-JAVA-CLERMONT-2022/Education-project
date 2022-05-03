@@ -78,9 +78,9 @@ public class ReviewDTO {
             //userDTO.copyUser(review.getUser());
             reviewDTO.setUserDTO(userDTO);
 
-            ModuleeDTO moduleeDTO=new ModuleeDTO(review.getModule().getTitle());
+            //ModuleeDTO moduleeDTO=new ModuleeDTO(review.getModule().getTitle());
             //moduleeDTO.convertTo(review.getModule());
-            reviewDTO.setModuleeDTO(moduleeDTO);
+            //reviewDTO.setModuleeDTO(moduleeDTO);
 
             return reviewDTO;
         }else{

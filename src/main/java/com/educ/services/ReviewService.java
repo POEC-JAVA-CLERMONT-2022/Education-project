@@ -83,7 +83,7 @@ public class ReviewService {
        Modulee modulee=this.moduleeRepository.getById(moduleeId);
       review=new Review(note, comment);
       review.setUser(user);
-      review.setModule(modulee);
+      //review.setModule(modulee);
       review=this.reviewRepository.save(review);
        //Ajout de la review dans user et Module
 
@@ -137,7 +137,7 @@ public class ReviewService {
         }
 
     }
-
+/*
     private Modulee addModuleeReview(Modulee modulee, Long id) {
         try {
             List<Review> reviews;
@@ -158,6 +158,8 @@ public class ReviewService {
         }
 
     }
+
+ */
 
 
 }

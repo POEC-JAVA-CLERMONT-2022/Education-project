@@ -1,6 +1,7 @@
 package com.educ.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
@@ -23,8 +24,8 @@ public class Modulee {
     private List<Lesson> lessons;
 
     //@OneToMany(mappedBy = "module", fetch = FetchType.LAZY, cascade=CascadeType.REMOVE, orphanRemoval = true)
-    @OneToMany(mappedBy = "module", fetch = FetchType.LAZY)
-    private List<Review> reviews;
+   // @OneToMany //(mappedBy = "module", fetch = FetchType.LAZY)
+    //private List<Review> reviews;
 
 
 
@@ -39,7 +40,7 @@ public class Modulee {
     public Modulee(String title) {
         super();
         this.title = title;
-        this.reviews = new LinkedList<Review>();
+       // this.reviews = new LinkedList<Review>();
 
         this.lessons = new LinkedList<Lesson>();
         this.video = null;
@@ -61,11 +62,11 @@ public class Modulee {
     public List<Lesson> getLessons() {
         return lessons;
     }
-
+/*
     public List<Review> getReviews() {
         return reviews;
     }
-
+*/
 
     public void setTitle(String title) {
         this.title = title;
@@ -74,10 +75,12 @@ public class Modulee {
     public void setLessons(List<Lesson> lessons) {
         this.lessons = lessons;
     }
-
+/*
     public void setReviews(List<Review> reviews) {
         this.reviews = reviews;
     }
+
+ */
 
     public void setVideo(Video video) {
         this.video = video;
@@ -100,14 +103,15 @@ public class Modulee {
         return Objects.equals(title, other.title);
     }
 
+
     @Override
     public String toString() {
         return "Modulee{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
-                /*", lessons=" + lessons +
-                ", reviews=" + reviews +
-                ", video=" + video + */
+                ", lessons=" + lessons +
+                //", reviews=" + reviews +
+                ", video=" + video +
                 '}';
     }
 }
