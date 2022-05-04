@@ -57,12 +57,21 @@ public class EducationApplication {
 
 
 
-		Modulee modulee = moduleeService.getById(1L);
+		/*Modulee modulee = moduleeService.getById(1L);
 		System.out.println(modulee);
 		Lesson lesson=lessonService.getById(1L);
 		System.out.println(lesson);
         Review review=reviewService.createReview(1, "Bad", 2L,2L);
-        System.out.println(review);
+        System.out.println(review);*/
+
+		List<Modulee> modulees=lessonService.findListModuleeByLessonId(1L);
+		for(Modulee modulee:modulees){
+			System.out.println("++++++++++");
+			System.out.println(modulee);
+			System.out.println("++++++++++");
+		}
+
+
         //Video video = videoService.findByUrl("https");
 		//Video video = videoService.getById(1L);
 		//System.out.println(video);

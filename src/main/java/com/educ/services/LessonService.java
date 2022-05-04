@@ -1,9 +1,12 @@
 package com.educ.services;
 
+import java.util.LinkedList;
 import java.util.List;
 
+import com.educ.data.ModuleeRepository;
 import com.educ.entity.Language;
 import com.educ.entity.Level;
+import com.educ.entity.Modulee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,13 +20,19 @@ public class LessonService {
 
 
 	private LessonRepository lessonRepository;
+	private ModuleeRepository moduleeRepository;
 	@Autowired
-	public LessonService(LessonRepository lessonRepository) {
+	public LessonService(LessonRepository lessonRepository, ModuleeRepository moduleeRepository) {
 		this.lessonRepository = lessonRepository;
+		this.moduleeRepository = moduleeRepository;
 	}
+
+
 
 	public List<Lesson> findAll(){ return lessonRepository.findAll();
 	}
+
+
 
 
 	public boolean existId(Long id) {
@@ -45,9 +54,19 @@ public class LessonService {
 		}
 	}
 
-	Lesson findByNameAndLevelAndLanguage(String name, Level level, Language language){
+	public Lesson findByNameAndLevelAndLanguage(String name, Level level, Language language){
 		return this.lessonRepository.findByNameAndLevelAndLanguage(name,level,language);
 	}
+
+	public  List<Modulee> findListModuleeByLessonId(Long id){
+		List<Modulee> modulees=new LinkedList<Modulee>();
+		List<Long> modulee_ids=this.lessonRepository.findListModuleeByLessonId(id);
+		for(Long module_id:modulee_ids){
+			modulees.add(moduleeRepository.getById(module_id));
+		}
+		return modulees;
+	}
+
 
 	@Transactional
 	public Lesson createLesson(String name, String description, Float price, Language language, Level level) {
@@ -84,4 +103,6 @@ public class LessonService {
 		}
 
 	}
+
+
 }

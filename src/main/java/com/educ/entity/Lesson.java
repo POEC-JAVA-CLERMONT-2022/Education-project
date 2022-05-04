@@ -56,8 +56,6 @@ public class Lesson {
 		
 	}
 
-
-
 	public Lesson(String name, String description, float price, Language language, Level level) {
 		super();
 		this.name = name;
