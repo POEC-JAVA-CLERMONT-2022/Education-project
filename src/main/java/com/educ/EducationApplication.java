@@ -55,8 +55,6 @@ public class EducationApplication {
 
 
 
-
-
 		/*Modulee modulee = moduleeService.getById(1L);
 		System.out.println(modulee);
 		Lesson lesson=lessonService.getById(1L);
@@ -73,6 +71,7 @@ public class EducationApplication {
 
 
         //Video video = videoService.findByUrl("https");
+
 		//Video video = videoService.getById(1L);
 		//System.out.println(video);
 

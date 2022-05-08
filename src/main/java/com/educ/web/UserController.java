@@ -45,7 +45,7 @@ public class UserController {
 	}
 
 	@GetMapping("{id}")
-	public ResponseEntity<UserDTO> getUserById(@PathVariable Long id){
+	public ResponseEntity<?> getUserById(@PathVariable Long id){
 		try {
 			logger.info("User : {}", id);
 			UserDTO userDTO = new UserDTO();
@@ -59,7 +59,7 @@ public class UserController {
 	}
 
 	@PostMapping("add")
-	public ResponseEntity<UserDTO> addUser(@RequestBody UserDTO userDTO){
+	public ResponseEntity<?> addUser(@RequestBody UserDTO userDTO){
 		//logger.debug("REST request to save User : {}", userDTO);
 		try{
 			UserDTO createdUser = new UserDTO();
@@ -75,8 +75,7 @@ public class UserController {
 	}
 
 	@PutMapping()
-	public ResponseEntity<UserDTO> updateUserByEmail(@RequestBody UserDTO userDTO) {
-
+	public ResponseEntity<?> updateUserByEmail(@RequestBody UserDTO userDTO) {
 		try {
 			UserDTO userDTOLocale = new UserDTO();
 			LocalDate localDate=userDTO.getBirthAt();
