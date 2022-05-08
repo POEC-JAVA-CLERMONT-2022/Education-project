@@ -48,16 +48,22 @@ public class ModuleeController {
     }
 
     @GetMapping("{id}")
+
     public ResponseEntity<?> getModuleById(@PathVariable Long id) {
+
+
         try {
             logger.info("Module {}", id);
-            ModuleeDTO moduleeDTO = new ModuleeDTO();
-            moduleeDTO.convertTo(moduleeService.getById(id));
-            return new ResponseEntity<>(moduleeDTO, HttpStatus.OK);
+            Modulee modulee=moduleeService.getById(id);
+            /*ModuleeDTO moduleeDTO = new ModuleeDTO();
+            moduleeDTO.convertTo(moduleeService.getById(id));*/
+            return new ResponseEntity<>(modulee, HttpStatus.OK);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Module not found");
         }
     }
+
+ 
 
     @PostMapping()
     public ResponseEntity<?> addModule(@RequestBody ModuleeDTO moduleeDTO) {

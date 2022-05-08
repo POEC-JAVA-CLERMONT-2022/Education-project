@@ -24,7 +24,7 @@ public class Review {
 
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = false) //@JoinColumn(name="idModule", nullable = false)
-	@JoinColumn(name="module_id", nullable = false)
+//	@JoinColumn(name="module_id")
 	//@OnDelete(action = onDeleteAction.CASCADE)
 	//@JsonIgnore
 	private Modulee module;
@@ -74,12 +74,11 @@ public class Review {
 	public User getUser() {
 		return user;
 	}
-/*
+
 	public void setModule(Modulee module) {
 		this.module = module;
 	}
 
- */
 
 	public void setUser(User user) {
 		this.user = user;

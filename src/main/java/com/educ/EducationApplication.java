@@ -31,6 +31,8 @@ public class EducationApplication {
 
 	@Autowired
 	private ReviewService reviewService;
+	@Autowired
+	private LessonService lessonService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(EducationApplication.class, args);
@@ -51,14 +53,30 @@ public class EducationApplication {
 		//List<User> users=userService.findAll();
 		//System.out.println(user);
 
-		//Modulee modulee = moduleeService.getById(1L);
-		//System.out.println(modulee);
-		//Video video = videoService.findByUrl("https");
+
+
+		/*Modulee modulee = moduleeService.getById(1L);
+		System.out.println(modulee);
+		Lesson lesson=lessonService.getById(1L);
+		System.out.println(lesson);
+        Review review=reviewService.createReview(1, "Bad", 2L,2L);
+        System.out.println(review);*/
+
+		List<Modulee> modulees=lessonService.findListModuleeByLessonId(1L);
+		for(Modulee modulee:modulees){
+			System.out.println("++++++++++");
+			System.out.println(modulee);
+			System.out.println("++++++++++");
+		}
+
+
+        //Video video = videoService.findByUrl("https");
+
 		//Video video = videoService.getById(1L);
 		//System.out.println(video);
 
 		//Review review = reviewService.getById(1L);
-		//System.out.println(review);
+		//System.out.println(review)
 
 	}
 }
