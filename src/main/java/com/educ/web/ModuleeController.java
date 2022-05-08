@@ -33,7 +33,7 @@ public class ModuleeController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<ModuleeDTO>> getModules() {
+    public ResponseEntity<?> getModules() {
         try {
             List<Modulee> modulees = moduleeService.findAll();
             List<ModuleeDTO> moduleeDTOS = new LinkedList<ModuleeDTO>();
@@ -48,7 +48,10 @@ public class ModuleeController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Modulee> getModuleById(@PathVariable Long id) {
+
+    public ResponseEntity<?> getModuleById(@PathVariable Long id) {
+
+
         try {
             logger.info("Module {}", id);
             Modulee modulee=moduleeService.getById(id);
@@ -60,20 +63,10 @@ public class ModuleeController {
         }
     }
 
-  /*  @GetMapping("{id}")
-    public ResponseEntity<ModuleeDTO> getModuleById(@PathVariable Long id) {
-        try {
-            logger.info("Module {}", id);
-            ModuleeDTO moduleeDTO = new ModuleeDTO();
-            moduleeDTO.convertTo(moduleeService.getById(id));
-            return new ResponseEntity<>(moduleeDTO, HttpStatus.OK);
-        } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Module not found");
-        }
-    }*/
+ 
 
-    @PostMapping("add")
-    public ResponseEntity<ModuleeDTO> addModule(@RequestBody ModuleeDTO moduleeDTO) {
+    @PostMapping()
+    public ResponseEntity<?> addModule(@RequestBody ModuleeDTO moduleeDTO) {
         try {
             ModuleeDTO createdModulee = new ModuleeDTO();
             Modulee modulee = moduleeService.createModule(moduleeDTO.getTitle(), "Java", Level.MIDDLE, Language.EN, "www.you.com");
@@ -100,7 +93,7 @@ public class ModuleeController {
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<Modulee> deleteModule(@PathVariable Long id) {
+    public ResponseEntity<?> deleteModule(@PathVariable Long id) {
         try {
             moduleeService.deleteModule(id);
             return ResponseEntity.ok().build();

@@ -3,7 +3,6 @@ package com.educ.web;
 import com.educ.entity.Video;
 import com.educ.services.VideoService;
 import com.educ.services.dto.VideoDTO;
-import com.educ.web.advice.ResponseCodeMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +28,7 @@ public class VideoController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<VideoDTO>> getVideos(){
+    public ResponseEntity<?> getVideos(){
         try {
             List<Video> videos = videoService.findAll();
             List<VideoDTO> videoDTOS = new LinkedList<VideoDTO>();
@@ -44,9 +43,10 @@ public class VideoController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<VideoDTO> getVideoById(@PathVariable Long id){
+    public ResponseEntity<?> getVideoById(@PathVariable Long id){
         try {
             logger.info("Given video {}",id);
+            //faire une condition pour verifier si l'id existe avec message BAD_REQUEST
             VideoDTO videoDTO = new VideoDTO();
             videoDTO.convertTo(videoService.getById(id));
             //return ResponseEntity.ok(videoDTO);
@@ -56,15 +56,14 @@ public class VideoController {
         }
     }
 
-    @PostMapping("add")
-    public ResponseEntity<VideoDTO> addVideo(@RequestBody VideoDTO videoDTO){
+    @PostMapping
+    public ResponseEntity<?> addVideo(@RequestBody VideoDTO videoDTO){
         try{
             VideoDTO newVideo = new VideoDTO();
             newVideo.convertTo(videoService.createVideo(videoDTO.getTitle(), videoDTO.getUrl(), videoDTO.getDuration()));
-            return new ResponseEntity<>(newVideo, HttpStatus.CREATED); /* CODE 201 */
+            return new ResponseEntity<>(newVideo, HttpStatus.CREATED); /* CODE 201, on peut retourner lbjeto o el id */
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Error to create video : ", e);
-            //return ResponseEntity.status(HttpStatus.CONFLICT).body(new ResponseCodeMessage(409, e.getMessage()));
         }
     }
 
@@ -78,13 +77,22 @@ public class VideoController {
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<Video> deleteVideo(@PathVariable Long id){
+    public ResponseEntity<?> deleteVideo(@PathVariable Long id){
         try{
-            videoService.deleteVideo(id);
-            return ResponseEntity.ok().build();
+            Video video = videoService.getById(id);
+            if(video == null)
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+            boolean isDeleted = videoService.deleteVideo(id);
+            if(!isDeleted)
+                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
         } catch (Exception e){
             e.printStackTrace();
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Video not found");
+            //throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Video not found");
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }
