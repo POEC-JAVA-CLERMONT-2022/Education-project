@@ -89,6 +89,7 @@ public class VideoController {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
             videoService.deleteVideo(id);
+
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
         } catch (Exception e){

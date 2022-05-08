@@ -67,7 +67,9 @@ public class EducationApplication {
 			System.out.println("++++++++++");
 			System.out.println(modulee);
 			System.out.println("++++++++++");
-		} 
+		}
+
+		System.out.println(moduleeService.calculRating("Module java"));
 
 
         //Video video = videoService.findByUrl("https");
