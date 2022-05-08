@@ -1,5 +1,6 @@
 package com.educ.web;
 
+import com.educ.entity.Lesson;
 import com.educ.entity.Modulee;
 import com.educ.entity.Review;
 
@@ -37,12 +38,7 @@ public class ReviewController {
     public ResponseEntity<?> getReviews(){
         try {
             List<Review> reviews = reviewService.findAll();
-            List<ReviewDTO> reviewDTOS = new LinkedList<ReviewDTO>();
-            for (Review review:reviews){
-                ReviewDTO reviewDTO =  new ReviewDTO();
-                reviewDTOS.add(reviewDTO.convertTo(review));
-            }
-            return new ResponseEntity<>(reviewDTOS, HttpStatus.OK);
+            return new ResponseEntity<>(reviews, HttpStatus.OK);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Review not found");
         }
@@ -52,39 +48,51 @@ public class ReviewController {
     public ResponseEntity<?> getReviewById(@PathVariable Long id){
         try {
             logger.info("Given Review {}",id);
-            ReviewDTO reviewDTO = new ReviewDTO();
-            reviewDTO.convertTo(reviewService.getById(id));
-           // reviewDTO.setUser_id(this.reviewService.findUserIdById(id));
-            return new ResponseEntity<>(reviewDTO, HttpStatus.OK);
+            Review findReview = reviewService.getById(id);
+            if(findReview == null){
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+            return new ResponseEntity<>(findReview, HttpStatus.OK);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Review not found");
         }
     }
 
-    @PostMapping() /* check for user and module */
-    public ResponseEntity<ReviewDTO> addReview(@RequestBody ReviewDTO reviewDTO){
+    @PostMapping()
+    public ResponseEntity<?> addReview(@RequestBody Review review){
         try {
-            ReviewDTO newReview = new ReviewDTO();
-            newReview.convertTo(reviewService.createReview(reviewDTO.getNote(),reviewDTO.getComment(),reviewDTO.getUserDTO().getId(), reviewDTO.getModuleeDTO().getId()));
-            return new ResponseEntity<>(newReview, HttpStatus.CREATED);
+            Review createdReview = reviewService.createReview(review.getNote(),review.getComment(),review.getUser().getId(), review.getModule().getId());
+            return new ResponseEntity<>(createdReview, HttpStatus.CREATED);
 
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Error to create review");
         }
     }
 
-    //check this for insert module & user
+
     @PutMapping("{id}")
-    public void updateReview(@PathVariable Long id, @RequestBody ReviewDTO reviewDTO){
+    public ResponseEntity<?> updateReview(@PathVariable Long id, @RequestBody Review review){
         try {
-            reviewService.updateReview(id, reviewDTO.getNote(), reviewDTO.getComment());
+            if(id != null){
+                reviewService.updateReview(id, review.getNote(), review.getComment());
+            }
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Error to update review");
         }
     }
 
     @DeleteMapping("{id}")
-    public void deleteReview(@PathVariable Long id){
-        reviewService.deleteReview(id);
+    public ResponseEntity<?> deleteReview(@PathVariable Long id){
+        try {
+            Review deletedReview = reviewService.getById(id);
+            if(deletedReview == null){
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+            reviewService.deleteReview(id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Lesson not found");
+        }
     }
 }

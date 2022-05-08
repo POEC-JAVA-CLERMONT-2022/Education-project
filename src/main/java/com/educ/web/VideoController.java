@@ -46,10 +46,11 @@ public class VideoController {
     public ResponseEntity<?> getVideoById(@PathVariable Long id){
         try {
             logger.info("Given video {}",id);
-            //faire une condition pour verifier si l'id existe avec message BAD_REQUEST
+            if(id == null){
+                return new ResponseEntity<> (HttpStatus.NOT_FOUND);
+            }
             VideoDTO videoDTO = new VideoDTO();
             videoDTO.convertTo(videoService.getById(id));
-            //return ResponseEntity.ok(videoDTO);
             return new ResponseEntity<> (videoDTO, HttpStatus.OK);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Video not found");
@@ -68,11 +69,15 @@ public class VideoController {
     }
 
     @PutMapping("{id}")
-    public void updateVideo(@PathVariable Long id, @RequestBody VideoDTO videoDTO){
+    public ResponseEntity<?> updateVideo(@PathVariable Long id, @RequestBody VideoDTO videoDTO){
         try {
-            videoService.updateVideo(id, videoDTO.getTitle(), videoDTO.getUrl(), videoDTO.getDuration());
+            if(id != null){
+                videoService.updateVideo(id, videoDTO.getTitle(), videoDTO.getUrl(), videoDTO.getDuration());
+            }
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -83,10 +88,7 @@ public class VideoController {
             if(video == null)
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
-            boolean isDeleted = videoService.deleteVideo(id);
-            if(!isDeleted)
-                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-
+            videoService.deleteVideo(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
         } catch (Exception e){
