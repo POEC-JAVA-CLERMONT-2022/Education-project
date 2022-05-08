@@ -69,7 +69,7 @@ public class EducationApplication {
 			System.out.println("++++++++++");
 			System.out.println(modulee);
 			System.out.println("++++++++++");
-		}
+		} 
 
 
         //Video video = videoService.findByUrl("https");
