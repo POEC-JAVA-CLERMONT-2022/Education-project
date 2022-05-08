@@ -157,7 +157,7 @@ public class ModuleeService {
             }
 
         }
-       
+
         return ((double)somme / (double) nbre);
     }
 

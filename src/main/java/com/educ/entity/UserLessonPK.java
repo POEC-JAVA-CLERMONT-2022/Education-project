@@ -30,4 +30,12 @@ public class UserLessonPK implements Serializable {
 	public Lesson getLesson() {
 		return lesson;
 	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public void setLesson(Lesson lesson) {
+		this.lesson = lesson;
+	}
 }
