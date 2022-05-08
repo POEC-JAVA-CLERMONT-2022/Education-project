@@ -2,7 +2,6 @@ package com.educ.web;
 import com.educ.entity.Lesson;
 
 import com.educ.services.LessonService;
-import com.educ.services.dto.LessonDTO;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,8 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-
-import java.util.LinkedList;
 import java.util.List;
 
 
@@ -30,37 +27,37 @@ public class LessonController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<LessonDTO>> getLessons(){
+    public ResponseEntity<?> getLessons(){
         try {
             List<Lesson> lessons = lessonService.findAll();
-            List<LessonDTO> lessonDTOS = new LinkedList<LessonDTO>();
-            for(Lesson lesson:lessons){
-                LessonDTO lessonDTO = new LessonDTO();
-                lessonDTOS.add(lessonDTO.convertTo(lesson));
-            }
-            return new ResponseEntity<>(lessonDTOS, HttpStatus.OK);
+            return new ResponseEntity<>(lessons, HttpStatus.OK);
         }catch (Exception e){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Lessons not found");
         }
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<LessonDTO> getLessonById(@PathVariable Long id){
+    public ResponseEntity<?> getLessonById(@PathVariable Long id){
         try {
             logger.info("Given lesson {}",id);
-            LessonDTO findLesson = new LessonDTO();
-            findLesson.convertTo(lessonService.getById(id));
+            Lesson findLesson = lessonService.getById(id);
+            if(findLesson == null){
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
             return new ResponseEntity<>(findLesson, HttpStatus.OK);
+
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Lesson not found");
         }
     }
 
-    @PostMapping("add")
-    public ResponseEntity<LessonDTO> addLesson(@RequestBody LessonDTO lessonDTO){
+    @PostMapping()
+    public ResponseEntity<?> addLesson(@RequestBody Lesson lesson){
         try {
-            LessonDTO newLesson = new LessonDTO();
-            newLesson.convertTo(lessonService.createLesson(lessonDTO.getName(), lessonDTO.getDescription(), lessonDTO.getPrice(), lessonDTO.getLanguage(), lessonDTO.getLevel()));
+            if(lesson.getName() == null || lesson.getName() == ""){
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+            Lesson newLesson = lessonService.createLesson(lesson.getName(), lesson.getDescription(), lesson.getPrice(), lesson.getLanguage(), lesson.getLevel());
             return new ResponseEntity<>(newLesson, HttpStatus.CREATED);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Error to create lesson", e);
@@ -69,21 +66,27 @@ public class LessonController {
 
     //Postman language & level : FR / MIDDLE
     //Postman price 150.20
-    @PutMapping("{id}") /* check return */
-    public ResponseEntity<LessonDTO> updateLesson(@PathVariable Long id, @RequestBody LessonDTO lessonDTO){
+    @PutMapping("{id}")
+    public ResponseEntity<?> updateLesson(@PathVariable Long id, @RequestBody Lesson lesson){
         try {
-            lessonService.updateLesson(id, lessonDTO.getName(), lessonDTO.getDescription(), lessonDTO.getPrice(), lessonDTO.getLanguage(), lessonDTO.getLevel());
-            return new ResponseEntity(HttpStatus.OK);
+            if(id != null){
+                lessonService.updateLesson(id, lesson.getName(), lesson.getDescription(), lesson.getPrice(), lesson.getLanguage(), lesson.getLevel());
+            }
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Error to update lesson");
         }
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<Lesson> deleteLesson(@PathVariable Long id){
+    public ResponseEntity<?> deleteLesson(@PathVariable Long id){
         try {
+            Lesson lesson = lessonService.getById(id);
+            if(lesson == null){
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
             lessonService.deleteLesson(id);
-            return ResponseEntity.ok().build();
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Lesson not found");
         }
