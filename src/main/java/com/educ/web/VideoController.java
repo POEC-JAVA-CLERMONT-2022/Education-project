@@ -83,7 +83,8 @@ public class VideoController {
             if(video == null)
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
-            boolean isDeleted = videoService.deleteVideo(id);
+            //boolean isDeleted = videoService.deleteVideo(id);
+            boolean isDeleted =true;
             if(!isDeleted)
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 
