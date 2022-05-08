@@ -30,17 +30,12 @@ public class UserController {
 	}
 
 	@GetMapping()
-	public ResponseEntity<List<UserDTO>> getUsers(){
+	public ResponseEntity<?> getUsers(){
 		try {
 			List<User> users = userService.findAll();
-			List<UserDTO> userDTOS=new LinkedList<UserDTO>();
-			for (User user:users){
-				UserDTO userDTO=new UserDTO();
-				userDTOS.add(userDTO.copyUser(user));
-			}
-			return new ResponseEntity<>(userDTOS, HttpStatus.OK);
+			return new ResponseEntity<>(users, HttpStatus.OK);
 		} catch (Exception e){
-			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
 
@@ -48,9 +43,11 @@ public class UserController {
 	public ResponseEntity<?> getUserById(@PathVariable Long id){
 		try {
 			logger.info("User : {}", id);
-			UserDTO userDTO = new UserDTO();
-			userDTO.copyUser(userService.getById(id));
-			return new ResponseEntity<> (userDTO, HttpStatus.OK);
+			User findUser =  userService.getById(id);
+			if(findUser == null){
+				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			}
+			return new ResponseEntity<> (findUser, HttpStatus.OK);
 		} catch (Exception e) {
 			/*e.printStackTrace();*/ /* error en console */
 			//throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found :", e); /* Error long in pageweb */
@@ -58,14 +55,12 @@ public class UserController {
 		}
 	}
 
-	@PostMapping("add")
-	public ResponseEntity<?> addUser(@RequestBody UserDTO userDTO){
+	@PostMapping()
+	public ResponseEntity<?> addUser(@RequestBody User user){
 		//logger.debug("REST request to save User : {}", userDTO);
 		try{
-			UserDTO createdUser = new UserDTO();
-			User user = userService.createUser(userDTO.getFirstName(), userDTO.getLastName(), userDTO.getBirthAt(), userDTO.getUrlImage(), userDTO.getEmail(), userDTO.getPassword(), userDTO.getStatus());
-			createdUser.copyUser(user);
-			return new ResponseEntity(createdUser, HttpStatus.CREATED); /* OK*/
+			User createdUser = userService.createUser(user.getFirstName(), user.getLastName(), user.getBirthAt(), user.getUrlImage(), user.getEmail(), user.getPassword(), user.getStatus());
+			return new ResponseEntity(createdUser, HttpStatus.CREATED);
 		} catch (Exception e) { /* check when email exist */
 			e.printStackTrace();
 			//return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -75,13 +70,14 @@ public class UserController {
 	}
 
 	@PutMapping()
-	public ResponseEntity<?> updateUserByEmail(@RequestBody UserDTO userDTO) {
+	public ResponseEntity<?> updateUserByEmail(@RequestBody User user) {
 		try {
-			UserDTO userDTOLocale = new UserDTO();
-			LocalDate localDate=userDTO.getBirthAt();
-			User user=userService.updateByEmail(userDTO.getFirstName(), userDTO.getLastName(), localDate, userDTO.getUrlImage(), userDTO.getEmail(), userDTO.getPassword(), userDTO.getStatus());
-			userDTOLocale.copyUser(user);
-			return new ResponseEntity(userDTOLocale, HttpStatus.CREATED);
+			if(user.getEmail() != null){
+				LocalDate localDate=user.getBirthAt();
+				User updatedUser = userService.updateByEmail(user.getFirstName(), user.getLastName(), localDate, user.getUrlImage(), user.getEmail(), user.getPassword(), user.getStatus());
+				return new ResponseEntity(updatedUser, HttpStatus.OK);
+			}
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		} catch (Exception e) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Error to create user", e);
 			//return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -89,25 +85,33 @@ public class UserController {
 	}
 
 	@PutMapping("{id}")
-	public void updateUser(@PathVariable Long id, @RequestBody UserDTO userDTO) {
+	public ResponseEntity<?> updateUser(@PathVariable Long id, @RequestBody User user) {
 		try {
-			logger.info("User : {}", id);
-			//UserDTO userDTOLocale = new UserDTO();
-			LocalDate localDate=userDTO.getBirthAt();
-			userService.updateUser(id,userDTO.getFirstName(), userDTO.getLastName(), localDate, userDTO.getUrlImage(), userDTO.getEmail(), userDTO.getPassword(), userDTO.getStatus());
+			if(id != null){
+				logger.info("User : {}", id);
+				LocalDate localDate=user.getBirthAt();
+				userService.updateUser(id,user.getFirstName(), user.getLastName(), localDate, user.getUrlImage(), user.getEmail(), user.getPassword(), user.getStatus());
+			}
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		} catch (Exception e) {
 			logger.info("User : {}", id);
 			e.printStackTrace();
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Error to update user");
 		}
-
 	}
 
 	@DeleteMapping("{id}")
-	public void deleteUser(@PathVariable Long id){
+	public ResponseEntity<?> deleteUser(@PathVariable Long id){
 		try {
+			User deletedUser = userService.getById(id);
+			if(deletedUser == null){
+				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			}
 			userService.deleteUser(id);
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		} catch (Exception e) {
 			e.printStackTrace();
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
 		}
 	}
 }
