@@ -1,6 +1,7 @@
 package com.educ.services;
 
 
+import com.educ.data.ReviewRepository;
 import com.educ.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,17 +18,18 @@ public class ModuleeService {
 
     private LessonService lessonService;
 
-
+    private ReviewRepository reviewRepository;
 
     private VideoService videoService;
 
     @Autowired
-    public ModuleeService(ModuleeRepository moduleRepository, LessonService lessonService, VideoService videoService) {
+    public ModuleeService(ModuleeRepository moduleRepository, LessonService lessonService, ReviewRepository reviewRepository, VideoService videoService) {
         this.moduleRepository = moduleRepository;
         this.lessonService = lessonService;
-
+        this.reviewRepository = reviewRepository;
         this.videoService = videoService;
     }
+
 
     public List<Modulee> findAll() {
         return moduleRepository.findAll();
@@ -142,15 +144,23 @@ public class ModuleeService {
         if (modulee == null) {
             return null;
         }
-        List<Review> reviews = modulee.getReviews();
+        List<Review> reviews = reviewRepository.findAll();
         if (reviews == null) {
             return 0.0;
         }
         int somme = 0;
+        int nbre=0;
         for (Review review : reviews) {
-            somme += review.getNote();
+            if(review.getModule().getId()==modulee.getId()){
+                somme += review.getNote();
+                nbre++;
+            }
+
         }
-        return Double.valueOf(somme / reviews.size());
+
+        return ((double)somme / (double) nbre);
     }
+
+
 }
 

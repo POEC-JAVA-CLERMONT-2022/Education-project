@@ -33,62 +33,69 @@ public class ModuleeController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<ModuleeDTO>> getModules() {
+    public ResponseEntity<?> getModules() {
         try {
             List<Modulee> modulees = moduleeService.findAll();
-            List<ModuleeDTO> moduleeDTOS = new LinkedList<ModuleeDTO>();
-            for (Modulee modulee : modulees) {
-                ModuleeDTO moduleeDTO = new ModuleeDTO();
-                moduleeDTOS.add(moduleeDTO.convertTo(modulee));
-            }
-            return new ResponseEntity<>(moduleeDTOS, HttpStatus.OK);
+           return new ResponseEntity<>(modulees, HttpStatus.OK);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Module not found", e);
         }
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<ModuleeDTO> getModuleById(@PathVariable Long id) {
+    public ResponseEntity<?> getModuleById(@PathVariable Long id) {
         try {
             logger.info("Module {}", id);
-            ModuleeDTO moduleeDTO = new ModuleeDTO();
-            moduleeDTO.convertTo(moduleeService.getById(id));
-            return new ResponseEntity<>(moduleeDTO, HttpStatus.OK);
+            Modulee findModulee = moduleeService.getById(id);
+            if(findModulee == null){
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+            return new ResponseEntity<>(findModulee, HttpStatus.OK);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Module not found");
         }
     }
-
-    @PostMapping("add")
-    public ResponseEntity<ModuleeDTO> addModule(@RequestBody ModuleeDTO moduleeDTO) {
+    /* check this with Salsabil */
+    /*
+    @PostMapping()
+    public ResponseEntity<?> addModule(@RequestBody Modulee modulee) {
         try {
-            ModuleeDTO createdModulee = new ModuleeDTO();
-            Modulee modulee = moduleeService.createModule(moduleeDTO.getTitle(), "Java", Level.MIDDLE, Language.EN, "www.you.com");
-            createdModulee.convertTo(modulee);
-            return new ResponseEntity(createdModulee, HttpStatus.CREATED); /* OK*/
-        } catch (Exception e) { /* check when email exist */
+            if(modulee.getTitle() == null || modulee.getTitle() == ""){
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+            Modulee createdModulee = moduleeService.createModule(modulee.getTitle(), modulee.getVideo());
+            return new ResponseEntity(createdModulee, HttpStatus.CREATED);
+        } catch (Exception e) {
             e.printStackTrace();
             //return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Error to create module", e);
         }
     }
 
+     */
+
     @PutMapping("{id}")
-    public void updateModulee(@PathVariable Long id, @RequestBody ModuleeDTO moduleeDTO) {
+    public ResponseEntity<?> updateModulee(@PathVariable Long id, @RequestBody Modulee modulee) {
         try {
-            logger.info("Modulee : {}", id);
-            //UserDTO userDTOLocale = new UserDTO();
-            //LocalDate localDate=userDTO.getBirthAt();
-            moduleeService.updateModule(id, moduleeDTO.getTitle());
+           if(id != null){
+               logger.info("Modulee : {}", id);
+               moduleeService.updateModule(id, modulee.getTitle());
+           }
+           return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             logger.info("Modulee : {}", id);
             e.printStackTrace();
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Error to update module");
         }
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<Modulee> deleteModule(@PathVariable Long id) {
+    public ResponseEntity<?> deleteModule(@PathVariable Long id) {
         try {
+            Modulee modulee = moduleeService.getById(id);
+            if(modulee == null){
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
             moduleeService.deleteModule(id);
             return ResponseEntity.ok().build();
         } catch (Exception e) {

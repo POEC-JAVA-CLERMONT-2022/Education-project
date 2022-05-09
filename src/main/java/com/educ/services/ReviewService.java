@@ -137,7 +137,7 @@ public class ReviewService {
         }
 
     }
-
+/*
     private Modulee addModuleeReview(Modulee modulee, Long id) {
         try {
             List<Review> reviews;
@@ -158,6 +158,8 @@ public class ReviewService {
         }
 
     }
+
+ */
 
 
 }

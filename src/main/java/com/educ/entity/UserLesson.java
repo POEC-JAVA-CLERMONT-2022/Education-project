@@ -7,6 +7,7 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.Table;
+import javax.validation.constraints.PositiveOrZero;
 
 @Entity
 @Table(name="user_lesson")
@@ -20,7 +21,8 @@ public class UserLesson {
 private UserLessonPK userLessonPK;
 
 @Column(name = "result")
-private float resultat;
+@PositiveOrZero
+private Float resultat;
 
 public  UserLesson() {
 	
@@ -34,7 +36,11 @@ public UserLessonPK getUserLessonPK() {
 	return userLessonPK;
 }
 
+	public Float getResultat() {
+		return resultat;
+	}
 
-
-
+	public void setResultat(Float resultat) {
+		this.resultat = resultat;
+	}
 }

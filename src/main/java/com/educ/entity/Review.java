@@ -1,5 +1,8 @@
 package com.educ.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.OnDelete;
+
 import java.util.Objects;
 
 import javax.persistence.*;
@@ -20,7 +23,10 @@ public class Review {
 	private String comment;
 
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, optional = false) //@JoinColumn(name="idModule", nullable = false)
+//	@JoinColumn(name="module_id")
+	//@OnDelete(action = onDeleteAction.CASCADE)
+	//@JsonIgnore
 	private Modulee module;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -38,6 +44,8 @@ public class Review {
 		this.module=new Modulee();
 		this.user=new User();
 	}
+
+
 
 	public Long getId() {
 		return id;
@@ -59,7 +67,7 @@ public class Review {
 		this.comment = comment;
 	}
 
-	 public Modulee getModule() {
+	public Modulee getModule() {
 		return module;
 	}
 
@@ -70,6 +78,7 @@ public class Review {
 	public void setModule(Modulee module) {
 		this.module = module;
 	}
+
 
 	public void setUser(User user) {
 		this.user = user;
@@ -98,8 +107,8 @@ public class Review {
 				"id=" + id +
 				", note=" + note +
 				", comment='" + comment + '\'' +
-				/*", module=" + module +
-				", user=" + user +*/
+				", module=" + module +
+				", user=" + user +
 				'}';
 	}
 }

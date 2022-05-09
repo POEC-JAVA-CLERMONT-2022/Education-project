@@ -16,6 +16,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.PositiveOrZero;
 
 @Entity
 
@@ -33,6 +35,7 @@ public class Lesson {
 	private String description;
 	
 	@Column(name="price")
+	@PositiveOrZero
 	private float price;
 	
 	/*@ManyToMany(mappedBy = "lessons")
@@ -45,8 +48,10 @@ public class Lesson {
 	/*@OneToMany
 	@JoinColumn(name = "lesson_id")
 	private List<Modulee> modules;*/
-	
+
+
 	@Column(name="level")
+	@NotBlank
 	private Level level;
 	
 	@Column(name="language")
@@ -55,8 +60,6 @@ public class Lesson {
 	public Lesson() {
 		
 	}
-
-
 
 	public Lesson(String name, String description, float price, Language language, Level level) {
 		super();

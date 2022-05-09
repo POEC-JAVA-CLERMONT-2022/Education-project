@@ -3,17 +3,19 @@ package com.educ.services;
 
 
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
-import com.educ.entity.Review;
-import com.educ.entity.Role;
+import com.educ.data.UserLessonRepository;
+import com.educ.entity.*;
 import com.educ.services.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
 import com.educ.data.UserRepository;
-import com.educ.entity.User;
 import org.springframework.transaction.annotation.Transactional;
 
 
@@ -24,14 +26,15 @@ public class UserService {
 
 	private RoleService roleService;
 
-
+	private UserLessonRepository userLessonRepository;
 
 	@Autowired
-	public UserService(UserRepository userRepository, RoleService roleService) {
+	public UserService(UserRepository userRepository, RoleService roleService, UserLessonRepository userLessonRepository) {
 		this.userRepository = userRepository;
 		this.roleService = roleService;
-
+		this.userLessonRepository = userLessonRepository;
 	}
+
 
 	public List<User> findAll(){
 		return userRepository.findAll();
@@ -124,6 +127,35 @@ public class UserService {
 		}
 	}
 
+	public List<Lesson> findLessonsByUserId(Long userId){
+		List<Lesson> lessons=new LinkedList<Lesson>();
+		Lesson lesson;
+		List<UserLesson> userLessons=this.userLessonRepository.findByUserLessonPK_user_Id(userId);
+		for(UserLesson userLesson:userLessons){
+			UserLessonPK userLessonPK=userLesson.getUserLessonPK();
+			lesson=userLessonPK.getLesson();
+			lessons.add(lesson);
+		}
+		return lessons;
+	}
 
+
+
+	public Map<String, Float> findNoteAndLessonsForUser(Long userId){
+		Map<String, Float> bulletin=new HashMap<String,Float>();
+		User user=this.getById(userId);
+		Role role=new Role("Student");
+		if(!user.getRoles().contains(role)){
+			return null;
+		}
+		Lesson lesson;
+		List<UserLesson> userLessons=userLessonRepository.findByUserLessonPK_user_Id(userId);
+		for(UserLesson userLesson:userLessons){
+			lesson=userLesson.getUserLessonPK().getLesson();
+			bulletin.put(lesson.getName(),userLesson.getResultat());
+		}
+		return bulletin;
+
+	}
 
 }
