@@ -4,14 +4,12 @@ import java.util.LinkedList;
 import java.util.List;
 
 import com.educ.data.ModuleeRepository;
-import com.educ.entity.Language;
-import com.educ.entity.Level;
-import com.educ.entity.Modulee;
+import com.educ.data.UserLessonRepository;
+import com.educ.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.educ.data.LessonRepository;
-import com.educ.entity.Lesson;
 import org.springframework.transaction.annotation.Transactional;
 
 
@@ -21,12 +19,13 @@ public class LessonService {
 
 	private LessonRepository lessonRepository;
 	private ModuleeRepository moduleeRepository;
+	private UserLessonRepository userLessonRepository;
 	@Autowired
-	public LessonService(LessonRepository lessonRepository, ModuleeRepository moduleeRepository) {
+	public LessonService(LessonRepository lessonRepository, ModuleeRepository moduleeRepository, UserLessonRepository userLessonRepository) {
 		this.lessonRepository = lessonRepository;
 		this.moduleeRepository = moduleeRepository;
+		this.userLessonRepository = userLessonRepository;
 	}
-
 
 
 	public List<Lesson> findAll(){ return lessonRepository.findAll();
@@ -103,6 +102,47 @@ public class LessonService {
 		}
 
 	}
+
+	public List<User> findUsersByLessonId(Long lessonId){
+		List<User> users=new LinkedList<User>();
+		User user;
+		List<UserLesson> userLessons=this.userLessonRepository.findByUserLessonPK_lesson_Id(lessonId);
+		for (UserLesson userLesson:userLessons){
+			UserLessonPK userLessonPK=userLesson.getUserLessonPK();
+			user=userLessonPK.getUser();
+			users.add(user);
+		}
+		return users;
+	}
+
+	public List<User> findStudentsByLessonId(Long lessonId){
+		List<User> users=this.findUsersByLessonId(lessonId);
+
+
+		List<User> students=new LinkedList<User>();
+		Role role=new Role("Student");
+		for(User user:users){
+			if(user.getRoles().contains(role)){
+				students.add(user);
+			}
+		}
+
+		return students;
+	}
+
+	public List<User> findTeachersByLessonId(Long lessonId){
+		List<User> users=this.findUsersByLessonId(lessonId);
+		List<User> teachers=new LinkedList<User>();
+		Role role=new Role("Teacher");
+		for(User user:users){
+			if(user.getRoles().contains(role)){
+				teachers.add(user);
+			}
+		}
+		return teachers;
+	}
+
+
 
 
 }

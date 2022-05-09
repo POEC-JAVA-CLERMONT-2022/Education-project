@@ -20,6 +20,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 
@@ -33,9 +36,11 @@ public class User {
 	private Long id;
 	
 	@Column(name="firstName", length=150)
+	@NotBlank
 	private String firstName;
 	
 	@Column(name="lastName", length=150)
+	@NotBlank
 	private String lastName;
 	
 	@Column(name="birthAt", length=150)
@@ -45,12 +50,17 @@ public class User {
 	private String urlImage;
 	
 	@Column(name="email", length=150, unique = true, nullable = false)
+	@NotBlank
+	@Email
 	private String email;
 	
 	@Column(name="password", length=150)
+	@NotBlank
+	@Size(min = 8, max=16,message = "Password must be between 8 and 16 charaters")
 	private String password;
 	
 	@Column(name="status", length=150)
+	@NotBlank
 	private String status;
 	
 	/*@OneToMany(mappedBy ="user", fetch = FetchType.LAZY)*/
