@@ -68,7 +68,7 @@ public class ModuleeDTO {
         BeanUtils.copyProperties(modulee, moduleeDTO);
 
         VideoDTO videoDTO=new VideoDTO();
-        videoDTO.convertTo(modulee.getVideo());
+       // videoDTO.convertTo(modulee.getVideo());
         moduleeDTO.setVideoDTO(videoDTO);
         return moduleeDTO;
     }

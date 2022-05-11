@@ -60,7 +60,7 @@ public class ModuleeService {
         }
         return moduleRepository.findByTitle(title);
     }
-
+/*
     @Transactional
     public Modulee createModule(String title, String name, Level level, Language language, String url) {
         if (title == null) {
@@ -76,6 +76,8 @@ public class ModuleeService {
         this.moduleRepository.save(module);
         return module;
     }
+
+ */
 
     @Transactional
     public Modulee updateModule(Long id, String title) {
@@ -100,7 +102,7 @@ public class ModuleeService {
             this.moduleRepository.delete(modulee);
         }
     }
-
+/*
     public Modulee addModuleeLesson(Modulee modulee, String name, Level level, Language language) {
         try {
             List<Lesson> lessons;
@@ -120,7 +122,7 @@ public class ModuleeService {
             return modulee;
         }
     }
-
+*/
 
     private Modulee addModuleeVideo(Modulee modulee, String url) {
         try {

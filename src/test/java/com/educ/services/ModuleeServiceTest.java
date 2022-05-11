@@ -29,7 +29,7 @@ public class ModuleeServiceTest {
     static void initAll() {
         System.out.println("beforeAll");
     }
-
+/*
     @Test
     @DisplayName("creation module test")
     public void testCreationModule(){
@@ -80,5 +80,7 @@ public class ModuleeServiceTest {
         modulees=moduleeService.findAll();
         assertTrue(modulees.contains(modulee));
     }
+
+ */
 
 }

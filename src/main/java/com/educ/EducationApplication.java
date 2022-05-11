@@ -62,14 +62,6 @@ public class EducationApplication {
         Review review=reviewService.createReview(1, "Bad", 2L,2L);
         System.out.println(review);*/
 
-		List<Modulee> modulees=lessonService.findListModuleeByLessonId(1L);
-		for(Modulee modulee:modulees){
-			System.out.println("++++++++++");
-			System.out.println(modulee);
-			System.out.println("++++++++++");
-		}
-
-		System.out.println(moduleeService.calculRating("Module java"));
 
 
         //Video video = videoService.findByUrl("https");
