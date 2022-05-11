@@ -89,6 +89,7 @@ public class VideoController {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
             videoService.deleteVideo(id);
 
 =======
@@ -97,6 +98,9 @@ public class VideoController {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 */
 >>>>>>> 103f792 (config et compose)
+=======
+            videoService.deleteVideo(id);
+>>>>>>> 0bcfabf (update with Salsabil)
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
         } catch (Exception e){
