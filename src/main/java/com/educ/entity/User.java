@@ -34,50 +34,44 @@ public class User {
 	@Column(name="id", nullable=false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@Column(name="firstName", length=150)
 	@NotBlank
 	private String firstName;
-	
+
 	@Column(name="lastName", length=150)
 	@NotBlank
 	private String lastName;
-	
+
 	@Column(name="birthAt", length=150)
 	private LocalDate birthAt;
-	
+
 	@Column(name="urlImage")
 	private String urlImage;
-	
+
 	@Column(name="email", length=150, unique = true, nullable = false)
 	@NotBlank
 	@Email
 	private String email;
-	
+
 	@Column(name="password", length=150)
 	@NotBlank
 	@Size(min = 8, max=16,message = "Password must be between 8 and 16 charaters")
 	private String password;
-	
+
 	@Column(name="status", length=150)
 	@NotBlank
 	private String status;
-	
-	/*@OneToMany(mappedBy ="user", fetch = FetchType.LAZY)*/
-	//@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade=CascadeType.REMOVE, orphanRemoval = true)
-	//
-	@OneToMany(mappedBy ="user", fetch = FetchType.LAZY)
-	private List<Review> reviews;
 
-
+	/* create association table users_roles */
 	@JoinColumn(name="role_id")
 	@ManyToMany
 	private List<Role> roles;
-	
+
 	public User() {
 		this.email="";
 	}
-		
+
 
 	public User(String firstName, String lastName, LocalDate birthAt, String urlImage, String email, String password, String status) {
 		this.firstName = firstName;
@@ -87,9 +81,6 @@ public class User {
 		this.email = email;
 		this.password = password;
 		this.status = status;
-		this.roles=new LinkedList<Role>();
-		this.reviews=new LinkedList<Review>();
-		//this.review=null;
 	}
 
 	public void setFirstName(String firstName) {
@@ -124,9 +115,6 @@ public class User {
 		this.roles = roles;
 	}
 
-	public void setReviews(List<Review> reviews) {
-		this.reviews = reviews;
-	}
 
 	public String getFirstName() {
 		return firstName;
@@ -151,7 +139,7 @@ public class User {
 	public String getStatus() {
 		return status;
 	}
-	
+
 	public String getUrlImage() {
 		return urlImage;
 	}
@@ -164,13 +152,6 @@ public class User {
 		return password;
 	}
 
-	public List<Review> getReviews() {
-		return reviews;
-	}
-
-	/*public Review getReview() {
-		return review;
-	}*/
 
 	@Override
 	public int hashCode() {
@@ -181,7 +162,7 @@ public class User {
 	public String toString() {
 		return "User {id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", birthAt=" + birthAt
 				+ ", urlImage=" + urlImage + ", email=" + email + ", password=" + password + ", status=" + status
-				/*+", review=" + reviews + ", roles=" + roles */
+
 				+ "}";
 	}
 	@Override

@@ -46,7 +46,8 @@ public class EducationApplication {
 		Role roleA=this.roleService.createRole("Admin");
 		Role roleT=this.roleService.createRole("Teacher");
 		Role roleS=this.roleService.createRole("Student");
-
+		Review review=reviewService.getById(1L);
+		System.out.println(review);
 
 		//User user = userService.findByEmail("g@gmail.com");
 		//User user = userService.getById(1L);
@@ -61,7 +62,7 @@ public class EducationApplication {
 		System.out.println(lesson);
         Review review=reviewService.createReview(1, "Bad", 2L,2L);
         System.out.println(review);*/
-
+/*
 		List<Modulee> modulees=lessonService.findListModuleeByLessonId(1L);
 		for(Modulee modulee:modulees){
 			System.out.println("++++++++++");
@@ -71,7 +72,7 @@ public class EducationApplication {
 
 		System.out.println(moduleeService.calculRating("Module java"));
 
-
+*/
         //Video video = videoService.findByUrl("https");
 
 		//Video video = videoService.getById(1L);

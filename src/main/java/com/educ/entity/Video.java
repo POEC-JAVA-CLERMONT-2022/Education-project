@@ -29,7 +29,7 @@ public class Video {
     @Column(name = "duration")
     private LocalTime duration;
 
-
+    /* create association in table modulee */
     @OneToOne(mappedBy = "video")
     private Modulee module;
 
@@ -42,7 +42,7 @@ public class Video {
         this.title = title;
         this.url = url;
         this.duration = duration;
-        //this.module = null;
+
     }
 
     public Long getId() {
@@ -59,14 +59,6 @@ public class Video {
 
     public LocalTime getDuration() {
         return duration;
-    }
-
-    public Modulee getModule() {
-        return module;
-    }
-
-    public void setModule(Modulee module) {
-        this.module = module;
     }
 
     public void setTitle(String title) {
@@ -98,7 +90,7 @@ public class Video {
     @Override
     public String toString() {
         return "Video {id=" + id + ", title=" + title + ", url=" + url + ", duration=" + duration
-              /*  + ", module=" + module */
+
                 + "}";
     }
 

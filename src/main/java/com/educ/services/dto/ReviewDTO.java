@@ -4,13 +4,14 @@ import com.educ.entity.*;
 import com.educ.services.UserService;
 import org.springframework.beans.BeanUtils;
 
+import java.io.Serializable;
 
-public class ReviewDTO {
+
+public class ReviewDTO implements Serializable {
     private Long id;
     private int note;
     private String comment;
-    private UserDTO userDTO;
-    private ModuleeDTO moduleeDTO;
+    private String moduleTitle;
 
     public ReviewDTO() {
 
@@ -22,13 +23,13 @@ public class ReviewDTO {
 
     }
 
-    public ReviewDTO(Long id, int note, String comment, UserDTO userDTO, ModuleeDTO moduleeDTO) {
+    public ReviewDTO(Long id, int note, String comment, String moduleTitle) {
         this.id = id;
         this.note = note;
         this.comment = comment;
-        this.userDTO = userDTO;
-        this.moduleeDTO = moduleeDTO;
+        this.moduleTitle=moduleTitle;
     }
+
 
     public int getNote() {
         return note;
@@ -38,20 +39,12 @@ public class ReviewDTO {
         return comment;
     }
 
-    public UserDTO getUserDTO() {
-        return userDTO;
+    public String getModuleTitle() {
+        return moduleTitle;
     }
 
-    public ModuleeDTO getModuleeDTO() {
-        return moduleeDTO;
-    }
-
-    public void setUserDTO(UserDTO userDTO) {
-        this.userDTO = userDTO;
-    }
-
-    public void setModuleeDTO(ModuleeDTO moduleeDTO) {
-        this.moduleeDTO = moduleeDTO;
+    public void setModuleTitle(String moduleTitle) {
+        this.moduleTitle = moduleTitle;
     }
 
     public Long getId() {
@@ -72,15 +65,7 @@ public class ReviewDTO {
             reviewDTO=new ReviewDTO(review.getId(),review.getNote(),review.getComment());
             BeanUtils.copyProperties(review, reviewDTO);
 
-            UserDTO userDTO=new UserDTO(review.getUser().getFirstName(),review.getUser().getLastName(),
-                    review.getUser().getBirthAt(),review.getUser().getUrlImage(), review.getUser().getEmail(),
-                    review.getUser().getPassword(),review.getUser().getStatus());
-            //userDTO.copyUser(review.getUser());
-            reviewDTO.setUserDTO(userDTO);
-
-            //ModuleeDTO moduleeDTO=new ModuleeDTO(review.getModule().getTitle());
-            //moduleeDTO.convertTo(review.getModule());
-            //reviewDTO.setModuleeDTO(moduleeDTO);
+            reviewDTO.setModuleTitle(review.getModule().getTitle());
 
             return reviewDTO;
         }else{

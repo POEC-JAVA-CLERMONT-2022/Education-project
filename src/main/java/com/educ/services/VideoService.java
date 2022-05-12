@@ -37,11 +37,7 @@ public class VideoService {
 	}
 
 	public Video getById(Long id) {
-		if(this.existId(id)){
-			return videoRepository.getById(id);
-		}
-		return null;
-
+		return videoRepository.findById(id).orElseThrow();
 	}
 
 	public Video findByUrl(String url){

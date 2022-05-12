@@ -48,6 +48,7 @@ public class ReviewService {
     }*/
 
     public Review getById(Long id) {
+       // return reviewRepository.findById(id).orElseThrow();
 
             if (this.existId(id)) {
                 try {
@@ -82,7 +83,7 @@ public class ReviewService {
        User user=this.userRepository.getById(userId);
        Modulee modulee=this.moduleeRepository.getById(moduleeId);
       review=new Review(note, comment);
-      review.setUser(user);
+      //review.setUser(user);
       review.setModule(modulee);
       review=this.reviewRepository.save(review);
        //Ajout de la review dans user et Module
@@ -121,7 +122,7 @@ public class ReviewService {
         }
     }
 
-    private User addUserReview(User user, Long id){
+   /* private User addUserReview(User user, Long id){
         try {
             List<Review> reviews;
             Review review=this.getById(id);
@@ -136,7 +137,7 @@ public class ReviewService {
             return user;
         }
 
-    }
+    }*/
 /*
     private Modulee addModuleeReview(Modulee modulee, Long id) {
         try {
