@@ -3,6 +3,7 @@ import com.educ.entity.Lesson;
 
 import com.educ.services.LessonService;
 
+import com.educ.services.dto.LessonDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +45,8 @@ public class LessonController {
             if(findLesson == null){
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
-            return new ResponseEntity<>(findLesson, HttpStatus.OK);
+            LessonDTO lessonDTO=new LessonDTO();
+            return new ResponseEntity<>(lessonDTO.convertTo(findLesson), HttpStatus.OK);
 
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Lesson not found");

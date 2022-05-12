@@ -11,25 +11,18 @@ public class ReviewDTO implements Serializable {
     private Long id;
     private int note;
     private String comment;
-    private String moduleTitle;
+    private ModuleeDTO moduleeDTO;
 
     public ReviewDTO() {
 
     }
-    public ReviewDTO(Long id, int note, String comment) {
+
+    public ReviewDTO(Long id, int note, String comment, ModuleeDTO moduleeDTO) {
         this.id = id;
         this.note = note;
         this.comment = comment;
-
+        this.moduleeDTO = moduleeDTO;
     }
-
-    public ReviewDTO(Long id, int note, String comment, String moduleTitle) {
-        this.id = id;
-        this.note = note;
-        this.comment = comment;
-        this.moduleTitle=moduleTitle;
-    }
-
 
     public int getNote() {
         return note;
@@ -39,12 +32,16 @@ public class ReviewDTO implements Serializable {
         return comment;
     }
 
-    public String getModuleTitle() {
-        return moduleTitle;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public void setModuleTitle(String moduleTitle) {
-        this.moduleTitle = moduleTitle;
+    public ModuleeDTO getModuleeDTO() {
+        return moduleeDTO;
+    }
+
+    public void setModuleeDTO(ModuleeDTO moduleeDTO) {
+        this.moduleeDTO = moduleeDTO;
     }
 
     public Long getId() {
@@ -60,12 +57,16 @@ public class ReviewDTO implements Serializable {
     }
 
     public ReviewDTO convertTo(Review review){
+        Modulee modulee=review.getModule();
+        ModuleeDTO moduleeDTO=new ModuleeDTO();
+        moduleeDTO=moduleeDTO.convertTo(modulee);
+
         ReviewDTO reviewDTO;
         if(review!=null){
-            reviewDTO=new ReviewDTO(review.getId(),review.getNote(),review.getComment());
-            BeanUtils.copyProperties(review, reviewDTO);
+            reviewDTO=new ReviewDTO(review.getId(),review.getNote(),review.getComment(),moduleeDTO);
+            //BeanUtils.copyProperties(review, reviewDTO);
 
-            reviewDTO.setModuleTitle(review.getModule().getTitle());
+           // reviewDTO.setModuleTitle(review.getModule().getTitle());
 
             return reviewDTO;
         }else{

@@ -4,6 +4,7 @@ import com.educ.data.RoleRepository;
 import com.educ.data.UserRepository;
 import com.educ.entity.Role;
 import com.educ.entity.User;
+import com.educ.services.dto.RoleDTO;
 import com.educ.services.dto.UserDTO;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -56,9 +57,16 @@ public class UserServiceTestMockito {
         String email="salsabilgrouche@yahoo.fr";
         String password="xxxx";
         String status="Developpeuse";
-        UserDTO userDTO=new UserDTO(firstName,lastName,birthAt,urlImage,email,password,status);
+
         List<Role> roles=new LinkedList<Role>();
         roles.add(new Role("Member"));
+        List<RoleDTO> roleDTOS=new LinkedList<RoleDTO>();
+
+        for (Role r:roles){
+            roleDTOS.add(new RoleDTO(r.getId(),r.getName()));
+        }
+        UserDTO userDTO=new UserDTO(1L,firstName,lastName,birthAt,urlImage,email,password,status, roleDTOS);
+
         User user=new User(firstName,lastName,birthAt,urlImage,email,password,status);
         user.setRoles(roles);
         return user;
@@ -76,9 +84,16 @@ public class UserServiceTestMockito {
         String email="salsabilgrouche@yahoo.fr";
         String password="xxxx";
         String status="Developpeuse";
-        UserDTO userDTO=new UserDTO(firstName,lastName,birthAt,urlImage,email,password,status);
+        //UserDTO userDTO=new UserDTO(1L,firstName,lastName,birthAt,urlImage,email,password,status);
         List<Role> roles=new LinkedList<Role>();
         roles.add(new Role("Member"));
+
+        List<RoleDTO> roleDTOS=new LinkedList<RoleDTO>();
+
+        for (Role r:roles){
+            roleDTOS.add(new RoleDTO(r.getId(),r.getName()));
+        }
+        UserDTO userDTO=new UserDTO(1L,firstName,lastName,birthAt,urlImage,email,password,status, roleDTOS);
         users=new LinkedList<User>();
 
         when(mockedRoleRepository.save(Mockito.any(Role.class))).thenReturn(new Role("Member"));

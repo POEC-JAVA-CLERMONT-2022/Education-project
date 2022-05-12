@@ -6,6 +6,7 @@ import com.educ.entity.Review;
 
 import com.educ.services.ReviewService;
 
+import com.educ.services.dto.ModuleeDTO;
 import com.educ.services.dto.ReviewDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,11 +51,12 @@ public class ReviewController {
             logger.info("Given Review {}",id);
             Review findReview = reviewService.getById(id);
 
-            ReviewDTO reviewDTO=new ReviewDTO(findReview.getId(),findReview.getNote(), findReview.getComment(), findReview.getModule().getTitle());
+
+            ReviewDTO reviewDTO=new ReviewDTO();
             if(findReview == null){
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
-            return new ResponseEntity<>(reviewDTO, HttpStatus.OK);
+            return new ResponseEntity<>(reviewDTO.convertTo(findReview), HttpStatus.OK);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Review not found");
         }

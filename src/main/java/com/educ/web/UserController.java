@@ -47,7 +47,8 @@ public class UserController {
 			if(findUser == null){
 				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 			}
-			return new ResponseEntity<> (findUser, HttpStatus.OK);
+			UserDTO userDTO=new UserDTO();
+			return new ResponseEntity<> (userDTO.copyUser(findUser), HttpStatus.OK);
 		} catch (Exception e) {
 			/*e.printStackTrace();*/ /* error en console */
 			//throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found :", e); /* Error long in pageweb */

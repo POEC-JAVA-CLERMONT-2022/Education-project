@@ -50,12 +50,14 @@ public class ModuleeController {
             if(findModulee == null){
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
-            return new ResponseEntity<>(findModulee, HttpStatus.OK);
+            ModuleeDTO moduleeDTO=new ModuleeDTO();
+
+            return new ResponseEntity<>(moduleeDTO.convertTo(findModulee), HttpStatus.OK);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Module not found");
         }
     }
-    /* check this with Salsabil */
+
     /*
     @PostMapping()
     public ResponseEntity<?> addModule(@RequestBody Modulee modulee) {
