@@ -56,8 +56,8 @@ public class UserService {
 	}
 
 	public User getById(Long id) {
-		if(this.existId(id)){ return userRepository.getById(id);
-		}else{ return null; }
+		return userRepository.findById(id).orElseThrow();
+
 	}
 
 	@Transactional

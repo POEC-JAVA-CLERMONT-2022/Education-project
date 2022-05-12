@@ -49,10 +49,12 @@ public class ReviewController {
         try {
             logger.info("Given Review {}",id);
             Review findReview = reviewService.getById(id);
+
+            ReviewDTO reviewDTO=new ReviewDTO(findReview.getId(),findReview.getNote(), findReview.getComment(), findReview.getModule().getTitle());
             if(findReview == null){
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
-            return new ResponseEntity<>(findReview, HttpStatus.OK);
+            return new ResponseEntity<>(reviewDTO, HttpStatus.OK);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Review not found");
         }

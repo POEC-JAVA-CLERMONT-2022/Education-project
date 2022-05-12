@@ -10,14 +10,14 @@ import javax.persistence.ManyToOne;
 public class UserLessonPK implements Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	private User user;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Lesson lesson;
 
 	protected UserLessonPK() {
-		
+
 	}
-	
+
 	public UserLessonPK(User user, Lesson lesson) {
 		this.user=user;
 		this.lesson =lesson;

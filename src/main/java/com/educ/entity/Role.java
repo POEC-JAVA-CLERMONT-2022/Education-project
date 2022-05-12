@@ -14,13 +14,13 @@ public class Role {
 	@Column(name="id", nullable=false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	 
+
 	@Column(name="name", length=250, unique = true, nullable = false)
 	private String name;
 
 	public Role() {
 
-		}
+	}
 
 	public Role(String name) {
 		super();

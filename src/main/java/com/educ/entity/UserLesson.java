@@ -12,29 +12,29 @@ import javax.validation.constraints.PositiveOrZero;
 @Entity
 @Table(name="user_lesson")
 @AssociationOverrides({
-	@AssociationOverride(name="users.user", joinColumns = @JoinColumn(name="user_id") ),
-	@AssociationOverride(name="lessons.lesson", joinColumns = @JoinColumn(name="lesson_id") )
+		@AssociationOverride(name="users.user", joinColumns = @JoinColumn(name="user_id") ),
+		@AssociationOverride(name="lessons.lesson", joinColumns = @JoinColumn(name="lesson_id") )
 })
 
 public class UserLesson {
-@EmbeddedId
-private UserLessonPK userLessonPK;
+	@EmbeddedId
+	private UserLessonPK userLessonPK;
 
-@Column(name = "result")
-@PositiveOrZero
-private Float resultat;
+	@Column(name = "result")
+	@PositiveOrZero
+	private Float resultat;
 
-public  UserLesson() {
-	
-}
+	public  UserLesson() {
 
-public  UserLesson(UserLessonPK userLessonPK) {
-	this.userLessonPK=userLessonPK;
-}
+	}
 
-public UserLessonPK getUserLessonPK() {
-	return userLessonPK;
-}
+	public  UserLesson(UserLessonPK userLessonPK) {
+		this.userLessonPK=userLessonPK;
+	}
+
+	public UserLessonPK getUserLessonPK() {
+		return userLessonPK;
+	}
 
 	public Float getResultat() {
 		return resultat;

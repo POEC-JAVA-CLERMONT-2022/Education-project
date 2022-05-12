@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Entity
 @Table(name="reviews")
 public class Review {
-	
+
 	@Id
 	@Column(name="id", nullable=false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,22 +18,20 @@ public class Review {
 
 	@Column(name="note")
 	private int note;
-	
+
 	@Column(name="comment")
 	private String comment;
 
-
-	@ManyToOne(fetch = FetchType.LAZY, optional = false) //@JoinColumn(name="idModule", nullable = false)
-//	@JoinColumn(name="module_id")
-	//@OnDelete(action = onDeleteAction.CASCADE)
-	//@JsonIgnore
+	/* create module_id  .... nothing to declare in Modulee */
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	private Modulee module;
-	
+
+	/* create user_id  .... nothing to declare in User */
 	@ManyToOne(fetch = FetchType.LAZY)
 	private User user;
 
 
-	
+
 	public Review() {
 	}
 
@@ -41,11 +39,8 @@ public class Review {
 		super();
 		this.note = note;
 		this.comment = comment;
-		this.module=new Modulee();
-		this.user=new User();
+
 	}
-
-
 
 	public Long getId() {
 		return id;
@@ -79,10 +74,12 @@ public class Review {
 		this.module = module;
 	}
 
-
+/*
 	public void setUser(User user) {
 		this.user = user;
 	}
+
+ */
 
 	@Override
 	public int hashCode() {
@@ -108,7 +105,7 @@ public class Review {
 				", note=" + note +
 				", comment='" + comment + '\'' +
 				", module=" + module +
-				", user=" + user +
+				//", user=" + user +
 				'}';
 	}
 }
