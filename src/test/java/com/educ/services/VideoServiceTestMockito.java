@@ -36,7 +36,7 @@ public class VideoServiceTestMockito {
         String url="https://www.youtube.com/watch?v=c3gKseNAs9w&ab_channel=DailyCodeBuffer";
         LocalTime duration=LocalTime.of(3,11,17);
         when(mockVideoRepository.save(Mockito.any(Video.class))).thenReturn(new Video(title, url, duration));
-        VideoDTO videoDTO=new VideoDTO(title, url, duration);
+        VideoDTO videoDTO=new VideoDTO(1L,title, url, duration);
 
         //ACT
         Video testVideo = videoService.createVideo(title, url, duration);

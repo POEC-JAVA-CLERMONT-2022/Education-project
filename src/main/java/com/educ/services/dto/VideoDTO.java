@@ -11,27 +11,26 @@ public class VideoDTO {
     private String title;
     private String url;
     private LocalTime duration;
-    //private ModuleeDTO moduleeDTO;
+
 
     public VideoDTO() {
     }
 
-    /*
-    public VideoDTO(String title, String url, LocalTime duration, ModuleeDTO moduleeDTO) {
 
+    public VideoDTO(Long id,String title, String url, LocalTime duration) {
+        this.id=id;
         this.title = title;
         this.url = url;
         this.duration = duration;
-        //this.moduleeDTO = moduleeDTO;
+
     }
 
-     */
+    public Long getId() {
+        return id;
+    }
 
-    public VideoDTO(String title, String url, LocalTime duration) {
-        this.title = title;
-        this.url = url;
-        this.duration = duration;
-       // this.moduleeDTO=new ModuleeDTO();
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -45,11 +44,7 @@ public class VideoDTO {
     public LocalTime getDuration() {
         return duration;
     }
-    /*
-    public ModuleeDTO getModuleeDTO() {
-        return moduleeDTO;
-    }
-    */
+
 
     public void setTitle(String title) {
         this.title = title;
@@ -62,20 +57,11 @@ public class VideoDTO {
     public void setDuration(LocalTime duration) {
         this.duration = duration;
     }
-/*
-    public void setModuleeDTO(ModuleeDTO moduleeDTO) {
-        this.moduleeDTO = moduleeDTO;
-    }
-*/
-    public VideoDTO convertTo(Video video){
-        BeanUtils.copyProperties(video, this);
-        return this;
-        //VideoDTO videoDTO=new VideoDTO();
-        //BeanUtils.copyProperties(video, videoDTO);
 
-        //ModuleeDTO moduleeDTO=new ModuleeDTO();
-        //moduleeDTO.convertTo(video.getModule());
-       // videoDTO.setModuleeDTO(moduleeDTO);
-       // return videoDTO;
+    public VideoDTO convertTo(Video video){
+        VideoDTO videoDTO=new VideoDTO();
+        BeanUtils.copyProperties(video, this);
+        return videoDTO;
+
     }
 }
