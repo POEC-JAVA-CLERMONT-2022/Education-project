@@ -36,7 +36,12 @@ public class ModuleeController {
     public ResponseEntity<?> getModules() {
         try {
             List<Modulee> modulees = moduleeService.findAll();
-           return new ResponseEntity<>(modulees, HttpStatus.OK);
+            List<ModuleeDTO> moduleeDTOS=new LinkedList<ModuleeDTO>();
+            ModuleeDTO moduleeDTO=new ModuleeDTO();
+            for (Modulee modulee:modulees){
+                moduleeDTOS.add(moduleeDTO.convertTo(modulee));
+            }
+           return new ResponseEntity<>(moduleeDTOS, HttpStatus.OK);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Module not found", e);
         }

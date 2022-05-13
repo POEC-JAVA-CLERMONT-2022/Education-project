@@ -33,7 +33,12 @@ public class UserController {
 	public ResponseEntity<?> getUsers(){
 		try {
 			List<User> users = userService.findAll();
-			return new ResponseEntity<>(users, HttpStatus.OK);
+			List<UserDTO> userDTOS=new LinkedList<UserDTO>();
+			UserDTO userDTO=new UserDTO();
+			for(User user:users){
+				userDTOS.add(userDTO.copyUser(user));
+			}
+			return new ResponseEntity<>(userDTOS, HttpStatus.OK);
 		} catch (Exception e){
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
