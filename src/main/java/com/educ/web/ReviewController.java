@@ -39,7 +39,12 @@ public class ReviewController {
     public ResponseEntity<?> getReviews(){
         try {
             List<Review> reviews = reviewService.findAll();
-            return new ResponseEntity<>(reviews, HttpStatus.OK);
+            List<ReviewDTO> reviewDTOS=new LinkedList<ReviewDTO>();
+            ReviewDTO reviewDTO=new ReviewDTO();
+            for (Review review:reviews){
+                reviewDTOS.add(reviewDTO.convertTo(review));
+            }
+            return new ResponseEntity<>(reviewDTOS, HttpStatus.OK);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Review not found");
         }

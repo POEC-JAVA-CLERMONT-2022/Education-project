@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.LinkedList;
 import java.util.List;
 
 
@@ -31,7 +32,12 @@ public class LessonController {
     public ResponseEntity<?> getLessons(){
         try {
             List<Lesson> lessons = lessonService.findAll();
-            return new ResponseEntity<>(lessons, HttpStatus.OK);
+            List<LessonDTO> lessonDTOS=new LinkedList<LessonDTO>();
+            LessonDTO lessonDTO=new LessonDTO();
+            for(Lesson lesson:lessons){
+                lessonDTOS.add(lessonDTO.convertTo(lesson));
+            }
+            return new ResponseEntity<>(lessonDTOS, HttpStatus.OK);
         }catch (Exception e){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Lessons not found");
         }
