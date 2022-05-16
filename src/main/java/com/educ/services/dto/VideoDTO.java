@@ -59,8 +59,10 @@ public class VideoDTO {
     }
 
     public VideoDTO convertTo(Video video){
-        VideoDTO videoDTO=new VideoDTO();
-        BeanUtils.copyProperties(video, this);
+
+
+        VideoDTO videoDTO=new VideoDTO(video.getId(), video.getTitle(), video.getUrl(),video.getDuration());
+
         return videoDTO;
 
     }
