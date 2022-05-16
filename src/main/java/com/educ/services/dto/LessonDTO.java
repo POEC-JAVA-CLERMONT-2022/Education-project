@@ -6,28 +6,31 @@ import com.educ.entity.Level;
 import com.educ.entity.Modulee;
 import org.springframework.beans.BeanUtils;
 
+import java.io.Serializable;
+import java.util.LinkedList;
 import java.util.List;
 
-public class LessonDTO {
+public class LessonDTO implements Serializable {
     private Long id;
     private String name;
     private String description;
     private float price;
-    private List<Modulee> modules;
     private Level level;
     private Language language;
+    private List<ModuleeDTO> moduleeDTOS;
 
     public LessonDTO() {
 
     }
 
-    public LessonDTO(String name, String description, float price, Language language, Level level) {
+    public LessonDTO(Long id, String name, String description, float price, Level level, Language language, List<ModuleeDTO> moduleeDTOS) {
+        this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
-        this.language = language;
         this.level = level;
-        this.modules=null;
+        this.language = language;
+        this.moduleeDTOS = moduleeDTOS;
     }
 
     public Long getId() {
@@ -46,9 +49,7 @@ public class LessonDTO {
         return price;
     }
 
-    public List<Modulee> getModules() {
-        return modules;
-    }
+
 
     public Level getLevel() {
         return level;
@@ -70,13 +71,6 @@ public class LessonDTO {
         this.price = price;
     }
 
-    /*
-    public void setModules(List<Modulee> modules) {
-        this.modules = modules;
-    }
-
-     */
-
     public void setLevel(Level level) {
         this.level = level;
     }
@@ -85,9 +79,30 @@ public class LessonDTO {
         this.language = language;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public List<ModuleeDTO> getModuleeDTOS() {
+        return moduleeDTOS;
+    }
+
+    public void setModuleeDTOS(List<ModuleeDTO> moduleeDTOS) {
+        this.moduleeDTOS = moduleeDTOS;
+    }
+
     public LessonDTO convertTo(Lesson lesson){
-        BeanUtils.copyProperties(lesson, this);
-        return this;
+        List<Modulee> modulees=lesson.getModulees();
+        List<ModuleeDTO> moduleeDTOList=new LinkedList<ModuleeDTO>();
+        ModuleeDTO moduleeDTO=new ModuleeDTO();
+        if (modulees!=null){
+            for (Modulee m:modulees){
+                moduleeDTOList.add(moduleeDTO.convertTo(m));
+            }
+        }
+        LessonDTO lessonDTO=new LessonDTO(lesson.getId(),lesson.getName(),lesson.getDescription(),lesson.getPrice(), lesson.getLevel(),lesson.getLanguage(),moduleeDTOList);
+        //BeanUtils.copyProperties(lesson, this);
+        return lessonDTO;
     }
 
 }

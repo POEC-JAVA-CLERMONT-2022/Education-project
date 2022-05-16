@@ -3,6 +3,7 @@ import com.educ.entity.Lesson;
 
 import com.educ.services.LessonService;
 
+import com.educ.services.dto.LessonDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.LinkedList;
 import java.util.List;
 
 
@@ -30,7 +32,12 @@ public class LessonController {
     public ResponseEntity<?> getLessons(){
         try {
             List<Lesson> lessons = lessonService.findAll();
-            return new ResponseEntity<>(lessons, HttpStatus.OK);
+            List<LessonDTO> lessonDTOS=new LinkedList<LessonDTO>();
+            LessonDTO lessonDTO=new LessonDTO();
+            for(Lesson lesson:lessons){
+                lessonDTOS.add(lessonDTO.convertTo(lesson));
+            }
+            return new ResponseEntity<>(lessonDTOS, HttpStatus.OK);
         }catch (Exception e){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Lessons not found");
         }
@@ -44,7 +51,8 @@ public class LessonController {
             if(findLesson == null){
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
-            return new ResponseEntity<>(findLesson, HttpStatus.OK);
+            LessonDTO lessonDTO=new LessonDTO();
+            return new ResponseEntity<>(lessonDTO.convertTo(findLesson), HttpStatus.OK);
 
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Lesson not found");
@@ -52,25 +60,24 @@ public class LessonController {
     }
 
     @PostMapping()
-    public ResponseEntity<?> addLesson(@RequestBody Lesson lesson){
+    public ResponseEntity<?> addLesson(@RequestBody LessonDTO lessonDTO){
         try {
-            if(lesson.getName() == null || lesson.getName() == ""){
+            if(lessonDTO.getName() == null || lessonDTO.getName() == ""){
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
-            Lesson newLesson = lessonService.createLesson(lesson.getName(), lesson.getDescription(), lesson.getPrice(), lesson.getLanguage(), lesson.getLevel());
-            return new ResponseEntity<>(newLesson, HttpStatus.CREATED);
+            Lesson newLesson = lessonService.createLesson(lessonDTO.getName(), lessonDTO.getDescription(), lessonDTO.getPrice(), lessonDTO.getLanguage(), lessonDTO.getLevel());
+            LessonDTO resultLessonDTO=new LessonDTO();
+            return new ResponseEntity<>(resultLessonDTO.convertTo(newLesson), HttpStatus.CREATED);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Error to create lesson", e);
         }
     }
 
-    //Postman language & level : FR / MIDDLE
-    //Postman price 150.20
     @PutMapping("{id}")
-    public ResponseEntity<?> updateLesson(@PathVariable Long id, @RequestBody Lesson lesson){
+    public ResponseEntity<?> updateLesson(@PathVariable Long id, @RequestBody LessonDTO lessonDTO){
         try {
             if(id != null){
-                lessonService.updateLesson(id, lesson.getName(), lesson.getDescription(), lesson.getPrice(), lesson.getLanguage(), lesson.getLevel());
+                lessonService.updateLesson(id, lessonDTO.getName(), lessonDTO.getDescription(), lessonDTO.getPrice(), lessonDTO.getLanguage(), lessonDTO.getLevel());
             }
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (Exception e) {

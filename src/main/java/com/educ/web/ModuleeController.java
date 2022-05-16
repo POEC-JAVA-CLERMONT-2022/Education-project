@@ -36,7 +36,12 @@ public class ModuleeController {
     public ResponseEntity<?> getModules() {
         try {
             List<Modulee> modulees = moduleeService.findAll();
-           return new ResponseEntity<>(modulees, HttpStatus.OK);
+            List<ModuleeDTO> moduleeDTOS=new LinkedList<ModuleeDTO>();
+            ModuleeDTO moduleeDTO=new ModuleeDTO();
+            for (Modulee modulee:modulees){
+                moduleeDTOS.add(moduleeDTO.convertTo(modulee));
+            }
+           return new ResponseEntity<>(moduleeDTOS, HttpStatus.OK);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Module not found", e);
         }
@@ -50,12 +55,14 @@ public class ModuleeController {
             if(findModulee == null){
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
-            return new ResponseEntity<>(findModulee, HttpStatus.OK);
+            ModuleeDTO moduleeDTO=new ModuleeDTO();
+
+            return new ResponseEntity<>(moduleeDTO.convertTo(findModulee), HttpStatus.OK);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Module not found");
         }
     }
-    /* check this with Salsabil */
+
     /*
     @PostMapping()
     public ResponseEntity<?> addModule(@RequestBody Modulee modulee) {
@@ -75,11 +82,11 @@ public class ModuleeController {
      */
 
     @PutMapping("{id}")
-    public ResponseEntity<?> updateModulee(@PathVariable Long id, @RequestBody Modulee modulee) {
+    public ResponseEntity<?> updateModulee(@PathVariable Long id, @RequestBody ModuleeDTO moduleeDTO) {
         try {
            if(id != null){
                logger.info("Modulee : {}", id);
-               moduleeService.updateModule(id, modulee.getTitle());
+               moduleeService.updateModule(id, moduleeDTO.getTitle());
            }
            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (Exception e) {

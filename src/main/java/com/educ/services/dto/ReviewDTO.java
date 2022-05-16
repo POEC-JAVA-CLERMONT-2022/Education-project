@@ -4,29 +4,23 @@ import com.educ.entity.*;
 import com.educ.services.UserService;
 import org.springframework.beans.BeanUtils;
 
+import java.io.Serializable;
 
-public class ReviewDTO {
+
+public class ReviewDTO implements Serializable {
     private Long id;
     private int note;
     private String comment;
-    private UserDTO userDTO;
     private ModuleeDTO moduleeDTO;
 
     public ReviewDTO() {
 
     }
-    public ReviewDTO(Long id, int note, String comment) {
+
+    public ReviewDTO(Long id, int note, String comment, ModuleeDTO moduleeDTO) {
         this.id = id;
         this.note = note;
         this.comment = comment;
-
-    }
-
-    public ReviewDTO(Long id, int note, String comment, UserDTO userDTO, ModuleeDTO moduleeDTO) {
-        this.id = id;
-        this.note = note;
-        this.comment = comment;
-        this.userDTO = userDTO;
         this.moduleeDTO = moduleeDTO;
     }
 
@@ -38,16 +32,12 @@ public class ReviewDTO {
         return comment;
     }
 
-    public UserDTO getUserDTO() {
-        return userDTO;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public ModuleeDTO getModuleeDTO() {
         return moduleeDTO;
-    }
-
-    public void setUserDTO(UserDTO userDTO) {
-        this.userDTO = userDTO;
     }
 
     public void setModuleeDTO(ModuleeDTO moduleeDTO) {
@@ -66,5 +56,23 @@ public class ReviewDTO {
         this.comment = comment;
     }
 
+    public ReviewDTO convertTo(Review review){
+        Modulee modulee=review.getModule();
+        ModuleeDTO moduleeDTO=new ModuleeDTO();
+        moduleeDTO=moduleeDTO.convertTo(modulee);
 
+        ReviewDTO reviewDTO;
+        if(review!=null){
+            reviewDTO=new ReviewDTO(review.getId(),review.getNote(),review.getComment(),moduleeDTO);
+            //BeanUtils.copyProperties(review, reviewDTO);
+
+            // reviewDTO.setModuleTitle(review.getModule().getTitle());
+
+            return reviewDTO;
+        }else{
+            reviewDTO=new ReviewDTO();
+            return reviewDTO;
+        }
+
+    }
 }

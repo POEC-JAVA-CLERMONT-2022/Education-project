@@ -9,8 +9,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.event.ApplicationStartedEvent;
 import org.springframework.context.event.EventListener;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.List;
 
 @SpringBootApplication
@@ -39,7 +37,7 @@ public class EducationApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(EducationApplication.class, args);
 	}
-	
+
 	@EventListener(classes= {ApplicationStartedEvent.class})
 	public void applicationStarted() {
 
@@ -48,14 +46,40 @@ public class EducationApplication {
 		Role roleA=this.roleService.createRole("Admin");
 		Role roleT=this.roleService.createRole("Teacher");
 		Role roleS=this.roleService.createRole("Student");
+		Review review=reviewService.getById(1L);
+		System.out.println(review);
 
-		Video video1 = videoService.createVideo("Video1","www.videos.com/video1",LocalTime.now());
-		Video video2 = videoService.createVideo("Video2","www.videos.com/video2", LocalTime.now());
+		//User user = userService.findByEmail("g@gmail.com");
+		//User user = userService.getById(1L);
+		//List<User> users=userService.findAll();
+		//System.out.println(user);
 
-		User user1 = userService.createUser("Wendy","Pariente", LocalDate.now(),"https://s3.com/photo/wp.png","w@gmail.com","password","Technicienne");
 
 
+		/*Modulee modulee = moduleeService.getById(1L);
+		System.out.println(modulee);
+		Lesson lesson=lessonService.getById(1L);
+		System.out.println(lesson);
+        Review review=reviewService.createReview(1, "Bad", 2L,2L);
+        System.out.println(review);*/
+/*
+		List<Modulee> modulees=lessonService.findListModuleeByLessonId(1L);
+		for(Modulee modulee:modulees){
+			System.out.println("++++++++++");
+			System.out.println(modulee);
+			System.out.println("++++++++++");
+		}
 
+		System.out.println(moduleeService.calculRating("Module java"));
+
+*/
+		//Video video = videoService.findByUrl("https");
+
+		//Video video = videoService.getById(1L);
+		//System.out.println(video);
+
+		//Review review = reviewService.getById(1L);
+		//System.out.println(review)
 
 	}
 }

@@ -6,42 +6,35 @@ import com.educ.entity.Review;
 import com.educ.entity.Video;
 import org.springframework.beans.BeanUtils;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
-public class ModuleeDTO {
+public class ModuleeDTO implements Serializable {
     private Long id;
     private String title;
-    //private List<Lesson> lessons;
-    //private List<Review> reviews;
     private VideoDTO videoDTO;
 
     public ModuleeDTO() {
     }
 
-    public ModuleeDTO(String title) {
-        super();
+    public ModuleeDTO(Long id, String title, VideoDTO videoDTO) {
+        this.id = id;
         this.title = title;
-        //this.reviews=new LinkedList<Review>();
-        //this.lessons=new LinkedList<Lesson>();
-        this.videoDTO=null;
+        this.videoDTO = videoDTO;
     }
 
     public Long getId() {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getTitle() {
         return title;
     }
-
-    /*public List<Lesson> getLessons() {
-        return lessons;
-    }
-
-    public List<Review> getReviews() {
-        return reviews;
-    }*/
 
     public VideoDTO getVideoDTO() {
         return videoDTO;
@@ -51,25 +44,20 @@ public class ModuleeDTO {
         this.title = title;
     }
 
-   /* public void setLessons(List<Lesson> lessons) {
-        this.lessons = lessons;
-    }
-
-    public void setReviews(List<Review> reviews) {
-        this.reviews = reviews;
-    } */
 
     public void setVideoDTO(VideoDTO videoDTO) {
         this.videoDTO = videoDTO;
     }
 
     public ModuleeDTO convertTo(Modulee modulee){
-        ModuleeDTO moduleeDTO=new ModuleeDTO();
-        BeanUtils.copyProperties(modulee, moduleeDTO);
+        VideoDTO videoDTO;
+        if (modulee.getVideo()!=null){
+            videoDTO=new VideoDTO(modulee.getVideo().getId(), modulee.getVideo().getTitle(), modulee.getVideo().getUrl(), modulee.getVideo().getDuration());
+        }else{
+            videoDTO=null;
+        }
 
-        VideoDTO videoDTO=new VideoDTO();
-       // videoDTO.convertTo(modulee.getVideo());
-        moduleeDTO.setVideoDTO(videoDTO);
+        ModuleeDTO moduleeDTO=new ModuleeDTO(modulee.getId(), modulee.getTitle(), videoDTO);
         return moduleeDTO;
     }
 }
