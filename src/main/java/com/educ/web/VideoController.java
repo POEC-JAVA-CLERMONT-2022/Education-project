@@ -50,8 +50,9 @@ public class VideoController {
                 return new ResponseEntity<> (HttpStatus.NOT_FOUND);
             }
             VideoDTO videoDTO = new VideoDTO();
-            videoDTO.convertTo(videoService.getById(id));
-            return new ResponseEntity<> (videoDTO, HttpStatus.OK);
+            Video video=videoService.getById(id);
+
+            return new ResponseEntity<> (videoDTO.convertTo(video), HttpStatus.OK);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Video not found");
         }

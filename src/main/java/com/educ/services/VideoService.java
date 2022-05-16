@@ -1,5 +1,6 @@
 package com.educ.services;
 
+import com.educ.entity.Review;
 import com.educ.entity.Role;
 import com.educ.entity.Video;
 import com.educ.services.dto.VideoDTO;
@@ -37,7 +38,19 @@ public class VideoService {
 	}
 
 	public Video getById(Long id) {
-		return videoRepository.findById(id).orElseThrow();
+		if (this.existId(id)) {
+			try {
+				Video video=videoRepository.getById(id);
+				return video;
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+		} else {
+			return null;
+		}
+		//return videoRepository.findById(id).orElse(null);
 	}
 
 	public Video findByUrl(String url){
