@@ -55,20 +55,18 @@ public class UserController {
 			UserDTO userDTO=new UserDTO();
 			return new ResponseEntity<> (userDTO.copyUser(findUser), HttpStatus.OK);
 		} catch (Exception e) {
-			/*e.printStackTrace();*/ /* error en console */
-			//throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found :", e); /* Error long in pageweb */
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
 		}
 	}
 
 	@PostMapping()
 	public ResponseEntity<?> addUser(@RequestBody UserDTO userDTO){
-		//logger.debug("REST request to save User : {}", userDTO);
+
 		try{
 			User createdUser = userService.createUser(userDTO.getFirstName(), userDTO.getLastName(), userDTO.getBirthAt(), userDTO.getUrlImage(), userDTO.getEmail(), userDTO.getPassword(), userDTO.getStatus());
 			UserDTO userDTO1=new UserDTO();
 			return new ResponseEntity(userDTO1.copyUser(createdUser), HttpStatus.CREATED);
-		} catch (Exception e) { /* check when email exist */
+		} catch (Exception e) {
 			e.printStackTrace();
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Error to create user", e);
 		}
@@ -98,6 +96,7 @@ public class UserController {
 				logger.info("User : {}", id);
 				LocalDate localDate=user.getBirthAt();
 				userService.updateUser(id,user.getFirstName(), user.getLastName(), localDate, user.getUrlImage(), user.getEmail(), user.getPassword(), user.getStatus());
+				return new ResponseEntity<>(HttpStatus.OK);
 			}
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		} catch (Exception e) {

@@ -37,7 +37,7 @@ public class EducationApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(EducationApplication.class, args);
 	}
-	
+
 	@EventListener(classes= {ApplicationStartedEvent.class})
 	public void applicationStarted() {
 
@@ -73,7 +73,7 @@ public class EducationApplication {
 		System.out.println(moduleeService.calculRating("Module java"));
 
 */
-        //Video video = videoService.findByUrl("https");
+		//Video video = videoService.findByUrl("https");
 
 		//Video video = videoService.getById(1L);
 		//System.out.println(video);

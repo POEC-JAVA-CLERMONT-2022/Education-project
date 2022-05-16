@@ -66,7 +66,7 @@ public class ReviewDTO implements Serializable {
             reviewDTO=new ReviewDTO(review.getId(),review.getNote(),review.getComment(),moduleeDTO);
             //BeanUtils.copyProperties(review, reviewDTO);
 
-           // reviewDTO.setModuleTitle(review.getModule().getTitle());
+            // reviewDTO.setModuleTitle(review.getModule().getTitle());
 
             return reviewDTO;
         }else{

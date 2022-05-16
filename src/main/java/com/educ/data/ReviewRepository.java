@@ -17,7 +17,7 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 
     public List<Review> findAll();
 
-    public Review getById(Long id);
+    //public Review getById(Long id);
 
     /*@EntityGraph(attributePaths = {"eventFiles", "eventFiles.eventFilePK.file"})
     Page<Event> findByTo(User principal, Pageable pageable);*/

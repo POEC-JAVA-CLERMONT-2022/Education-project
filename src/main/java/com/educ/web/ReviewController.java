@@ -86,6 +86,7 @@ public class ReviewController {
         try {
             if(id != null){
                 reviewService.updateReview(id, reviewDTO.getNote(), reviewDTO.getComment());
+                return new ResponseEntity<>(HttpStatus.OK);
             }
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (Exception e) {
