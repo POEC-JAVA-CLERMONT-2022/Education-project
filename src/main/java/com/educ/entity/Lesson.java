@@ -1,24 +1,15 @@
 package com.educ.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.PositiveOrZero;
-
+//@JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Entity
 
 @Table(name="lessons")
@@ -27,38 +18,30 @@ public class Lesson {
 	@Column(name="id", nullable=false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@Column(name="name")
 	private String name;
-	
+
 	@Column(name="description")
 	private String description;
-	
+
 	@Column(name="price")
 	@PositiveOrZero
 	private float price;
-	
-	/*@ManyToMany(mappedBy = "lessons")
-	private List<User> users; */
-	
-	/*private List<User> students;
-	private List<User> admins;*/
-	
-	//@OneToMany(mappedBy = "lesson", cascade=CascadeType.REMOVE, orphanRemoval = true)
-	/*@OneToMany
-	@JoinColumn(name = "lesson_id")
-	private List<Modulee> modules;*/
-
 
 	@Column(name="level")
-	@NotBlank
 	private Level level;
-	
+
 	@Column(name="language")
 	private Language language;
-	
+
+	/* just like this it creates a new table lessons_modulees
+	 * Nothing to declare in child Modulee */
+	@OneToMany
+	private List<Modulee> modulees;
+
 	public Lesson() {
-		
+
 	}
 
 	public Lesson(String name, String description, float price, Language language, Level level) {
@@ -68,7 +51,7 @@ public class Lesson {
 		this.price = price;
 		this.language = language;
 		this.level = level;
- 		//this.modules=new LinkedList<Modulee>();
+
 	}
 
 	public void setName(String name) {
@@ -112,11 +95,9 @@ public class Lesson {
 		return language;
 	}
 
-	/* public List<Modulee> getModules() {
-		return modules;
-	} */
-
-
+	public List<Modulee> getModulees() {
+		return modulees;
+	}
 
 	public void setLevel(Level level) {
 		this.level = level;
@@ -146,6 +127,14 @@ public class Lesson {
 
 	@Override
 	public String toString() {
-		return "Lesson {id=" + id + ", name=" + name + ", description=" + description + ", price=" + price +", level=" + level + ", language=" + language + "}";
+		return "Lesson{" +
+				"id=" + id +
+				", name='" + name + '\'' +
+				", description='" + description + '\'' +
+				", price=" + price +
+				//", modules=" + modules +
+				", level=" + level +
+				", language=" + language +
+				'}';
 	}
 }

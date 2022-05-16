@@ -45,12 +45,7 @@ public class LessonService {
 	}
 
 	public Lesson getById(Long id) {
-		if(this.existId(id)){
-			Lesson lesson=this.lessonRepository.getById(id);
-			return lesson;
-		}else{
-			return null;
-		}
+		return this.lessonRepository.findById(id).orElse(null);
 	}
 
 	public Lesson findByNameAndLevelAndLanguage(String name, Level level, Language language){
@@ -58,11 +53,7 @@ public class LessonService {
 	}
 
 	public  List<Modulee> findListModuleeByLessonId(Long id){
-		List<Modulee> modulees=new LinkedList<Modulee>();
-		List<Long> modulee_ids=this.lessonRepository.findListModuleeByLessonId(id);
-		for(Long module_id:modulee_ids){
-			modulees.add(moduleeRepository.getById(module_id));
-		}
+		List<Modulee> modulees=this.getById(id).getModulees();
 		return modulees;
 	}
 

@@ -66,27 +66,5 @@ public class ReviewDTO {
         this.comment = comment;
     }
 
-    public ReviewDTO convertTo(Review review){
-        ReviewDTO reviewDTO;
-        if(review!=null){
-            reviewDTO=new ReviewDTO(review.getId(),review.getNote(),review.getComment());
-            BeanUtils.copyProperties(review, reviewDTO);
 
-            UserDTO userDTO=new UserDTO(review.getUser().getFirstName(),review.getUser().getLastName(),
-                    review.getUser().getBirthAt(),review.getUser().getUrlImage(), review.getUser().getEmail(),
-                    review.getUser().getPassword(),review.getUser().getStatus());
-            //userDTO.copyUser(review.getUser());
-            reviewDTO.setUserDTO(userDTO);
-
-            //ModuleeDTO moduleeDTO=new ModuleeDTO(review.getModule().getTitle());
-            //moduleeDTO.convertTo(review.getModule());
-            //reviewDTO.setModuleeDTO(moduleeDTO);
-
-            return reviewDTO;
-        }else{
-            reviewDTO=new ReviewDTO();
-            return reviewDTO;
-        }
-
-    }
 }

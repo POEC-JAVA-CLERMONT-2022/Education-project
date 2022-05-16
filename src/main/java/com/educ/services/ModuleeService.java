@@ -46,12 +46,13 @@ public class ModuleeService {
     }
 
     public Modulee getById(Long id) {
-        if (this.existId(id)) {
+        return this.moduleRepository.findById(id).orElseThrow();
+     /*   if (this.existId(id)) {
             Modulee modulee = this.moduleRepository.getById(id);
             return modulee;
         } else {
             return null;
-        }
+        } */
     }
 
     public Modulee findByTitle(String title) {
@@ -60,7 +61,7 @@ public class ModuleeService {
         }
         return moduleRepository.findByTitle(title);
     }
-/*
+
     @Transactional
     public Modulee createModule(String title, String name, Level level, Language language, String url) {
         if (title == null) {
@@ -70,14 +71,12 @@ public class ModuleeService {
             return this.findByTitle(title);
         }
         Modulee module = new Modulee(title);
-        module = this.addModuleeLesson(module, name, level, language);
+        //module = this.addModuleeLesson(module, name, level, language);
 
-        module = this.addModuleeVideo(module, url);
+        //module = this.addModuleeVideo(module, url);
         this.moduleRepository.save(module);
         return module;
     }
-
- */
 
     @Transactional
     public Modulee updateModule(Long id, String title) {
@@ -102,8 +101,8 @@ public class ModuleeService {
             this.moduleRepository.delete(modulee);
         }
     }
-/*
-    public Modulee addModuleeLesson(Modulee modulee, String name, Level level, Language language) {
+
+  /*  public Modulee addModuleeLesson(Modulee modulee, String name, Level level, Language language) {
         try {
             List<Lesson> lessons;
             Lesson lesson = lessonService.findByNameAndLevelAndLanguage(name, level, language);
@@ -121,8 +120,8 @@ public class ModuleeService {
             System.out.println("Erreur relation Module lesson null");
             return modulee;
         }
-    }
-*/
+    }*/
+/*
 
     private Modulee addModuleeVideo(Modulee modulee, String url) {
         try {
@@ -140,6 +139,7 @@ public class ModuleeService {
             return modulee;
         }
     }
+    */
 
     public Double calculRating(String title) {
         Modulee modulee = this.findByTitle(title);

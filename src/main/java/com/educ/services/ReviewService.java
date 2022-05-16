@@ -42,14 +42,8 @@ public class ReviewService {
         return false;
     }
 
-  /*  public Long findUserIdById(Long id){
-        Long user_id=this.reviewRepository.findUserIdById(id);
-        return user_id;
-    }*/
-
-    public Review getById(Long id) {
-
-            if (this.existId(id)) {
+   public Review getById(Long id) {
+           if (this.existId(id)) {
                 try {
                     Review review=reviewRepository.getById(id);
                     return review;
@@ -121,7 +115,7 @@ public class ReviewService {
         }
     }
 
-    private User addUserReview(User user, Long id){
+   /* private User addUserReview(User user, Long id){
         try {
             List<Review> reviews;
             Review review=this.getById(id);
@@ -136,7 +130,7 @@ public class ReviewService {
             return user;
         }
 
-    }
+    }*/
 /*
     private Modulee addModuleeReview(Modulee modulee, Long id) {
         try {
