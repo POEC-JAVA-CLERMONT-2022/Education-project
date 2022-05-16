@@ -22,17 +22,7 @@ public class UserDTO implements Serializable {
    private List<RoleDTO> roleDTOS;
 
     public UserDTO() { }
-/*
-    public UserDTO(Long id, String firstName, String lastName, LocalDate birthAt, String urlImage, String email, String password, String status) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.birthAt = birthAt;
-        this.urlImage = urlImage;
-        this.email = email;
-        this.password = password;
-        this.status = status;
-    }*/
+
 
     public UserDTO(Long id, String firstName, String lastName, LocalDate birthAt, String urlImage, String email, String password, String status, List<RoleDTO> roleDTOS) {
         this.id = id;
@@ -122,9 +112,12 @@ public class UserDTO implements Serializable {
         List<Role> roles=user.getRoles();
         List<RoleDTO> roleDTOS=new LinkedList<RoleDTO>();
         RoleDTO roleDTO=new RoleDTO();
-        for(Role r:roles){
-            roleDTOS.add(roleDTO.convertTo(r));
+        if(roles!=null){
+            for(Role r:roles){
+                roleDTOS.add(new RoleDTO(r.getId(),r.getName()));
+            }
         }
+
         UserDTO userDTO=new UserDTO(user.getId(),user.getFirstName(),user.getLastName(),user.getBirthAt(),user.getUrlImage(),user.getEmail(),user.getPassword(),user.getStatus(),roleDTOS);
 
         return userDTO;

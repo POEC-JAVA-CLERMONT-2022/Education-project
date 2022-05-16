@@ -60,25 +60,24 @@ public class LessonController {
     }
 
     @PostMapping()
-    public ResponseEntity<?> addLesson(@RequestBody Lesson lesson){
+    public ResponseEntity<?> addLesson(@RequestBody LessonDTO lessonDTO){
         try {
-            if(lesson.getName() == null || lesson.getName() == ""){
+            if(lessonDTO.getName() == null || lessonDTO.getName() == ""){
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
-            Lesson newLesson = lessonService.createLesson(lesson.getName(), lesson.getDescription(), lesson.getPrice(), lesson.getLanguage(), lesson.getLevel());
-            return new ResponseEntity<>(newLesson, HttpStatus.CREATED);
+            Lesson newLesson = lessonService.createLesson(lessonDTO.getName(), lessonDTO.getDescription(), lessonDTO.getPrice(), lessonDTO.getLanguage(), lessonDTO.getLevel());
+            LessonDTO resultLessonDTO=new LessonDTO();
+            return new ResponseEntity<>(resultLessonDTO.convertTo(newLesson), HttpStatus.CREATED);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Error to create lesson", e);
         }
     }
 
-    //Postman language & level : FR / MIDDLE
-    //Postman price 150.20
     @PutMapping("{id}")
-    public ResponseEntity<?> updateLesson(@PathVariable Long id, @RequestBody Lesson lesson){
+    public ResponseEntity<?> updateLesson(@PathVariable Long id, @RequestBody LessonDTO lessonDTO){
         try {
             if(id != null){
-                lessonService.updateLesson(id, lesson.getName(), lesson.getDescription(), lesson.getPrice(), lesson.getLanguage(), lesson.getLevel());
+                lessonService.updateLesson(id, lessonDTO.getName(), lessonDTO.getDescription(), lessonDTO.getPrice(), lessonDTO.getLanguage(), lessonDTO.getLevel());
             }
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (Exception e) {

@@ -82,11 +82,11 @@ public class ModuleeController {
      */
 
     @PutMapping("{id}")
-    public ResponseEntity<?> updateModulee(@PathVariable Long id, @RequestBody Modulee modulee) {
+    public ResponseEntity<?> updateModulee(@PathVariable Long id, @RequestBody ModuleeDTO moduleeDTO) {
         try {
            if(id != null){
                logger.info("Modulee : {}", id);
-               moduleeService.updateModule(id, modulee.getTitle());
+               moduleeService.updateModule(id, moduleeDTO.getTitle());
            }
            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (Exception e) {

@@ -30,7 +30,6 @@ public class Lesson {
 	private float price;
 
 	@Column(name="level")
-	@NotBlank
 	private Level level;
 
 	@Column(name="language")

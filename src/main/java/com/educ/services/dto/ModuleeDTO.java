@@ -50,8 +50,13 @@ public class ModuleeDTO implements Serializable {
     }
 
     public ModuleeDTO convertTo(Modulee modulee){
+        VideoDTO videoDTO;
+        if (modulee.getVideo()!=null){
+            videoDTO=new VideoDTO(modulee.getVideo().getId(), modulee.getVideo().getTitle(), modulee.getVideo().getUrl(), modulee.getVideo().getDuration());
+        }else{
+            videoDTO=null;
+        }
 
-        VideoDTO videoDTO=new VideoDTO(modulee.getVideo().getId(), modulee.getVideo().getTitle(), modulee.getVideo().getUrl(), modulee.getVideo().getDuration());
         ModuleeDTO moduleeDTO=new ModuleeDTO(modulee.getId(), modulee.getTitle(), videoDTO);
         return moduleeDTO;
     }
