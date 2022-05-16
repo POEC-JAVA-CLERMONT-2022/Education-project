@@ -6,6 +6,7 @@ import com.educ.entity.Review;
 
 import com.educ.services.ReviewService;
 
+import com.educ.services.dto.CreationReviewDTo;
 import com.educ.services.dto.ModuleeDTO;
 import com.educ.services.dto.ReviewDTO;
 import org.slf4j.Logger;
@@ -68,10 +69,11 @@ public class ReviewController {
     }
 
     @PostMapping()
-    public ResponseEntity<?> addReview(@RequestBody Review review){
+    public ResponseEntity<?> addReview(@RequestBody CreationReviewDTo creationReviewDTo){
         try {
-            Review createdReview = reviewService.createReview(review.getNote(),review.getComment(),review.getUser().getId(), review.getModule().getId());
-            return new ResponseEntity<>(createdReview, HttpStatus.CREATED);
+            Review review = reviewService.createReview(creationReviewDTo.getNote(),creationReviewDTo.getComment(),creationReviewDTo.getUser_id(), creationReviewDTo.getModulee_id());
+            CreationReviewDTo createdReview=new CreationReviewDTo();
+            return new ResponseEntity<>(createdReview.convertTo(review), HttpStatus.CREATED);
 
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Error to create review");
@@ -80,10 +82,10 @@ public class ReviewController {
 
 
     @PutMapping("{id}")
-    public ResponseEntity<?> updateReview(@PathVariable Long id, @RequestBody Review review){
+    public ResponseEntity<?> updateReview(@PathVariable Long id, @RequestBody ReviewDTO reviewDTO){
         try {
             if(id != null){
-                reviewService.updateReview(id, review.getNote(), review.getComment());
+                reviewService.updateReview(id, reviewDTO.getNote(), reviewDTO.getComment());
             }
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (Exception e) {

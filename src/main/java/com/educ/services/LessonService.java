@@ -52,15 +52,11 @@ public class LessonService {
 		return this.lessonRepository.findByNameAndLevelAndLanguage(name,level,language);
 	}
 
-/*	public  List<Modulee> findListModuleeByLessonId(Long id){
-		List<Modulee> modulees=new LinkedList<Modulee>();
-		List<Long> modulee_ids=this.lessonRepository.findListModuleeByLessonId(id);
-		for(Long module_id:modulee_ids){
-			modulees.add(moduleeRepository.getById(module_id));
-		}
+	public  List<Modulee> findListModuleeByLessonId(Long id){
+		List<Modulee> modulees=this.getById(id).getModulees();
 		return modulees;
 	}
-*/
+
 
 	@Transactional
 	public Lesson createLesson(String name, String description, Float price, Language language, Level level) {

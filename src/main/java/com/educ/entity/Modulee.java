@@ -3,6 +3,7 @@ package com.educ.entity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 //@JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Entity
@@ -15,13 +16,13 @@ public class Modulee {
     private Long id;
 
     @Column(name = "title", unique = true, nullable = false)
+    @NotBlank
     private String title;
 
     /* create video_id in table modulees */
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "video_id", referencedColumnName = "id")
     private Video video;
-
 
     public Modulee() {
     }

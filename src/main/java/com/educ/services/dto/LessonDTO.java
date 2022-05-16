@@ -95,8 +95,10 @@ public class LessonDTO implements Serializable {
         List<Modulee> modulees=lesson.getModulees();
         List<ModuleeDTO> moduleeDTOList=new LinkedList<ModuleeDTO>();
         ModuleeDTO moduleeDTO=new ModuleeDTO();
-        for (Modulee m:modulees){
-            moduleeDTOList.add(moduleeDTO.convertTo(m));
+        if (modulees!=null){
+            for (Modulee m:modulees){
+                moduleeDTOList.add(moduleeDTO.convertTo(m));
+            }
         }
         LessonDTO lessonDTO=new LessonDTO(lesson.getId(),lesson.getName(),lesson.getDescription(),lesson.getPrice(), lesson.getLevel(),lesson.getLanguage(),moduleeDTOList);
         //BeanUtils.copyProperties(lesson, this);
