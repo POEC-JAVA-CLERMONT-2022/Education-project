@@ -87,6 +87,7 @@ public class ModuleeController {
            if(id != null){
                logger.info("Modulee : {}", id);
                moduleeService.updateModule(id, moduleeDTO.getTitle());
+               return new ResponseEntity<>(HttpStatus.OK);
            }
            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (Exception e) {

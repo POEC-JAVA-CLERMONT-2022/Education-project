@@ -62,7 +62,7 @@ public class VideoController {
         try{
             VideoDTO newVideo = new VideoDTO();
             newVideo.convertTo(videoService.createVideo(videoDTO.getTitle(), videoDTO.getUrl(), videoDTO.getDuration()));
-            return new ResponseEntity<>(newVideo, HttpStatus.CREATED); /* CODE 201, on peut retourner lbjeto o el id */
+            return new ResponseEntity<>(newVideo, HttpStatus.CREATED);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Error to create video : ", e);
         }
@@ -73,10 +73,10 @@ public class VideoController {
         try {
             if(id != null){
                 videoService.updateVideo(id, videoDTO.getTitle(), videoDTO.getUrl(), videoDTO.getDuration());
+                return new ResponseEntity<>(HttpStatus.OK);
             }
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (Exception e) {
-            //e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -94,7 +94,6 @@ public class VideoController {
 
         } catch (Exception e){
             e.printStackTrace();
-            //throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Video not found");
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
